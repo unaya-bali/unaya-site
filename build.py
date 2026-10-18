@@ -97,7 +97,7 @@ def footer(lang, page):
 <div style="flex: 1 1 260px; min-width: 0; display: flex; flex-direction: column; gap: 10px;">
 <div style="{H}">{t['f_company']}</div>
 <span>PT Unaya Bali Grup</span>
-<span>NIB 3009260021018 · KBLI 55901</span>
+<span>NIB 3009260021018</span>
 <span style="color: #CDBFB6;">{t['build']}</span>
 </div>
 </div>
