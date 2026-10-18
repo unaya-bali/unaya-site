@@ -30,16 +30,16 @@ T = {  # textes communs
 }
 
 DESC = {
- ('fr','Main'):"Gestion locative de villas à Bali : marketing, réservations, entretien et rapport financier chaque mois. Commission dès 18 %, sans frais fixes. Nyanyi, Uluwatu, Umalas.",
- ('en','Main'):"Bali villa management: marketing, bookings, maintenance and a monthly financial report. Commission from 18%, no fixed fees. Nyanyi, Uluwatu, Umalas.",
+ ('fr','Main'):"Gestion locative de villas à Bali : marketing, réservations, entretien et rapport financier chaque mois. Commission dès 18 %, sans frais fixes. Uluwatu / Jimbaran, Tanah Lot / Canggu West, Seminyak / Kerobokan.",
+ ('en','Main'):"Bali villa management: marketing, bookings, maintenance and a monthly financial report. Commission from 18%, no fixed fees. Uluwatu / Jimbaran, Tanah Lot / Canggu West, Seminyak / Kerobokan.",
  ('fr','VillaSuma'):"Villa Suma à Balangan, Uluwatu : 5 suites, piscine privée, jusqu'à 10 voyageurs, à 5 minutes de la plage. Réservation directe.",
  ('en','VillaSuma'):"Villa Suma in Balangan, Uluwatu: 5 suites, private pool, up to 10 guests, 5 minutes from the beach. Book direct.",
  ('fr','VillaYuga'):"Villa Yuga à Nyanyi : 4 chambres, piscine privée, vue sur les rizières, à 5 minutes de Nuanu. Jusqu'à 8 voyageurs. Réservation directe.",
  ('en','VillaYuga'):"Villa Yuga in Nyanyi: 4 bedrooms, private pool, rice-field views, 5 minutes from Nuanu. Up to 8 guests. Book direct.",
  ('fr','VillaRumahJambu'):"Rumah Jambu : maison balinaise authentique avec jardin tropical, au cœur du village de Balangan, Uluwatu. 2 chambres, 4 voyageurs.",
  ('en','VillaRumahJambu'):"Rumah Jambu: an authentic Balinese house with a tropical garden in the heart of Balangan village, Uluwatu. 2 bedrooms, 4 guests.",
- ('fr','Proprietaires'):"Confiez votre villa à Unaya Management : location, entretien et rapport financier chaque mois, sans frais fixes. Nyanyi, Uluwatu, Umalas.",
- ('en','Proprietaires'):"Entrust your villa to Unaya Management: rentals, maintenance and a monthly financial report, with no fixed fees. Nyanyi, Uluwatu, Umalas.",
+ ('fr','Proprietaires'):"Confiez votre villa à Unaya Management : location, entretien et rapport financier chaque mois, sans frais fixes. Uluwatu / Jimbaran, Tanah Lot / Canggu West, Seminyak / Kerobokan.",
+ ('en','Proprietaires'):"Entrust your villa to Unaya Management: rentals, maintenance and a monthly financial report, with no fixed fees. Uluwatu / Jimbaran, Tanah Lot / Canggu West, Seminyak / Kerobokan.",
  ('fr','ProprietairesServices'):"Marketing, réservations, accueil des voyageurs, entretien et comptabilité : tous les services Unaya Management pour votre villa à Bali.",
  ('en','ProprietairesServices'):"Marketing, bookings, guest welcome, maintenance and accounting: every Unaya Management service for your Bali villa.",
  ('fr','ProprietairesTarifs'):"Gestion complète à partir de 18 % ou Marketing seul à 11 %. Sans frais fixes, commission calculée après plateformes et taxe d'hébergement.",
