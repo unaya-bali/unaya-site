@@ -1,0 +1,18 @@
+{
+  "Main": {"en": "/", "fr": "/fr/"},
+  "VillaSuma": {"en": "/villas/suma/", "fr": "/fr/villas/suma/"},
+  "VillaYuga": {"en": "/villas/yuga/", "fr": "/fr/villas/yuga/"},
+  "VillaRumahJambu": {"en": "/villas/rumah-jambu/", "fr": "/fr/villas/rumah-jambu/"},
+  "APropos": {"en": "/about/", "fr": "/fr/a-propos/"},
+  "ServicesVoyageurs": {"en": "/guest-services/", "fr": "/fr/services-voyageurs/"},
+  "FAQ": {"en": "/faq/", "fr": "/fr/faq/"},
+  "Contact": {"en": "/contact/", "fr": "/fr/contact/"},
+  "Proprietaires": {"en": "/owners/", "fr": "/fr/proprietaires/"},
+  "ProprietairesServices": {"en": "/owners/services/", "fr": "/fr/proprietaires/services/"},
+  "ProprietairesTarifs": {"en": "/owners/pricing/", "fr": "/fr/proprietaires/tarifs/"},
+  "ConfierMaVilla": {"en": "/owners/list-your-villa/", "fr": "/fr/proprietaires/confier-ma-villa/"},
+  "Merci": {"en": "/thank-you/", "fr": "/fr/merci/"},
+  "MentionsLegales": {"en": "/legal-notice/", "fr": "/fr/mentions-legales/"},
+  "Confidentialite": {"en": "/privacy/", "fr": "/fr/confidentialite/"},
+  "Conditions": {"en": "/booking-terms/", "fr": "/fr/conditions-reservation/"}
+}

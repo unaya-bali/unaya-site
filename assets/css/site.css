@@ -1,0 +1,66 @@
+/* Unaya Management — styles communs (charte : Aubergine #3F2A3A, Prune #5A3552, Or rose #D2A48C, Cuivre #A8705A, Perle #F7F2EE, Brun encre #2E2429) */
+:root{--aubergine:#3F2A3A;--prune:#5A3552;--or-rose:#D2A48C;--cuivre:#A8705A;--cuivre-texte:#8B5A46;--perle:#F7F2EE;--encre:#2E2429;--ligne:#E6DCD4}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--perle);color:var(--encre);font-family:'Jost',sans-serif;font-weight:300;font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+img{max-width:100%}
+a{color:var(--aubergine)}a:hover{color:var(--cuivre-texte)}
+:focus-visible{outline:2px solid var(--cuivre);outline-offset:3px}
+.skip{position:absolute;left:-9999px;top:0;background:var(--aubergine);color:var(--perle);padding:12px 18px;z-index:100}
+.skip:focus{left:16px;top:16px}
+
+/* En-tête */
+.site-header{background:var(--perle);border-bottom:1px solid var(--ligne);position:sticky;top:0;z-index:50}
+.site-header__in{max-width:1360px;margin:0 auto;padding:16px 32px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.site-header__logo{flex:none}.site-header__logo img{height:40px;width:auto;display:block}
+.site-nav{display:flex;gap:24px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:400;white-space:nowrap}
+.site-nav a{text-decoration:none}
+.site-nav a[aria-current="page"]{color:var(--cuivre-texte)}
+.nav-lang{display:none}
+.site-header__actions{display:flex;align-items:center;gap:10px;white-space:nowrap;flex:none}
+.lang{font-size:13px;letter-spacing:.12em;text-decoration:none;padding:10px 6px}
+.lang strong{font-weight:500}
+.btn{display:inline-block;padding:12px 20px;font-size:13px;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;border:1px solid var(--aubergine);color:var(--aubergine)}
+.btn--plein{background:var(--aubergine);color:var(--perle)}
+.btn--plein:hover{background:var(--prune);color:var(--perle)}
+.menu-toggle{display:none;background:none;border:1px solid var(--aubergine);color:var(--aubergine);width:46px;height:46px;cursor:pointer;align-items:center;justify-content:center}
+.menu-toggle svg{display:block}
+.subnav{max-width:1280px;margin:0 auto;padding:24px 32px 0;display:flex;flex-wrap:wrap;gap:24px;font-size:13px;letter-spacing:.14em;text-transform:uppercase}
+.subnav a{text-decoration:none;padding-bottom:6px;border-bottom:2px solid transparent}
+.subnav a[aria-current="page"]{color:var(--cuivre-texte);border-bottom-color:var(--cuivre)}
+
+@media (max-width:1320px){.site-header__actions .btn:not(.btn--plein){display:none}}
+@media (max-width:1080px){
+  .site-header__in{flex-wrap:wrap;padding:12px 16px}
+  .site-header__logo img{height:34px}
+  .menu-toggle{display:inline-flex}
+  .site-nav{display:none;order:3;width:100%;flex-direction:column;gap:0;padding:8px 0 4px}
+  .site-nav a{padding:14px 0;border-top:1px solid var(--ligne)}
+  .site-header.is-open .site-nav{display:flex}
+  .site-nav .nav-lang{display:block;color:var(--cuivre-texte)}
+  .site-header__actions .btn:not(.btn--plein){display:none}
+}
+@media (max-width:640px){
+  main section{padding-left:16px!important;padding-right:16px!important}
+  main section > div{padding-left:0!important;padding-right:0!important}
+  main h1{font-size:44px!important}
+  main h2{font-size:34px!important}
+  .site-header__actions .btn--plein{padding:10px 14px}
+  .site-header__logo img{height:28px}
+  .site-header__in{gap:12px}
+  .site-header__actions .lang{display:none}
+  .subnav{padding:16px 16px 0;gap:16px}
+  [data-gallery] > div > div:nth-child(3){display:none}
+  [data-gallery] > div > div:first-child{height:320px!important}
+}
+
+/* Formulaires */
+.form-ok{background:#EFE6DF;padding:18px 22px;color:var(--prune)}
+.hp{position:absolute;left:-9999px}
+
+/* Galerie (visionneuse) */
+.lightbox{position:fixed;inset:0;background:rgba(46,36,41,.94);display:none;align-items:center;justify-content:center;z-index:200;padding:24px}
+.lightbox.is-open{display:flex}
+.lightbox img{max-height:86vh;max-width:92vw;object-fit:contain}
+.lightbox button{position:absolute;background:none;border:none;color:var(--perle);font-size:34px;cursor:pointer;width:56px;height:56px}
+.lightbox .lb-close{top:12px;right:12px}.lightbox .lb-prev{left:8px;top:50%}.lightbox .lb-next{right:8px;top:50%}
