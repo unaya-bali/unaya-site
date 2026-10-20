@@ -1,0 +1,11 @@
+<!-- title: Paiement — Unaya Management -->
+<section style="max-width: 860px; margin: 0 auto; padding: 72px 32px 96px;">
+<h1 style="margin: 0 0 20px; font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 56px; line-height: 1.05; color: #3F2A3A;">Paiement de votre réservation</h1>
+<p id="pay-msg" style="margin: 0 0 20px;">Merci ! Dès que votre paiement est validé, vous recevez la confirmation de réservation par e-mail.</p>
+<p style="margin: 0;"><a href="/fr/">← Retour à l'accueil</a></p>
+</section>
+<script>
+(function(){var q=new URLSearchParams(location.search),s=q.get('transaction_status')||'',el=document.getElementById('pay-msg');
+var M={"ok": "<strong>Merci, votre paiement est bien reçu.</strong> Votre réservation est confirmée : vous allez recevoir un e-mail de confirmation.", "pending": "<strong>Votre paiement est en attente.</strong> Si vous avez choisi le virement ou un paiement différé, finalisez-le avec les instructions reçues. La réservation sera confirmée dès réception.", "fail": "<strong>Le paiement n'a pas abouti.</strong> Votre réservation n'est pas encore payée. Réessayez depuis l'e-mail de réservation ou écrivez-nous à <a href=\"mailto:info@unayabali.com\">info@unayabali.com</a>."};
+if(s==='settlement'||s==='capture'){el.innerHTML=M.ok}else if(s==='pending'){el.innerHTML=M.pending}else if(s){el.innerHTML=M.fail}})();
+</script>

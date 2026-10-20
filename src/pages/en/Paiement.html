@@ -1,0 +1,11 @@
+<!-- title: Payment — Unaya Management -->
+<section style="max-width: 860px; margin: 0 auto; padding: 72px 32px 96px;">
+<h1 style="margin: 0 0 20px; font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 56px; line-height: 1.05; color: #3F2A3A;">Your booking payment</h1>
+<p id="pay-msg" style="margin: 0 0 20px;">Thank you! As soon as your payment is validated, you will receive your booking confirmation by email.</p>
+<p style="margin: 0;"><a href="/">← Back to home</a></p>
+</section>
+<script>
+(function(){var q=new URLSearchParams(location.search),s=q.get('transaction_status')||'',el=document.getElementById('pay-msg');
+var M={"ok": "<strong>Thank you, your payment has been received.</strong> Your booking is confirmed and a confirmation email is on its way.", "pending": "<strong>Your payment is pending.</strong> If you chose bank transfer or a deferred method, please complete it using the instructions you received. Your booking will be confirmed on receipt.", "fail": "<strong>The payment was not completed.</strong> Your booking is not paid yet. Please try again from your booking email or write to <a href=\"mailto:info@unayabali.com\">info@unayabali.com</a>."};
+if(s==='settlement'||s==='capture'){el.innerHTML=M.ok}else if(s==='pending'){el.innerHTML=M.pending}else if(s){el.innerHTML=M.fail}})();
+</script>
