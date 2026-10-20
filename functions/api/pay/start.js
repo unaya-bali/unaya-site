@@ -22,12 +22,13 @@ export async function onRequest({ request, env }) {
     if (b) {
       if (!UNAYA_PROPS.has(String(b.propertyId)) || String(b.status) === 'cancelled') return page(lang, T.err, T.msg, 400);
       const total = Math.round(Number(b.price) || 0);
-      const min = Math.ceil(total * (Number(env.DEPOSIT_PERCENT || 30) / 100));
-      // Le montant envoyé par le navigateur peut être modifié : on le borne entre l'acompte minimum et le total.
-      if (total > 0) amount = Math.min(Math.max(amount, min), total);
+      // Le montant est calculé ici (acompte = DEPOSIT_PERCENT % du total), jamais pris tel quel depuis le navigateur.
+      if (total > 0) amount = Math.ceil(total * (Number(env.DEPOSIT_PERCENT || 30) / 100));
       guest = { first_name: b.firstName || '', last_name: b.lastName || '', email: b.email || '', phone: b.phone || b.mobile || '' };
     } else if (isProd(env)) {
       return page(lang, T.err, T.msg, 400); // en production, la vérification Beds24 est obligatoire
+    } else if (amount < 1000) {
+      amount = Number(env.TEST_AMOUNT || 100000); // mode test sans API Beds24 : montant fictif
     }
   } catch (e) {
     return page(lang, T.err, T.msg, 502);
