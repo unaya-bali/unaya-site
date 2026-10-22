@@ -10,7 +10,8 @@ export async function onRequestPost({ request, env }) {
   // Anti-spam : champ caché rempli = robot
   if (data.get('site_web')) return Response.redirect(new URL(thanks, request.url), 303);
 
-  const formName = String(data.get('form-name') || 'formulaire');
+  const svc = data.get('service_demande');
+  const formName = svc ? `Service voyageur — ${svc} (${lang})` : String(data.get('form-name') || 'formulaire');
   const skip = new Set(['form-name', 'site_web', 'lang']);
   const rows = [];
   for (const [k, v] of data.entries()) {

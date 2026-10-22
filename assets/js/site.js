@@ -56,4 +56,20 @@
       if (e.key === 'ArrowRight') show(cur + 1);
     });
   }
+
+  // Fenêtres de demande (Services voyageurs)
+  document.querySelectorAll('[data-open-dialog]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var d = document.getElementById(b.getAttribute('data-open-dialog'));
+      if (d && d.showModal) { d.showModal(); var f = d.querySelector('input:not([type=hidden])'); if (f) f.focus(); }
+    });
+  });
+  document.querySelectorAll('dialog.svc-dialog').forEach(function (d) {
+    d.querySelectorAll('[data-close-dialog]').forEach(function (c) { c.addEventListener('click', function () { d.close(); }); });
+    d.addEventListener('click', function (e) { if (e.target === d) d.close(); });
+  });
+  if (location.hash) {
+    var h = document.getElementById('d-' + location.hash.slice(1));
+    if (h && h.showModal) h.showModal();
+  }
 })();
