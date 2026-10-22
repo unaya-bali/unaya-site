@@ -72,4 +72,12 @@
     var h = document.getElementById('d-' + location.hash.slice(1));
     if (h && h.showModal) h.showModal();
   }
+
+  // Formule choisie sur la page Tarifs -> présélection dans « Confier ma villa »
+  var fq = new URLSearchParams(location.search).get('formule');
+  var fs = document.querySelector('select[name=formule_souhaitee], select[name=preferred_plan]');
+  if (fq && fs) {
+    fs.selectedIndex = fq === 'marketing' ? 1 : 0;
+    var ff = fs.closest('form'); if (ff) ff.scrollIntoView({ block: 'start' });
+  }
 })();
