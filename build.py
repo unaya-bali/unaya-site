@@ -5,7 +5,7 @@ Utilisation :  python3 build.py
 Les textes des pages sont dans src/pages/fr/ et src/pages/en/ (HTML).
 L'en-tête, le menu et le pied de page sont définis ci-dessous, une seule fois pour tout le site.
 """
-import os, re, json, shutil, html
+import os, re, json, shutil, html, hashlib
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 SRC, DIST = os.path.join(ROOT, 'src'), os.path.join(ROOT, 'dist')
@@ -47,6 +47,9 @@ DESC = {
  ('fr','ConfierMaVilla'):"Présentez-nous votre villa à Bali et recevez une estimation de revenus gratuite et sans engagement sous 24 h.",
  ('en','ConfierMaVilla'):"Tell us about your Bali villa and receive a free, no-obligation income estimate within 24 hours.",
 }
+
+# Version des fichiers CSS/JS (change à chaque modification → le navigateur recharge la nouvelle version)
+ASSET_V = hashlib.md5(b''.join(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), f), 'rb').read() for f in ('assets/css/site.css', 'assets/js/site.js'))).hexdigest()[:8]
 
 def url(name, lang):
     base, _, anchor = name.partition('#')
@@ -189,7 +192,7 @@ def layout(lang, page, title, desc, body):
 <link rel="icon" href="/assets/logos/symbole.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/css/site.css">
+<link rel="stylesheet" href="/assets/css/site.css?v={ASSET_V}">
 </head>
 <body>
 {header(lang, page)}
@@ -197,7 +200,7 @@ def layout(lang, page, title, desc, body):
 {body}
 </main>
 {footer(lang, page)}
-<script src="/assets/js/site.js" defer></script>
+<script src="/assets/js/site.js?v={ASSET_V}" defer></script>
 </body>
 </html>
 '''
