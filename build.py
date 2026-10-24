@@ -11,19 +11,20 @@ ROOT = os.path.dirname(os.path.abspath(__file__))
 SRC, DIST = os.path.join(ROOT, 'src'), os.path.join(ROOT, 'dist')
 SITE = 'https://unayabali.com'
 ROUTES = json.load(open(os.path.join(SRC, 'routes.json'), encoding='utf-8'))
+PORTAL = 'https://owners.unayabali.com'
 OWNER_PAGES = ['Proprietaires', 'ProprietairesServices', 'ProprietairesTarifs', 'ConfierMaVilla']
 BEDS24 = {'VillaSuma': '359817', 'VillaYuga': '359816', 'VillaRumahJambu': '359818'}  # propriétés Unaya
 
 T = {  # textes communs
  'fr': dict(nav=[('Proprietaires','Propriétaires'),('Main#villas','Nos villas'),('Main#zones','Nos zones'),('ServicesVoyageurs','Services voyageurs'),('APropos','À propos'),('Contact','Contact')],
             book='Réserver', owner='Confier ma villa', menu='Menu', skip='Aller au contenu', main_menu='Menu principal',
-            sub=[('Proprietaires',"Vue d'ensemble"),('ProprietairesServices','Nos services'),('ProprietairesTarifs','Formules & tarifs'),('ConfierMaVilla','Confier ma villa')], sub_label='Propriétaires',
+            sub=[('Proprietaires',"Vue d'ensemble"),('ProprietairesServices','Nos services'),('ProprietairesTarifs','Formules & tarifs'),('ConfierMaVilla','Confier ma villa')], sub_label='Propriétaires', portal='Espace propriétaire',
             f_nav='Navigation', f_contact='Contact', f_company='Société', f_links=[('Proprietaires','Propriétaires'),('Main#villas','Nos villas'),('ServicesVoyageurs','Services voyageurs'),('FAQ','FAQ'),('Contact','Contact')],
             legal=[('MentionsLegales','Mentions légales'),('Confidentialite','Confidentialité'),('Conditions','Conditions de réservation')],
             country='Indonésie', build='Unaya Build — Développement (bientôt)', ogloc='fr_FR'),
  'en': dict(nav=[('Proprietaires','Owners'),('Main#villas','Our villas'),('Main#zones','Our areas'),('ServicesVoyageurs','Guest services'),('APropos','About'),('Contact','Contact')],
             book='Book', owner='List my villa', menu='Menu', skip='Skip to content', main_menu='Main menu',
-            sub=[('Proprietaires','Overview'),('ProprietairesServices','Our services'),('ProprietairesTarifs','Plans & pricing'),('ConfierMaVilla','List my villa')], sub_label='Owners',
+            sub=[('Proprietaires','Overview'),('ProprietairesServices','Our services'),('ProprietairesTarifs','Plans & pricing'),('ConfierMaVilla','List my villa')], sub_label='Owners', portal='Owner portal',
             f_nav='Navigation', f_contact='Contact', f_company='Company', f_links=[('Proprietaires','Owners'),('Main#villas','Our villas'),('ServicesVoyageurs','Guest services'),('FAQ','FAQ'),('Contact','Contact')],
             legal=[('MentionsLegales','Legal notice'),('Confidentialite','Privacy'),('Conditions','Booking terms')],
             country='Indonesia', build='Unaya Build — Development (coming soon)', ogloc='en_US'),
@@ -63,7 +64,7 @@ def header(lang, page):
     sub = ''
     if page in OWNER_PAGES:
         sub = f'<nav class="subnav" aria-label="{t["sub_label"]}">' + ''.join(
-            f'<a href="{url(n, lang)}"{" aria-current=\"page\"" if n == page else ""}>{lbl}</a>' for n, lbl in t['sub']) + '</nav>'
+            f'<a href="{url(n, lang)}"{" aria-current=\"page\"" if n == page else ""}>{lbl}</a>' for n, lbl in t['sub']) + f'<a class="subnav-portal" href="{PORTAL}">{t["portal"]} ↗</a></nav>'
     book_target = '#reserver' if page in BEDS24 else url('Main#villas', lang)
     return f'''<a class="skip" href="#contenu">{t['skip']}</a>
 <header class="site-header">
@@ -91,7 +92,8 @@ def footer(lang, page):
 </div>
 <div style="flex: 1 1 200px; min-width: 0; display: flex; flex-direction: column; gap: 10px;">
 <div style="{H}">{t['f_nav']}</div>
-{links}</div>
+{links}<a href="{PORTAL}" style="{L} margin-top: 6px; color: #D2A48C;">{t['portal']} ↗</a>
+</div>
 <div style="flex: 1 1 260px; min-width: 0; display: flex; flex-direction: column; gap: 10px;">
 <div style="{H}">{t['f_contact']}</div>
 <span>Jalan Balangan Hijau VI No. 15<br>Jimbaran, Kuta Selatan<br>Badung, Bali — {t['country']}</span>
