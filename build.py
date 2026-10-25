@@ -61,11 +61,27 @@ def url(name, lang):
     base, _, anchor = name.partition('#')
     return ROUTES[base][lang] + (('#' + anchor) if anchor else '')
 
+def subnav(lang, page):
+    t = T[lang]
+    if page not in OWNER_PAGES: return ''
+    return f'<nav class="subnav" aria-label="{t["sub_label"]}">' + ''.join(
+        f'<a href="{url(n, lang)}"{" aria-current=\"page\"" if n == page else ""}>{lbl}</a>' for n, lbl in t['sub']) + f'<a class="subnav-portal" href="{PORTAL}">{t["portal"]} ↗</a></nav>'
+
+def with_subnav(body, lang, page):
+    sn = subnav(lang, page)
+    if not sn: return body
+    b = body.lstrip()
+    if b.startswith('<section class="u-hero'):
+        i = b.index('</section>') + len('</section>')
+        return b[:i] + '\n' + sn + b[i:]
+    return sn + '\n' + body
+
 def header(lang, page):
     t = T[lang]; other = 'en' if lang == 'fr' else 'fr'
     nav = ''.join(f'<a href="{url(n, lang)}"{" aria-current=\"page\"" if (n == page or (n == "Proprietaires" and page in OWNER_PAGES)) else ""}>{lbl}</a>' for n, lbl in t['nav'])
     langsw = (f'<a class="lang" href="{url(page, other)}" hreflang="{other}"><strong>FR</strong> · EN</a>' if lang == 'fr'
               else f'<a class="lang" href="{url(page, other)}" hreflang="{other}">FR · <strong>EN</strong></a>')
+    return_sub = None
     sub = ''
     if page in OWNER_PAGES:
         sub = f'<nav class="subnav" aria-label="{t["sub_label"]}">' + ''.join(
@@ -80,7 +96,7 @@ def header(lang, page):
 <button class="menu-toggle" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="{t['menu']}"><svg width="22" height="16" viewBox="0 0 22 16" aria-hidden="true"><path d="M0 1h22M0 8h22M0 15h22" stroke="currentColor" stroke-width="1.6"/></svg></button></div>
 </div>
 </header>
-{sub}'''
+'''
 
 def footer(lang, page):
     t = T[lang]; other = 'en' if lang == 'fr' else 'fr'
@@ -215,7 +231,7 @@ def layout(lang, page, title, desc, body):
 <body>
 {header(lang, page)}
 <main id="contenu">
-{body}
+{with_subnav(body, lang, page)}
 </main>
 {footer(lang, page)}
 <script src="/assets/js/site.js?v={ASSET_V}" defer></script>
