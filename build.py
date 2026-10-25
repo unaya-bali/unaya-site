@@ -12,6 +12,9 @@ SRC, DIST = os.path.join(ROOT, 'src'), os.path.join(ROOT, 'dist')
 SITE = 'https://unayabali.com'
 ROUTES = json.load(open(os.path.join(SRC, 'routes.json'), encoding='utf-8'))
 PORTAL = 'https://owners.unayabali.com'
+# Réservation en ligne : 'beds24' (paiement Midtrans actif) ou 'whatsapp' (demande de disponibilité, en attendant la validation Midtrans)
+BOOKING_MODE = 'whatsapp'
+WHATSAPP = {'VillaSuma': '6285190211324', 'VillaYuga': '6281330617077', 'VillaRumahJambu': '6285190211324'}
 OWNER_PAGES = ['Proprietaires', 'ProprietairesServices', 'ProprietairesTarifs', 'ConfierMaVilla']
 BEDS24 = {'VillaSuma': '359817', 'VillaYuga': '359816', 'VillaRumahJambu': '359818'}  # propriétés Unaya
 
@@ -124,7 +127,7 @@ def fix_forms(body, lang, page):
     """Formulaires : noms de champs, envoi vers la fonction Cloudflare /api/form (Resend), anti-spam."""
     n = [0]
     def one(m):
-        if 'data-beds24' in m.group(1):  # bloc réservation : géré par site.js
+        if 'data-beds24' in m.group(1) or 'data-wa' in m.group(1):  # bloc réservation : géré par site.js
             return m.group(0)
         n[0] += 1
         inner = m.group(2)
@@ -146,7 +149,16 @@ def fix_booking(body, lang, page):
     lab = dict(fr=('Arrivée','Départ','Voyageurs','Vérifier les disponibilités','voyageur','voyageurs'), en=('Check-in','Check-out','Guests','Check availability','guest','guests'))[lang]
     maxg = {'VillaSuma': 10, 'VillaYuga': 8, 'VillaRumahJambu': 4}[page]
     opts = ''.join(f'<option value="{g}"{" selected" if g == 2 else ""}>{g} {lab[4] if g == 1 else lab[5]}</option>' for g in range(1, maxg + 1))
-    form = (f'<form data-beds24="{propid}" style="display: flex; flex-direction: column; gap: 16px;">'
+    wa = BOOKING_MODE == 'whatsapp'
+    if wa:
+        lab = lab[:3] + (('Demander la disponibilité sur WhatsApp',) if lang == 'fr' else ('Ask for availability on WhatsApp',)) + lab[4:]
+    vname = {'VillaSuma': 'Villa Suma', 'VillaYuga': 'Villa Yuga', 'VillaRumahJambu': 'Rumah Jambu'}[page]
+    attr = f'data-wa="{WHATSAPP[page]}" data-villa="{vname}"' if wa else f'data-beds24="{propid}"'
+    note = ''
+    if wa:
+        note = ('<p style="margin: 0; font-size: 14px; color: #E9DED6;">La réservation en ligne ouvre très bientôt. En attendant, envoyez-nous vos dates : nous vous répondons rapidement sur WhatsApp avec la disponibilité et le prix.</p>' if lang == 'fr'
+                else '<p style="margin: 0; font-size: 14px; color: #E9DED6;">Online booking opens very soon. In the meantime, send us your dates: we reply quickly on WhatsApp with availability and price.</p>')
+    form = (f'<form {attr} style="display: flex; flex-direction: column; gap: 16px;">' + note +
             f'<div style="display: flex; flex-wrap: wrap; gap: 12px;"><label style="{L}">{lab[0]}<input type="date" name="checkin" required style="{I}"></label>'
             f'<label style="{L}">{lab[1]}<input type="date" name="checkout" required style="{I}"></label></div>'
             f'<label style="{L}">{lab[2]}<select name="numadult" style="{I}">{opts}</select></label>'
@@ -154,6 +166,8 @@ def fix_booking(body, lang, page):
     i = aside.index('<div style="display: flex; flex-wrap: wrap; gap: 12px;">')
     j = aside.index('</button>', i) + len('</button>')
     aside = aside[:i] + form + aside[j:]
+    if wa:
+        aside = aside.replace('Calendrier synchronisé en temps réel (Beds24) · Paiement sécurisé', 'Réponse rapide sur WhatsApp · Sans engagement').replace('Real-time synchronised calendar (Beds24) · Secure payment', 'Quick reply on WhatsApp · No commitment')
     return body[:a] + aside + body[b:]
 
 def transform(body, lang, page):

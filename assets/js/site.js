@@ -80,4 +80,22 @@
     fs.selectedIndex = fq === 'marketing' ? 1 : 0;
     var ff = fs.closest('form'); if (ff) ff.scrollIntoView({ block: 'start' });
   }
+
+  // Demande de disponibilité sur WhatsApp (tant que la réservation en ligne n'est pas ouverte)
+  document.querySelectorAll('form[data-wa]').forEach(function (f) {
+    var i = f.querySelector('[name=checkin]'), o = f.querySelector('[name=checkout]');
+    var today = new Date().toISOString().slice(0, 10);
+    i.min = today; o.min = today;
+    i.addEventListener('change', function () { o.min = i.value; if (o.value && o.value <= i.value) o.value = ''; });
+    f.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var fr = document.documentElement.lang === 'fr';
+      var fmt = function (d) { if (!d) return ''; var p = d.split('-'); return p[2] + '/' + p[1] + '/' + p[0]; };
+      var g = f.querySelector('[name=numadult]').value;
+      var msg = fr
+        ? 'Bonjour, je souhaite réserver ' + f.dataset.villa + ' du ' + fmt(i.value) + ' au ' + fmt(o.value) + ' pour ' + g + ' voyageur(s). Est-ce disponible ? Merci !'
+        : 'Hello, I would like to book ' + f.dataset.villa + ' from ' + fmt(i.value) + ' to ' + fmt(o.value) + ' for ' + g + ' guest(s). Is it available? Thank you!';
+      window.open('https://wa.me/' + f.dataset.wa + '?text=' + encodeURIComponent(msg), '_blank', 'noopener');
+    });
+  });
 })();
