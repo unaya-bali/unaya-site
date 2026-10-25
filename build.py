@@ -19,13 +19,13 @@ OWNER_PAGES = ['Proprietaires', 'ProprietairesServices', 'ProprietairesTarifs', 
 BEDS24 = {'VillaSuma': '359817', 'VillaYuga': '359816', 'VillaRumahJambu': '359818'}  # propriétés Unaya
 
 T = {  # textes communs
- 'fr': dict(nav=[('Proprietaires','Propriétaires'),('Main#villas','Nos villas'),('Main#zones','Nos zones'),('ServicesVoyageurs','Services voyageurs'),('APropos','À propos'),('Contact','Contact')],
+ 'fr': dict(nav=[('Proprietaires','Propriétaires'),('Main#villas','Nos villas'),('Investir','Investir à Bali'),('ServicesVoyageurs','Services voyageurs'),('APropos','À propos'),('Contact','Contact')],
             book='Réserver', owner='Confier ma villa', menu='Menu', skip='Aller au contenu', main_menu='Menu principal',
             sub=[('Proprietaires',"Vue d'ensemble"),('ProprietairesServices','Nos services'),('ProprietairesTarifs','Formules & tarifs'),('ConfierMaVilla','Confier ma villa')], sub_label='Propriétaires', portal='Espace propriétaire',
             f_nav='Navigation', f_contact='Contact', f_company='Société', f_links=[('Proprietaires','Propriétaires'),('Main#villas','Nos villas'),('ServicesVoyageurs','Services voyageurs'),('FAQ','FAQ'),('Contact','Contact')],
             legal=[('MentionsLegales','Mentions légales'),('Confidentialite','Confidentialité'),('Conditions','Conditions de réservation')],
             country='Indonésie', build='Unaya Build — Investir à Bali', ogloc='fr_FR'),
- 'en': dict(nav=[('Proprietaires','Owners'),('Main#villas','Our villas'),('Main#zones','Our areas'),('ServicesVoyageurs','Guest services'),('APropos','About'),('Contact','Contact')],
+ 'en': dict(nav=[('Proprietaires','Owners'),('Main#villas','Our villas'),('Investir','Invest in Bali'),('ServicesVoyageurs','Guest services'),('APropos','About'),('Contact','Contact')],
             book='Book', owner='List my villa', menu='Menu', skip='Skip to content', main_menu='Main menu',
             sub=[('Proprietaires','Overview'),('ProprietairesServices','Our services'),('ProprietairesTarifs','Plans & pricing'),('ConfierMaVilla','List my villa')], sub_label='Owners', portal='Owner portal',
             f_nav='Navigation', f_contact='Contact', f_company='Company', f_links=[('Proprietaires','Owners'),('Main#villas','Our villas'),('ServicesVoyageurs','Guest services'),('FAQ','FAQ'),('Contact','Contact')],
