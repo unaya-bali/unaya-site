@@ -264,3 +264,28 @@ a{color:var(--aubergine)}a:hover{color:var(--cuivre-texte)}
 .v-info>div{display:grid;grid-template-columns:36px 1fr;gap:12px;align-items:start;background:#fff;border:1px solid var(--ligne);padding:16px 18px}
 .v-info .u-ic{width:30px;height:30px}
 @media (max-width:640px){.v-info{grid-template-columns:1fr}}
+/* plan cards (comparaison) */
+.p-cards{display:grid;grid-template-columns:1fr 1fr;gap:56px;max-width:1080px;margin:0 auto}
+.p-card{background:#FBF8F5;border:1px solid var(--ligne);border-radius:44px 44px 0 0;overflow:hidden;display:flex;flex-direction:column}
+.p-card__h{background:var(--cuivre);color:#fff;text-align:center;padding:34px 24px 30px}
+.p-card--b .p-card__h{background:#7B7175}
+.p-card__h h3{margin:0;font-family:'Cormorant Garamond',serif;font-weight:600;font-size:36px;line-height:1.05;color:#fff}
+.p-card__h p{margin:10px 0 0;font-size:17px;color:#fff;opacity:.95}
+.p-card__pct{text-align:center;padding:36px 20px 10px}
+.p-card__pct small{display:block;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--cuivre-texte,#8B5A46)}
+.p-card__pct strong{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:110px;line-height:1;color:var(--cuivre)}
+.p-card--b .p-card__pct strong,.p-card--b .p-card__pct small{color:#7B7175}
+.p-card__pct strong sup{font-size:.42em;vertical-align:top;position:relative;top:.25em;margin-left:2px}
+.p-card__pct span{display:block;font-size:17px;color:var(--encre,#2E2429);margin-top:6px}
+.p-card ul{list-style:none;margin:0;padding:18px 34px 10px}
+.p-card li{display:flex;align-items:center;gap:16px;padding:14px 0;border-bottom:1px solid var(--ligne);font-size:17px}
+.p-card li:last-child{border-bottom:0}
+.p-card li.no{color:#9A9094}
+.p-card li svg{flex:none;width:26px;height:26px}
+.p-card__note{margin:auto 34px 0;padding:18px 0 30px;border-top:1px solid var(--ligne);font-size:14px;color:#5A3552;text-align:center}
+.p-card__btn{margin:0 34px 34px;text-align:center}
+@media (max-width:860px){.p-cards{grid-template-columns:1fr;gap:36px}.p-card__pct strong{font-size:88px}.p-card ul{padding:14px 22px 6px}.p-card__note{margin:auto 22px 0}.p-card__btn{margin:0 22px 26px}}
+.p-cards{max-width:1180px;gap:72px}
+.p-card--b .p-card__btn .u-btn{background:#7B7175;color:#fff;border-color:#7B7175}
+.p-sec .u-head{text-align:center;margin-left:auto;margin-right:auto}
+.p-cards{width:100%}
