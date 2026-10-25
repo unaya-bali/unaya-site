@@ -99,3 +99,4 @@
     });
   });
 })();
+(function(){var a=document.querySelector('.subnav a[aria-current="page"]');if(a&&a.parentElement.scrollWidth>a.parentElement.clientWidth){a.parentElement.scrollLeft=a.offsetLeft-16;}})();
