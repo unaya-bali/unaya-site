@@ -34,6 +34,8 @@ T = {  # textes communs
 }
 
 DESC = {
+ ('fr','SiteWeb'):"Un site web pour votre villa à Bali : plus de visibilité, une meilleure expérience voyageurs, un marketing rentable et plus de réservations directes. Inclus dans nos formules.",
+ ('en','SiteWeb'):"A website for your Bali villa: more visibility, a better guest experience, cost-effective marketing and more direct bookings. Included in our plans.",
  ('fr','Investir'):"Investir à Bali : bail ou PT PMA, acheter ou faire construire, taxes et location en règle. Unaya Build vous accompagne du terrain à la mise en location.",
  ('en','Investir'):"Investing in Bali: leasehold or PT PMA, buying or building, taxes and legal renting. Unaya Build supports you from the land to renting out your villa.",
  ('fr','Main'):"Gestion locative de villas à Bali : marketing, réservations, entretien et rapport financier chaque mois. Commission dès 18 %, sans frais fixes. Uluwatu / Jimbaran, Tanah Lot / Canggu West, Seminyak / Kerobokan.",

@@ -70,5 +70,9 @@
   "Investir": {
     "en": "/invest-in-bali/",
     "fr": "/fr/investir-a-bali/"
+  },
+  "SiteWeb": {
+    "en": "/owners/website/",
+    "fr": "/fr/proprietaires/site-web/"
   }
 }
