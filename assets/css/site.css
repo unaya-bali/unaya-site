@@ -289,3 +289,12 @@ a{color:var(--aubergine)}a:hover{color:var(--cuivre-texte)}
 .p-card--b .p-card__btn .u-btn{background:#7B7175;color:#fff;border-color:#7B7175}
 .p-sec .u-head{text-align:center;margin-left:auto;margin-right:auto}
 .p-cards{width:100%}
+.p-card__h{background:var(--aubergine)}
+.p-card--b .p-card__h{background:var(--orrose,#D2A48C)}
+.p-card--b .p-card__h h3,.p-card--b .p-card__h p{color:var(--aubergine)}
+.p-card__pct strong{color:var(--cuivre)}
+.p-card--b .p-card__pct strong{color:var(--prune,#5A3552)}
+.p-card--b .p-card__pct small{color:var(--prune,#5A3552)}
+.p-card__btn .u-btn--rose{background:var(--aubergine);color:#fff;border-color:var(--aubergine)}
+.p-card--b .p-card__btn .u-btn{background:#D2A48C;color:var(--aubergine);border-color:#D2A48C}
+.p-why{margin-top:72px}
