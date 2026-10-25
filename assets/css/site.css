@@ -234,3 +234,33 @@ a{color:var(--aubergine)}a:hover{color:var(--cuivre-texte)}
 .u-next .u-ic{width:40px;height:40px;padding:8px;border:1px solid var(--cuivre);border-radius:50%;box-sizing:border-box;width:46px;height:46px}
 .u-next strong{display:block;font-family:'Cormorant Garamond',serif;font-weight:500;font-size:22px;color:var(--aubergine)}
 .u-next span{font-size:15px}
+/* À propos / contact */
+.a-sym{display:grid;grid-template-columns:.8fr 1.2fr;gap:56px;align-items:center}
+.a-sym__logo{background:var(--prune);height:420px;border-radius:210px 210px 0 0;display:flex;align-items:center;justify-content:center}
+.a-sym__logo svg{width:52%;height:auto}
+.a-group{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.a-group>div,.a-group>a{background:#fff;border:1px solid var(--ligne);padding:30px;display:flex;flex-direction:column;gap:10px;text-decoration:none;color:inherit}
+.a-group h3{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:26px;color:var(--aubergine);margin:0}
+.a-group p{margin:0}
+.a-group .a-cur{border-color:var(--cuivre)}
+.a-co{display:flex;flex-wrap:wrap;gap:18px 40px;align-items:center;padding:26px 30px;background:#fff;border:1px solid var(--ligne)}
+.a-co span{display:inline-flex;align-items:center;gap:10px}
+.c-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:48px;align-items:start}
+.c-form form{background:#fff;border:1px solid var(--ligne);padding:36px}
+.c-side{display:flex;flex-direction:column;gap:14px}
+.c-item{display:grid;grid-template-columns:52px 1fr;gap:14px;align-items:start;padding:18px 20px;background:#fff;border:1px solid var(--ligne);text-decoration:none;color:inherit}
+.c-item strong{display:block;font-family:'Cormorant Garamond',serif;font-weight:500;font-size:22px;color:var(--aubergine)}
+.c-item .u-ic{width:42px;height:42px}
+.c-map{height:280px;border:1px solid var(--ligne)}.c-map iframe{width:100%;height:100%;border:0;display:block}
+@media (max-width:980px){.a-sym,.c-grid{grid-template-columns:1fr}.a-group{grid-template-columns:1fr}.a-sym__logo{height:320px;max-width:340px;width:100%;margin:0 auto}}
+@media (max-width:640px){.c-form form{padding:22px}}
+/* villa pages */
+.v-stat{display:flex;flex-direction:column;align-items:flex-start;gap:4px}
+.v-stat .u-ic{width:30px;height:30px;margin-bottom:4px}
+.v-amen{display:grid!important;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px!important}
+.v-amen li{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--ligne);padding:12px 16px;font-size:15px}
+.v-amen .u-ic{width:28px;height:28px;flex:none}
+.v-info{display:grid!important;grid-template-columns:repeat(2,1fr);gap:12px!important}
+.v-info>div{display:grid;grid-template-columns:36px 1fr;gap:12px;align-items:start;background:#fff;border:1px solid var(--ligne);padding:16px 18px}
+.v-info .u-ic{width:30px;height:30px}
+@media (max-width:640px){.v-info{grid-template-columns:1fr}}
