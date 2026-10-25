@@ -66,5 +66,9 @@
   "Paiement": {
     "en": "/payment/",
     "fr": "/fr/paiement/"
+  },
+  "Investir": {
+    "en": "/invest-in-bali/",
+    "fr": "/fr/investir-a-bali/"
   }
 }

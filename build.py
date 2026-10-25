@@ -24,16 +24,18 @@ T = {  # textes communs
             sub=[('Proprietaires',"Vue d'ensemble"),('ProprietairesServices','Nos services'),('ProprietairesTarifs','Formules & tarifs'),('ConfierMaVilla','Confier ma villa')], sub_label='Propriétaires', portal='Espace propriétaire',
             f_nav='Navigation', f_contact='Contact', f_company='Société', f_links=[('Proprietaires','Propriétaires'),('Main#villas','Nos villas'),('ServicesVoyageurs','Services voyageurs'),('FAQ','FAQ'),('Contact','Contact')],
             legal=[('MentionsLegales','Mentions légales'),('Confidentialite','Confidentialité'),('Conditions','Conditions de réservation')],
-            country='Indonésie', build='Unaya Build — Développement (bientôt)', ogloc='fr_FR'),
+            country='Indonésie', build='Unaya Build — Investir à Bali', ogloc='fr_FR'),
  'en': dict(nav=[('Proprietaires','Owners'),('Main#villas','Our villas'),('Main#zones','Our areas'),('ServicesVoyageurs','Guest services'),('APropos','About'),('Contact','Contact')],
             book='Book', owner='List my villa', menu='Menu', skip='Skip to content', main_menu='Main menu',
             sub=[('Proprietaires','Overview'),('ProprietairesServices','Our services'),('ProprietairesTarifs','Plans & pricing'),('ConfierMaVilla','List my villa')], sub_label='Owners', portal='Owner portal',
             f_nav='Navigation', f_contact='Contact', f_company='Company', f_links=[('Proprietaires','Owners'),('Main#villas','Our villas'),('ServicesVoyageurs','Guest services'),('FAQ','FAQ'),('Contact','Contact')],
             legal=[('MentionsLegales','Legal notice'),('Confidentialite','Privacy'),('Conditions','Booking terms')],
-            country='Indonesia', build='Unaya Build — Development (coming soon)', ogloc='en_US'),
+            country='Indonesia', build='Unaya Build — Invest in Bali', ogloc='en_US'),
 }
 
 DESC = {
+ ('fr','Investir'):"Investir à Bali : bail ou PT PMA, acheter ou faire construire, taxes et location en règle. Unaya Build vous accompagne du terrain à la mise en location.",
+ ('en','Investir'):"Investing in Bali: leasehold or PT PMA, buying or building, taxes and legal renting. Unaya Build supports you from the land to renting out your villa.",
  ('fr','Main'):"Gestion locative de villas à Bali : marketing, réservations, entretien et rapport financier chaque mois. Commission dès 18 %, sans frais fixes. Uluwatu / Jimbaran, Tanah Lot / Canggu West, Seminyak / Kerobokan.",
  ('en','Main'):"Bali villa management: marketing, bookings, maintenance and a monthly financial report. Commission from 18%, no fixed fees. Uluwatu / Jimbaran, Tanah Lot / Canggu West, Seminyak / Kerobokan.",
  ('fr','VillaSuma'):"Villa Suma à Balangan, Uluwatu : 5 suites, piscine privée, jusqu'à 10 voyageurs, à 5 minutes de la plage. Réservation directe.",
@@ -106,7 +108,7 @@ def footer(lang, page):
 <div style="{H}">{t['f_company']}</div>
 <span>PT Unaya Bali Grup</span>
 <span>NIB 3009260021018</span>
-<span style="color: #CDBFB6;">{t['build']}</span>
+<a href="{url('Investir', lang)}" style="color: #D2A48C; text-decoration: none;">{t['build']} →</a>
 </div>
 </div>
 <div style="max-width: 1280px; margin: 0 auto; padding: 24px 32px 40px; border-top: 1px solid #5A3552; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; font-size: 13px; color: #CDBFB6;">
