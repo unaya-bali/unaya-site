@@ -15,6 +15,8 @@ PORTAL = 'https://owners.unayabali.com'
 # Réservation en ligne : 'beds24' (paiement Midtrans actif) ou 'whatsapp' (demande de disponibilité, en attendant la validation Midtrans)
 BOOKING_MODE = 'whatsapp'
 WHATSAPP = {'VillaSuma': '6285190211324', 'VillaYuga': '6281330617077', 'VillaRumahJambu': '6285190211324'}
+# Cloudflare Turnstile (case anti-robot) : clé PUBLIQUE du widget (la clé secrète va dans Cloudflare, variable TURNSTILE_SECRET)
+TURNSTILE_SITEKEY = ''
 OWNER_PAGES = ['Proprietaires', 'ProprietairesServices', 'ProprietairesTarifs', 'ConfierMaVilla']
 BEDS24 = {'VillaSuma': '359817', 'VillaYuga': '359816', 'VillaRumahJambu': '359818'}  # propriétés Unaya
 
@@ -155,6 +157,10 @@ def fix_forms(body, lang, page):
         inner = re.sub(r'<label style="display: flex; gap: 10px;[^"]*"><input type="checkbox"', lambda k: k.group(0) + ' name="consentement" required', inner)
         inner = inner.replace('<button type="button"', '<button type="submit"')
         inner = re.sub(r'(<(?:input|select)[^>]*?)(name="(?:nom|nom_complet|name|full_name|e_mail|email)")', r'\1\2 required', inner)
+        if TURNSTILE_SITEKEY:
+            ts = f'<div class="cf-turnstile" data-sitekey="{TURNSTILE_SITEKEY}" data-language="{lang}" data-theme="light" style="margin:4px 0"></div>'
+            k = inner.rfind('<button type="submit"')
+            inner = inner[:k] + ts + inner[k:] if k >= 0 else inner + ts
         fname = f'{page.lower()}-{lang}' + (f'-{n[0]}' if n[0] > 1 else '')
         return (f'<form name="{fname}" method="POST" action="/api/form"{m.group(1)}>'
                 f'<input type="hidden" name="form-name" value="{fname}"><input type="hidden" name="lang" value="{lang}"><p class="hp"><label>Site web <input name="site_web" tabindex="-1" autocomplete="off"></label></p>' + inner + '</form>')
@@ -236,7 +242,7 @@ def layout(lang, page, title, desc, body):
 {with_subnav(body, lang, page)}
 </main>
 {footer(lang, page)}
-<script src="/assets/js/site.js?v={ASSET_V}" defer></script>
+<script src="/assets/js/site.js?v={ASSET_V}" defer></script>{'<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>' if TURNSTILE_SITEKEY and 'cf-turnstile' in body else ''}
 </body>
 </html>
 '''

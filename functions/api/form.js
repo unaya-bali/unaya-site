@@ -16,12 +16,21 @@ export async function onRequestPost({ request, env }) {
   const mail = String(data.get('e_mail') || data.get('email') || '').toLowerCase();
   const dom = mail.split('@')[1] || '';
   if (dom.includes('unayabali') && dom !== 'unayabali.com') return Response.redirect(new URL(thanks, request.url), 303);
+  // Case anti-robot Cloudflare Turnstile (active dès que TURNSTILE_SECRET est défini dans Cloudflare)
+  if (env.TURNSTILE_SECRET) {
+    const fd = new FormData();
+    fd.append('secret', env.TURNSTILE_SECRET);
+    fd.append('response', String(data.get('cf-turnstile-response') || ''));
+    const ip = request.headers.get('CF-Connecting-IP'); if (ip) fd.append('remoteip', ip);
+    const v = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', { method: 'POST', body: fd }).then(r => r.json()).catch(() => ({ success: false }));
+    if (!v.success) return new Response(lang === 'en' ? 'Please tick the anti-robot box, then send the form again.' : 'Merci de cocher la case anti-robot, puis renvoyez le formulaire.', { status: 400, headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
+  }
   const msgAll = [...data.values()].map(String).join(' ').toLowerCase();
   const spammy = /(search ?index|searchregister|seo |backlink|rank(ing)? (on|in) google|crypto|casino|bitcoin|guest post)/.test(msgAll);
 
   const svc = data.get('service_demande');
   const formName = svc ? `Service voyageur — ${svc} (${lang})` : String(data.get('form-name') || 'formulaire');
-  const skip = new Set(['form-name', 'site_web', 'lang', 't_ok']);
+  const skip = new Set(['form-name', 'site_web', 'lang', 't_ok', 'cf-turnstile-response']);
   const rows = [];
   for (const [k, v] of data.entries()) {
     if (skip.has(k)) continue;
