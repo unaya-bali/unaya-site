@@ -100,3 +100,4 @@
   });
 })();
 (function(){var a=document.querySelector('.subnav a[aria-current="page"]');if(a&&a.parentElement.scrollWidth>a.parentElement.clientWidth){a.parentElement.scrollLeft=a.offsetLeft-16;}})();
+(function(){var t=String(Date.now());document.querySelectorAll('form[action="/api/form"]').forEach(function(f){var i=document.createElement('input');i.type='hidden';i.name='t_ok';i.value=t;f.appendChild(i);});})();

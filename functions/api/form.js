@@ -9,10 +9,19 @@ export async function onRequestPost({ request, env }) {
   const thanks = lang === 'en' ? '/thank-you/' : '/fr/merci/';
   // Anti-spam : champ caché rempli = robot
   if (data.get('site_web')) return Response.redirect(new URL(thanks, request.url), 303);
+  // Anti-spam 2 : le formulaire doit avoir été rempli dans un vrai navigateur (jeton posé par site.js, au moins 3 s)
+  const t0 = Number(data.get('t_ok') || 0);
+  if (!t0 || Date.now() - t0 < 3000) return Response.redirect(new URL(thanks, request.url), 303);
+  // Anti-spam 3 : fausse adresse imitant notre domaine (ex. search-unayabali.com) = arnaque
+  const mail = String(data.get('e_mail') || data.get('email') || '').toLowerCase();
+  const dom = mail.split('@')[1] || '';
+  if (dom.includes('unayabali') && dom !== 'unayabali.com') return Response.redirect(new URL(thanks, request.url), 303);
+  const msgAll = [...data.values()].map(String).join(' ').toLowerCase();
+  const spammy = /(search ?index|searchregister|seo |backlink|rank(ing)? (on|in) google|crypto|casino|bitcoin|guest post)/.test(msgAll);
 
   const svc = data.get('service_demande');
   const formName = svc ? `Service voyageur — ${svc} (${lang})` : String(data.get('form-name') || 'formulaire');
-  const skip = new Set(['form-name', 'site_web', 'lang']);
+  const skip = new Set(['form-name', 'site_web', 'lang', 't_ok']);
   const rows = [];
   for (const [k, v] of data.entries()) {
     if (skip.has(k)) continue;
@@ -29,7 +38,7 @@ export async function onRequestPost({ request, env }) {
     body: JSON.stringify({
       from: env.FORM_FROM || 'Site Unaya <site@unayabali.com>',
       to: [env.FORM_TO || 'info@unayabali.com'],
-      subject: `[Site] ${formName}`,
+      subject: `${spammy ? '[Spam probable] ' : ''}[Site] ${formName}`,
       html,
       ...(replyTo.includes('@') ? { reply_to: replyTo } : {}),
     }),
