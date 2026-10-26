@@ -16,7 +16,7 @@ PORTAL = 'https://owners.unayabali.com'
 BOOKING_MODE = 'whatsapp'
 WHATSAPP = {'VillaSuma': '6285190211324', 'VillaYuga': '6281330617077', 'VillaRumahJambu': '6285190211324'}
 # Cloudflare Turnstile (case anti-robot) : clé PUBLIQUE du widget (la clé secrète va dans Cloudflare, variable TURNSTILE_SECRET)
-TURNSTILE_SITEKEY = ''
+TURNSTILE_SITEKEY = '0x4AAAAAAFl92qPSywb2bEJt'
 OWNER_PAGES = ['Proprietaires', 'ProprietairesServices', 'ProprietairesTarifs', 'ConfierMaVilla']
 BEDS24 = {'VillaSuma': '359817', 'VillaYuga': '359816', 'VillaRumahJambu': '359818'}  # propriétés Unaya
 
