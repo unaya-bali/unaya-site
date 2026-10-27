@@ -363,3 +363,8 @@ a{color:var(--aubergine)}a:hover{color:var(--cuivre-texte)}
 @media (max-width:980px){.vl-grid{grid-template-columns:1fr 1fr}}
 @media (max-width:640px){.vl-grid{grid-template-columns:1fr}.vl-card__img{height:260px}}
 .u-quote .pl{color:#fff;font-size:12px}.u-quote .pl-expedia{color:#1B2B5B}
+.h-rates{display:flex;flex-wrap:wrap;gap:14px}
+.h-rate2{display:flex;flex-direction:column;align-items:flex-start;gap:6px;background:#FBF8F5;border:1px solid var(--ligne);padding:16px 22px;min-width:200px}
+.h-rate2 strong{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:44px;line-height:1;color:var(--aubergine)}
+.h-rate2 strong small{font-size:18px;color:var(--cuivre-texte)}
+.h-rate2>span:last-child{font-size:13px;color:var(--prune)}
