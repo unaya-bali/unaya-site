@@ -21,21 +21,23 @@ OWNER_PAGES = ['Proprietaires', 'ProprietairesServices', 'ProprietairesTarifs', 
 BEDS24 = {'VillaSuma': '359817', 'VillaYuga': '359816', 'VillaRumahJambu': '359818'}  # propriétés Unaya
 
 T = {  # textes communs
- 'fr': dict(nav=[('Proprietaires','Propriétaires'),('Main#villas','Nos villas'),('Investir','Investir à Bali'),('ServicesVoyageurs','Services voyageurs'),('APropos','À propos'),('Contact','Contact')],
+ 'fr': dict(nav=[('Proprietaires','Propriétaires'),('Villas','Nos villas'),('Investir','Investir à Bali'),('ServicesVoyageurs','Services voyageurs'),('APropos','À propos'),('Contact','Contact')],
             book='Réserver', owner='Confier ma villa', menu='Menu', skip='Aller au contenu', main_menu='Menu principal',
             sub=[('Proprietaires',"Vue d'ensemble"),('ProprietairesServices','Nos services'),('ProprietairesTarifs','Formules & tarifs'),('ConfierMaVilla','Confier ma villa')], sub_label='Propriétaires', portal='Espace propriétaire',
-            f_nav='Navigation', f_contact='Contact', f_company='Société', f_links=[('Proprietaires','Propriétaires'),('Main#villas','Nos villas'),('ServicesVoyageurs','Services voyageurs'),('FAQ','FAQ'),('Contact','Contact')],
+            f_nav='Navigation', f_contact='Contact', f_company='Société', f_links=[('Proprietaires','Propriétaires'),('Villas','Nos villas'),('ServicesVoyageurs','Services voyageurs'),('FAQ','FAQ'),('Contact','Contact')],
             legal=[('MentionsLegales','Mentions légales'),('Confidentialite','Confidentialité'),('Conditions','Conditions de réservation')],
             country='Indonésie', build='Unaya Build — Investir à Bali', ogloc='fr_FR'),
- 'en': dict(nav=[('Proprietaires','Owners'),('Main#villas','Our villas'),('Investir','Invest in Bali'),('ServicesVoyageurs','Guest services'),('APropos','About'),('Contact','Contact')],
+ 'en': dict(nav=[('Proprietaires','Owners'),('Villas','Our villas'),('Investir','Invest in Bali'),('ServicesVoyageurs','Guest services'),('APropos','About'),('Contact','Contact')],
             book='Book', owner='List my villa', menu='Menu', skip='Skip to content', main_menu='Main menu',
             sub=[('Proprietaires','Overview'),('ProprietairesServices','Our services'),('ProprietairesTarifs','Plans & pricing'),('ConfierMaVilla','List my villa')], sub_label='Owners', portal='Owner portal',
-            f_nav='Navigation', f_contact='Contact', f_company='Company', f_links=[('Proprietaires','Owners'),('Main#villas','Our villas'),('ServicesVoyageurs','Guest services'),('FAQ','FAQ'),('Contact','Contact')],
+            f_nav='Navigation', f_contact='Contact', f_company='Company', f_links=[('Proprietaires','Owners'),('Villas','Our villas'),('ServicesVoyageurs','Guest services'),('FAQ','FAQ'),('Contact','Contact')],
             legal=[('MentionsLegales','Legal notice'),('Confidentialite','Privacy'),('Conditions','Booking terms')],
             country='Indonesia', build='Unaya Build — Invest in Bali', ogloc='en_US'),
 }
 
 DESC = {
+ ('fr','Villas'):"Nos villas privées avec piscine à Bali : Villa Suma et Rumah Jambu à Uluwatu, Villa Yuga à Tanah Lot. Gérées par Unaya, réservation en direct.",
+ ('en','Villas'):"Our private pool villas in Bali: Villa Suma and Rumah Jambu in Uluwatu, Villa Yuga in Tanah Lot. Managed by Unaya, book direct.",
  ('fr','SiteWeb'):"Un site web pour votre villa à Bali : plus de visibilité, une meilleure expérience voyageurs, un marketing rentable et plus de réservations directes. Inclus dans nos formules.",
  ('en','SiteWeb'):"A website for your Bali villa: more visibility, a better guest experience, cost-effective marketing and more direct bookings. Included in our plans.",
  ('fr','Investir'):"Investir à Bali : bail ou PT PMA, acheter ou faire construire, taxes et location en règle. Unaya Build vous accompagne du terrain à la mise en location.",
@@ -90,7 +92,7 @@ def header(lang, page):
     if page in OWNER_PAGES:
         sub = f'<nav class="subnav" aria-label="{t["sub_label"]}">' + ''.join(
             f'<a href="{url(n, lang)}"{" aria-current=\"page\"" if n == page else ""}>{lbl}</a>' for n, lbl in t['sub']) + f'<a class="subnav-portal" href="{PORTAL}">{t["portal"]} ↗</a></nav>'
-    book_target = '#reserver' if page in BEDS24 else url('Main#villas', lang)
+    book_target = '#reserver' if page in BEDS24 else url('Villas', lang)
     return f'''<a class="skip" href="#contenu">{t['skip']}</a>
 <header class="site-header">
 <div class="site-header__in">

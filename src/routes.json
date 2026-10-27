@@ -74,5 +74,9 @@
   "SiteWeb": {
     "en": "/owners/website/",
     "fr": "/fr/proprietaires/site-web/"
+  },
+  "Villas": {
+    "en": "/villas/",
+    "fr": "/fr/villas/"
   }
 }

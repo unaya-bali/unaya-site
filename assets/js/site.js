@@ -101,3 +101,7 @@
 })();
 (function(){var a=document.querySelector('.subnav a[aria-current="page"]');if(a&&a.parentElement.scrollWidth>a.parentElement.clientWidth){a.parentElement.scrollLeft=a.offsetLeft-16;}})();
 (function(){var t=String(Date.now());document.querySelectorAll('form[action="/api/form"]').forEach(function(f){var i=document.createElement('input');i.type='hidden';i.name='t_ok';i.value=t;f.appendChild(i);});})();
+(function(){var f=document.querySelector('.vl-filters');if(!f)return;var cards=document.querySelectorAll('.vl-card'),none=document.querySelector('.vl-none');
+f.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;var z=b.getAttribute('data-zone'),n=0;
+f.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false');});
+cards.forEach(function(c){var ok=z==='all'||c.getAttribute('data-zone')===z;c.hidden=!ok;if(ok)n++;});if(none)none.hidden=n>0;});})();
