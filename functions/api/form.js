@@ -29,11 +29,25 @@ export async function onRequestPost({ request, env }) {
   const spammy = /(search ?index|searchregister|seo |backlink|rank(ing)? (on|in) google|crypto|casino|bitcoin|guest post)/.test(msgAll);
 
   const svc = data.get('service_demande');
-  const formName = svc ? `Service voyageur — ${svc} (${lang})` : String(data.get('form-name') || 'formulaire');
-  const skip = new Set(['form-name', 'site_web', 'lang', 't_ok', 'cf-turnstile-response']);
+  const isEstim = data.get('type_demande') === 'estimation';
+  const pick = (re) => { for (const [k, v] of data.entries()) if (re.test(k) && typeof v === 'string' && v) return v; return ''; };
+  const formName = isEstim ? `Estimation revenus — ${pick(/^(zone|area)$/)} · ${pick(/chambres|bedrooms/)} ch. · ${pick(/^(e_mail|email)$/)} (${lang})`
+    : svc ? `Service voyageur — ${svc} (${lang})` : String(data.get('form-name') || 'formulaire');
+  const skip = new Set(['form-name', 'site_web', 'lang', 't_ok', 'cf-turnstile-response', 'type_demande']);
   const rows = [];
+  const attachments = [];
+  let attBytes = 0;
   for (const [k, v] of data.entries()) {
     if (skip.has(k)) continue;
+    if (typeof v === 'object' && v && 'arrayBuffer' in v) {
+      // Fichier joint (photos de la demande d'estimation) : 5 fichiers / 10 Mo maximum
+      if (!v.size || attachments.length >= 5 || attBytes + v.size > 10 * 1024 * 1024) continue;
+      attBytes += v.size;
+      const buf = new Uint8Array(await v.arrayBuffer());
+      let bin = ''; for (let i = 0; i < buf.length; i += 0x8000) bin += String.fromCharCode.apply(null, buf.subarray(i, i + 0x8000));
+      attachments.push({ filename: String(v.name || `photo-${attachments.length + 1}.jpg`).slice(0, 100), content: btoa(bin) });
+      continue;
+    }
     const val = String(v).slice(0, 5000);
     rows.push(`<tr><td style="padding:6px 12px;color:#5A3552;vertical-align:top"><b>${esc(k)}</b></td><td style="padding:6px 12px">${esc(val).replace(/\n/g, '<br>')}</td></tr>`);
   }
@@ -47,8 +61,9 @@ export async function onRequestPost({ request, env }) {
     body: JSON.stringify({
       from: env.FORM_FROM || 'Site Unaya <site@unayabali.com>',
       to: [env.FORM_TO || 'info@unayabali.com'],
-      subject: `${spammy ? '[Spam probable] ' : ''}[Site] ${formName}`,
-      html,
+      subject: `${spammy ? '[Spam probable] ' : ''}${isEstim ? '[Estimation revenus]' : '[Site]'} ${formName}`,
+      html: attachments.length ? html.replace('</table>', `</table><p>${attachments.length} photo(s) en pièce jointe.</p>`) : html,
+      ...(attachments.length ? { attachments } : {}),
       ...(replyTo.includes('@') ? { reply_to: replyTo } : {}),
     }),
   });

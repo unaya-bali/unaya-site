@@ -378,3 +378,48 @@ a{color:var(--aubergine)}a:hover{color:var(--cuivre-texte)}
 .v-rev figcaption{font-size:14px;color:var(--prune)}
 .v-rev .u-stars{color:var(--cuivre)}
 @media (max-width:640px){.v-revs{grid-template-columns:1fr}}
+/* Investir — Q&R */
+.iq-verified{max-width:1180px;margin:28px auto 0;padding:14px 32px;display:flex;gap:12px;align-items:center;font-size:14px;color:var(--prune)}
+.iq-verified .u-ic{width:22px;height:22px;flex:none}
+.inv-step h2 .u-ic{width:34px;height:34px;vertical-align:-4px;margin-right:6px}
+.iq-faq{margin:6px 0 26px}
+.iq-faq details p{max-width:72ch}
+.iq-src{font-size:12px;vertical-align:super;margin-left:3px;color:var(--cuivre-texte);text-decoration:none}
+.iq-sub{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:26px;color:var(--aubergine);margin:8px 0 14px}
+.iq-cmp tbody th{font-weight:500;color:var(--aubergine);background:#FBF8F5;width:20%}
+.iq-cmp td{font-size:15px}
+.iq-zones{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.iq-zones>div{display:flex;flex-direction:column;gap:6px;background:#fff;border:1px solid var(--ligne);padding:18px}
+.iq-zones span{display:block;height:10px;border-radius:6px}
+.iq-zones strong{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:22px;color:var(--aubergine)}
+.iq-zones small{font-size:14px;color:var(--prune)}
+.iq-ex{background:#fff;border:1px solid var(--ligne);padding:30px;display:flex;flex-direction:column;gap:12px;max-width:720px}
+.iq-ex h3{margin:0;font-family:'Cormorant Garamond',serif;font-weight:500;font-size:28px;color:var(--aubergine)}
+.iq-ex p{margin:0}
+.iq-ex table{width:100%;border-collapse:collapse}
+.iq-ex td{padding:9px 0;border-bottom:1px solid var(--ligne)}
+.iq-ex td:last-child{text-align:right;white-space:nowrap;font-weight:500;color:var(--aubergine)}
+.iq-ex tr.iq-tot td{border-bottom:0;padding-top:14px;font-family:'Cormorant Garamond',serif;font-size:24px;color:var(--cuivre)}
+.iq-ex .inv-btn{align-self:flex-start;margin-top:6px}
+.iq-steps{list-style:none;margin:0 0 28px;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:14px;counter-reset:s}
+.iq-steps li{background:#fff;border:1px solid var(--ligne);padding:20px;display:flex;flex-direction:column;gap:6px;position:relative}
+.iq-steps b{width:40px;height:40px;border-radius:20px 20px 0 0;background:var(--aubergine);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:500}
+.iq-steps strong{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:23px;color:var(--aubergine)}
+.iq-steps span{font-size:15px;color:var(--prune)}
+.iq-acc{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.iq-acc>div{display:flex;flex-direction:column;gap:8px}
+.iq-acc h3{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:23px;color:var(--aubergine);margin:4px 0 0}
+.iq-acc p{margin:0;font-size:15px}
+.iq-formsec{background:var(--aubergine);color:#F7F2EE;margin-top:48px}
+.iq-formsec__in{max-width:1180px;margin:0 auto;padding:72px 32px;display:grid;grid-template-columns:.8fr 1.2fr;gap:48px;align-items:start}
+.iq-formsec h2{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:clamp(34px,4.4vw,52px);line-height:1.05;margin:14px 0 14px;color:#fff}
+.iq-formsec p{color:#E9DED6;font-size:17px}
+.iq-formsec .u-ic{color:#D2A48C}
+.iq-formbox{background:#F7F2EE;color:#2E2429;padding:32px}
+.iq-f2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.iq-sources{max-width:1180px;margin:0 auto;padding:56px 32px 24px}
+.iq-sources h2{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:34px;color:var(--aubergine);margin:0 0 14px}
+.iq-sources ol{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:6px;font-size:14px}
+.iq-sources a{color:var(--prune)}
+@media (max-width:900px){.iq-zones,.iq-steps{grid-template-columns:1fr 1fr}.iq-acc{grid-template-columns:1fr 1fr}.iq-formsec__in{grid-template-columns:1fr;padding:48px 16px}.iq-f2{grid-template-columns:1fr}.iq-formbox{padding:22px}.iq-verified{padding:12px 16px}.iq-sources{padding:40px 16px 16px}}
+@media (max-width:560px){.iq-zones,.iq-steps,.iq-acc{grid-template-columns:1fr}}

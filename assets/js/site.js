@@ -105,3 +105,4 @@
 f.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;var z=b.getAttribute('data-zone'),n=0;
 f.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false');});
 cards.forEach(function(c){var ok=z==='all'||c.getAttribute('data-zone')===z;c.hidden=!ok;if(ok)n++;});if(none)none.hidden=n>0;});})();
+(function(){document.querySelectorAll('input[type=file][data-max]').forEach(function(i){i.addEventListener('change',function(){var m=+i.getAttribute('data-max'),t=0;for(var k=0;k<i.files.length;k++)t+=i.files[k].size;var fr=document.documentElement.lang!=='en';if(i.files.length>m||t>10*1024*1024){alert(fr?'Maximum '+m+' photos et 10 Mo au total.':'Maximum '+m+' photos and 10 MB in total.');i.value='';}});});})();
