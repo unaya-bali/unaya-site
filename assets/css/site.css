@@ -368,3 +368,13 @@ a{color:var(--aubergine)}a:hover{color:var(--cuivre-texte)}
 .h-rate2 strong{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:44px;line-height:1;color:var(--aubergine)}
 .h-rate2 strong small{font-size:18px;color:var(--cuivre-texte)}
 .h-rate2>span:last-child{font-size:13px;color:var(--prune)}
+.v-score{display:inline-flex;align-items:center;gap:8px}
+.v-score b{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:26px;color:var(--aubergine)}
+.v-score small{font-size:13px;color:var(--prune)}
+.v-revs{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.v-rev{margin:0;background:#fff;border:1px solid var(--ligne);padding:26px;display:flex;flex-direction:column;gap:12px}
+.v-rev__top{display:flex;justify-content:space-between;align-items:center}
+.v-rev blockquote{margin:0;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:21px;line-height:1.35;color:var(--aubergine)}
+.v-rev figcaption{font-size:14px;color:var(--prune)}
+.v-rev .u-stars{color:var(--cuivre)}
+@media (max-width:640px){.v-revs{grid-template-columns:1fr}}
