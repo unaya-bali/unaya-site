@@ -232,7 +232,7 @@ def layout(lang, page, title, desc, body):
 <link rel="alternate" hreflang="{other}" href="{SITE + url(page, other)}">
 <link rel="alternate" hreflang="x-default" href="{SITE + url(page, 'en')}">
 <meta property="og:type" content="website"><meta property="og:title" content="{html.escape(title)}"><meta property="og:description" content="{html.escape(desc)}">
-<meta property="og:url" content="{canon}"><meta property="og:image" content="{SITE}/assets/images/suma-piscine.jpg"><meta property="og:locale" content="{T[lang]['ogloc']}">
+<meta property="og:url" content="{canon}"><meta property="og:image" content="{SITE}/assets/images/og-unaya.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="Unaya Management"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="{SITE}/assets/images/og-unaya.jpg"><meta property="og:locale" content="{T[lang]['ogloc']}">
 <link rel="icon" href="/assets/logos/symbole.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
