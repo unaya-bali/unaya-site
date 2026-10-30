@@ -1,7 +1,7 @@
 // Étape 1 : Beds24 (Passerelle personnalisée) envoie ici le client après sa réservation.
 // Réglage Beds24 : URL = https://<site>/api/pay/start   Post data = bookid=[BOOKID]&amount=[PAYMENTAMOUNT]
 // On vérifie la réservation, on crée la transaction Midtrans (Snap) et on redirige le client vers la page de paiement.
-import { snapUrl, midAuth, getBooking, isProd, UNAYA_PROPS, page } from '../../../lib/pay.js';
+import { snapUrl, midAuth, getBooking, isProd, UNAYA_PROPS, page, provider, xenAuth } from '../../../lib/pay.js';
 
 export async function onRequest({ request, env }) {
   const url = new URL(request.url);
@@ -14,7 +14,8 @@ export async function onRequest({ request, env }) {
 
   const bookId = String(form.get('bookid') || '').replace(/\D/g, '');
   let amount = Math.round(parseFloat(String(form.get('amount') || '0').replace(/[^\d.]/g, '')) || 0);
-  if (!bookId || !env.MIDTRANS_SERVER_KEY) return page(lang, T.err, T.msg, 400);
+  const prov = provider(env);
+  if (!bookId || (prov === 'midtrans' ? !env.MIDTRANS_SERVER_KEY : !env.XENDIT_SECRET_KEY)) return page(lang, T.err, T.msg, 400);
 
   let guest = {};
   try {
@@ -37,6 +38,29 @@ export async function onRequest({ request, env }) {
 
   const orderId = `UNAYA-${bookId}-${Date.now().toString(36)}`;
   const finish = `${url.origin}${lang === 'en' ? '/payment/' : '/fr/paiement/'}?bookid=${bookId}`;
+  if (prov === 'xendit') {
+    // Facture Xendit (cartes, QRIS, virements, e-wallets selon les moyens activés sur le compte)
+    const x = await fetch('https://api.xendit.co/v2/invoices', {
+      method: 'POST',
+      headers: { Authorization: xenAuth(env), 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        external_id: orderId,
+        amount,
+        currency: 'IDR',
+        description: (lang === 'en' ? 'Unaya booking #' : 'Réservation Unaya n°') + bookId,
+        ...(guest.email ? { payer_email: guest.email } : {}),
+        customer: { given_names: guest.first_name || undefined, surname: guest.last_name || undefined, email: guest.email || undefined, mobile_number: guest.phone || undefined },
+        success_redirect_url: finish,
+        failure_redirect_url: finish,
+        locale: 'en',
+        invoice_duration: 86400,
+      }),
+    });
+    if (!x.ok) return page(lang, T.err, T.msg, 502);
+    const xj = await x.json();
+    return Response.redirect(xj.invoice_url, 303);
+  }
+
   const r = await fetch(snapUrl(env), {
     method: 'POST',
     headers: { Authorization: midAuth(env), 'Content-Type': 'application/json', Accept: 'application/json' },
