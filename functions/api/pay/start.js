@@ -1,7 +1,7 @@
 // Étape 1 : Beds24 (Passerelle personnalisée) envoie ici le client après sa réservation.
 // Réglage Beds24 : URL = https://<site>/api/pay/start   Post data = bookid=[BOOKID]&amount=[PAYMENTAMOUNT]
 // On vérifie la réservation, on crée la transaction Midtrans (Snap) et on redirige le client vers la page de paiement.
-import { snapUrl, midAuth, getBooking, isProd, UNAYA_PROPS, page, provider, xenAuth } from '../../../lib/pay.js';
+import { snapUrl, midAuth, getBooking, isProd, isLive, UNAYA_PROPS, page, provider, xenAuth } from '../../../lib/pay.js';
 
 export async function onRequest({ request, env }) {
   const url = new URL(request.url);
@@ -26,8 +26,8 @@ export async function onRequest({ request, env }) {
       // Le montant est calculé ici (acompte = DEPOSIT_PERCENT % du total), jamais pris tel quel depuis le navigateur.
       if (total > 0) amount = Math.ceil(total * (Number(env.DEPOSIT_PERCENT || 30) / 100));
       guest = { first_name: b.firstName || '', last_name: b.lastName || '', email: b.email || '', phone: b.phone || b.mobile || '' };
-    } else if (isProd(env)) {
-      return page(lang, T.err, T.msg, 400); // en production, la vérification Beds24 est obligatoire
+    } else if (isLive(env)) {
+      return page(lang, T.err, T.msg, 400); // en mode réel, la vérification Beds24 est obligatoire
     } else if (amount < 1000) {
       amount = Number(env.TEST_AMOUNT || 100000); // mode test sans API Beds24 : montant fictif
     }
