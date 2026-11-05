@@ -17,6 +17,7 @@ BOOKING_MODE = 'whatsapp'
 WHATSAPP = {'VillaSuma': '6285190211324', 'VillaYuga': '6281330617077', 'VillaRumahJambu': '6285190211324'}
 # Cloudflare Turnstile (case anti-robot) : clé PUBLIQUE du widget (la clé secrète va dans Cloudflare, variable TURNSTILE_SECRET)
 TURNSTILE_SITEKEY = '0x4AAAAAAFl92qPSywb2bEJt'
+SOCIAL = {'instagram': 'https://www.instagram.com/unayabali/', 'linktree': 'https://linktr.ee/Unaya_Management'}
 OWNER_PAGES = ['Proprietaires', 'ProprietairesServices', 'ProprietairesTarifs', 'ConfierMaVilla']
 BEDS24 = {'VillaSuma': '359817', 'VillaYuga': '359816', 'VillaRumahJambu': '359818'}  # propriétés Unaya
 
@@ -116,6 +117,7 @@ def footer(lang, page):
 <div style="flex: 1 1 260px; min-width: 0; display: flex; flex-direction: column; gap: 18px;">
 <img src="/assets/logos/unaya-management-vertical-fonce.svg" alt="Unaya Management" style="width: 170px; height: auto; display: block;" loading="lazy">
 <span style="font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 22px; color: #D2A48C;">Uniquely cared for.</span>
+<div class="f-social"><a href="{SOCIAL['instagram']}" target="_blank" rel="noopener" aria-label="Instagram Unaya"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r="1" fill="currentColor" stroke="none"/></svg><span>@unayabali</span></a><a href="{SOCIAL['linktree']}" target="_blank" rel="noopener" aria-label="Linktree Unaya"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 3v18M5 8l7-5 7 5M5 14h14M7 19h10"/></svg><span>Linktree</span></a></div>
 </div>
 <div style="flex: 1 1 200px; min-width: 0; display: flex; flex-direction: column; gap: 10px;">
 <div style="{H}">{t['f_nav']}</div>

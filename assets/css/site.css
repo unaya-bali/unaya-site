@@ -423,3 +423,9 @@ a{color:var(--aubergine)}a:hover{color:var(--cuivre-texte)}
 .iq-sources a{color:var(--prune)}
 @media (max-width:900px){.iq-zones,.iq-steps{grid-template-columns:1fr 1fr}.iq-acc{grid-template-columns:1fr 1fr}.iq-formsec__in{grid-template-columns:1fr;padding:48px 16px}.iq-f2{grid-template-columns:1fr}.iq-formbox{padding:22px}.iq-verified{padding:12px 16px}.iq-sources{padding:40px 16px 16px}}
 @media (max-width:560px){.iq-zones,.iq-steps,.iq-acc{grid-template-columns:1fr}}
+.f-social{display:flex;flex-wrap:wrap;gap:10px}
+.f-social a{display:inline-flex;align-items:center;gap:8px;color:#E9DED6;text-decoration:none;font-size:14px;padding:8px 14px;border:1px solid rgba(210,164,140,.45);border-radius:999px}
+.f-social a:hover{background:#D2A48C;color:#3F2A3A;border-color:#D2A48C}
+.v-ig{display:inline-flex;align-items:center;gap:10px;margin-top:4px;padding:12px 18px;border:1px solid var(--ligne);background:#fff;color:var(--aubergine);text-decoration:none;font-size:15px;align-self:flex-start}
+.v-ig:hover{border-color:var(--cuivre)}
+.v-ig svg{color:var(--cuivre)}
