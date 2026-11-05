@@ -503,3 +503,4 @@ a{color:var(--aubergine)}a:hover{color:var(--cuivre-texte)}
 .ld-soon .u-ic{color:var(--cuivre)}.ld-soon h3{margin:0;font-family:'Cormorant Garamond',serif;font-weight:500;font-size:30px;color:var(--aubergine)}.ld-soon p{margin:0}
 @media (max-width:1000px){.ld-main,.ld-zone{grid-template-columns:1fr}.ld-price{position:static}.ld-around,.ld-facts__in{grid-template-columns:1fr 1fr}.ld-fact:nth-child(3){border-left:0}.ld-grid{grid-template-columns:1fr 1fr}}
 @media (max-width:640px){.ld-hero{min-height:520px}.ld-around,.ld-docs,.ld-grid{grid-template-columns:1fr}.ld-fact{padding:20px 16px}.ld-fact strong{font-size:22px}.ld-tbl div{grid-template-columns:1fr;gap:2px}.ld-map iframe{height:300px}}
+.sv-ph{display:block;width:calc(100% + 72px);max-width:none;margin:-36px -36px 6px;height:230px;object-fit:cover}
