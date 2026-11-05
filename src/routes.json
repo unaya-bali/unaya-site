@@ -78,5 +78,13 @@
   "Villas": {
     "en": "/villas/",
     "fr": "/fr/villas/"
+  },
+  "Terrains": {
+    "en": "/land/",
+    "fr": "/fr/terrains/"
+  },
+  "TerrainMelasti": {
+    "en": "/land/melasti-uluwatu/",
+    "fr": "/fr/terrains/melasti-uluwatu/"
   }
 }
