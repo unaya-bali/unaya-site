@@ -45,6 +45,8 @@ DESC = {
 ('en','Terrains'):"Land in Bali selected and checked by Unaya Build: land title, zoning, access. Leasehold or PT PMA, construction and renting out.",
 ('fr','TerrainMelasti'):"Terrain de 500 m² en zone rose à Melasti, Uluwatu : bail 30 ans + option 30 ans, titre SHM, à 5 min de la plage. IDR 3,15 milliards.",
 ('en','TerrainMelasti'):"500 m² pink-zone plot in Melasti, Uluwatu: 30-year lease + 30-year option, SHM title, 5 min from the beach. IDR 3.15 billion.",
+ ('fr','Experiences'):"Unaya Experiences : excursions privées à Bali avec guide francophone ou chauffeur, départ de votre villa. 10 circuits à la journée, activités et calcul du prix en ligne.",
+('en','Experiences'):"Unaya Experiences: private day trips in Bali with a French-speaking guide or a driver, from your villa. 10 day tours, activities and an online price calculator.",
  ('fr','Investir'):"Investir à Bali : bail ou PT PMA, acheter ou faire construire, taxes et location en règle. Unaya Build vous accompagne du terrain à la mise en location.",
  ('en','Investir'):"Investing in Bali: leasehold or PT PMA, buying or building, taxes and legal renting. Unaya Build supports you from the land to renting out your villa.",
  ('fr','Main'):"Gestion locative de villas à Bali : marketing, réservations, entretien et rapport financier chaque mois. Commission dès 18 %, sans frais fixes. Uluwatu / Jimbaran, Tanah Lot / Canggu West, Seminyak / Kerobokan.",
