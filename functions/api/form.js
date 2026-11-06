@@ -62,7 +62,7 @@ export async function onRequestPost({ request, env }) {
     const order = { s: svcKey, d: desc, a: amount, n: pick(/^(nom|name)$/), e: replyTo, w: pick(/whatsapp|telephone/), l: lang, t: Date.now() };
     const tok = await signOrder(env, order);
     const url = new URL(`/api/svc/paylink?d=${tok.d}&sig=${tok.sig}`, request.url).toString();
-    payBtn = `<p style="margin:24px 0"><a href="${url}" style="background:#3F2A3A;color:#F7F2EE;padding:14px 22px;text-decoration:none;font-weight:bold;border-radius:4px">Créer le lien de paiement</a></p><p style="color:#5A4E54;font-size:13px">Après avoir vérifié la disponibilité : le bouton ouvre une page où vous vérifiez le montant${amount ? ' (proposé : ' + amount.toLocaleString('fr-FR') + ' IDR)' : ''}, puis le lien Xendit est créé et envoyé au client par e-mail.</p>`;
+    payBtn = `<p style="margin:24px 0"><a href="${url}" style="background:#3F2A3A;color:#F7F2EE;padding:14px 22px;text-decoration:none;font-weight:bold;border-radius:4px">Préparer le lien de paiement</a></p><p style="color:#5A4E54;font-size:13px">Après avoir vérifié la disponibilité : le bouton ouvre une page où vous vérifiez et pouvez modifier le montant${amount ? ' (proposé : ' + amount.toLocaleString('fr-FR') + ' IDR)' : ''}, puis le lien Xendit est créé et envoyé au client par e-mail.</p>`;
   }
   const html = `<div style="font-family:Arial,sans-serif;color:#2E2429"><h2 style="color:#3F2A3A">Nouvelle demande — ${esc(formName)}</h2><table style="border-collapse:collapse">${rows.join('')}</table>${payBtn}<p style="color:#8B5A46">Envoyé depuis unayabali.com</p></div>`;
 

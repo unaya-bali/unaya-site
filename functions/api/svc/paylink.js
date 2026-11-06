@@ -12,15 +12,16 @@ export async function onRequestGet({ request, env }) {
   const u = new URL(request.url);
   const o = await readOrder(env, u.searchParams.get('d'), u.searchParams.get('sig'));
   if (!o) return shell('Lien invalide ou expiré', '<p>Ce lien de création de paiement n\'est pas valide (ou a plus de 60 jours). Créez le lien directement dans Xendit → Payment Links.</p>');
-  return shell('Créer le lien de paiement', `
+  return shell('Vérifier le montant', `
+<p style="margin:0 0 12px;padding:12px 16px;background:#F3E9E2;border-left:4px solid #D2A48C">Étape 2 sur 2 — vérifiez ou <strong>modifiez le montant</strong> et la description, puis confirmez. Rien n'est envoyé au client tant que vous n'avez pas confirmé.</p>
 <p style="margin:0 0 20px">Client : <strong>${esc(o.n)}</strong> · ${esc(o.e)}${o.w ? ' · WhatsApp ' + esc(o.w) : ''}</p>
 <form method="POST" style="display:flex;flex-direction:column;gap:16px;background:#fff;border:1px solid #E6DCD4;padding:24px">
 <input type="hidden" name="d" value="${esc(u.searchParams.get('d'))}"><input type="hidden" name="sig" value="${esc(u.searchParams.get('sig'))}">
 <label style="${label}">Description (vue par le client)<textarea name="desc" rows="3" style="${field}">${esc(o.d)}</textarea></label>
-<label style="${label}">Montant en IDR${o.a ? '' : ' — à compléter'}<input name="amount" inputmode="numeric" required value="${o.a ? esc(o.a) : ''}" placeholder="ex. 450000" style="${field}"></label>
+<label style="${label}">Montant en IDR (modifiable)${o.a ? ' — proposé : ' + esc(Number(o.a).toLocaleString('fr-FR').replace(/\u202f/g, ' ')) : ' — à compléter'}<input name="amount" inputmode="numeric" required value="${o.a ? esc(o.a) : ''}" placeholder="ex. 450000" autofocus style="${field};font-size:26px;font-weight:500;border:2px solid #D2A48C"></label>
 <label style="${label}">E-mail du client<input name="email" type="email" value="${esc(o.e)}" style="${field}"></label>
 <label style="display:flex;gap:10px;align-items:center;font-size:15px"><input type="checkbox" name="send" value="1" checked> Envoyer le lien au client par e-mail (copie à info@)</label>
-<button type="submit" style="height:52px;border:none;background:#3F2A3A;color:#F7F2EE;font-size:13px;letter-spacing:.2em;text-transform:uppercase;cursor:pointer">Créer le lien de paiement</button>
+<button type="submit" style="height:52px;border:none;background:#3F2A3A;color:#F7F2EE;font-size:13px;letter-spacing:.2em;text-transform:uppercase;cursor:pointer">Confirmer ce montant et envoyer le lien</button>
 <p style="margin:0;font-size:13px;color:#5A4E54">À faire seulement après avoir vérifié la disponibilité. Le lien est valable 3 jours ; le client paie par carte, virement, QRIS ou e-wallet.</p>
 </form>`);
 }
