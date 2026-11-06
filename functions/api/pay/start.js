@@ -23,7 +23,10 @@ export async function onRequest({ request, env }) {
   try {
     const b = await getBooking(env, bookId);
     if (b) {
-      if (!UNAYA_PROPS.has(String(b.propertyId)) || String(b.status) === 'cancelled') return fail('E2-' + b.propertyId + '-' + b.status, 400);
+      // Beds24 garde la réservation « cancelled » tant que la passerelle n'a pas confirmé le paiement : c'est normal.
+      if (!UNAYA_PROPS.has(String(b.propertyId))) return fail('E2-' + b.propertyId + '-' + b.status, 400);
+      const dep = String(b.departure || '');
+      if (dep && dep < new Date().toISOString().slice(0, 10)) return fail('E7', 400); // séjour déjà passé
       const total = Math.round(Number(b.price) || 0);
       // Le montant est calculé ici (acompte = DEPOSIT_PERCENT % du total), jamais pris tel quel depuis le navigateur.
       if (total > 0) amount = Math.ceil(total * (Number(env.DEPOSIT_PERCENT || 30) / 100));
