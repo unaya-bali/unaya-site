@@ -3,6 +3,8 @@
 //   RESEND_API_KEY  (clé API Resend — à saisir par vous, jamais dans le code)
 //   FORM_TO         (destinataire, ex. info@unayabali.com)
 //   FORM_FROM       (expéditeur vérifié dans Resend, ex. "Site Unaya <site@unayabali.com>")
+import { signOrder, describe } from '../../lib/svc.js';
+
 export async function onRequestPost({ request, env }) {
   const data = await request.formData();
   const lang = data.get('lang') === 'en' ? 'en' : 'fr';
@@ -52,7 +54,17 @@ export async function onRequestPost({ request, env }) {
     rows.push(`<tr><td style="padding:6px 12px;color:#5A3552;vertical-align:top"><b>${esc(k)}</b></td><td style="padding:6px 12px">${esc(val).replace(/\n/g, '<br>')}</td></tr>`);
   }
   const replyTo = String(data.get('e_mail') || data.get('email') || '');
-  const html = `<div style="font-family:Arial,sans-serif;color:#2E2429"><h2 style="color:#3F2A3A">Nouvelle demande — ${esc(formName)}</h2><table style="border-collapse:collapse">${rows.join('')}</table><p style="color:#8B5A46">Envoyé depuis unayabali.com</p></div>`;
+  // Services voyageurs et excursions : bouton « Créer le lien de paiement » (lien Xendit en un clic, après vérification des disponibilités)
+  let payBtn = '';
+  const svcKey = svc ? String(svc) : (/^experiences/i.test(String(data.get('form-name') || '')) ? 'experiences' : '');
+  if (svcKey && env.XENDIT_SECRET_KEY && !spammy) {
+    const { amount, desc } = describe(svcKey, data, lang);
+    const order = { s: svcKey, d: desc, a: amount, n: pick(/^(nom|name)$/), e: replyTo, w: pick(/whatsapp|telephone/), l: lang, t: Date.now() };
+    const tok = await signOrder(env, order);
+    const url = new URL(`/api/svc/paylink?d=${tok.d}&sig=${tok.sig}`, request.url).toString();
+    payBtn = `<p style="margin:24px 0"><a href="${url}" style="background:#3F2A3A;color:#F7F2EE;padding:14px 22px;text-decoration:none;font-weight:bold;border-radius:4px">Créer le lien de paiement</a></p><p style="color:#5A4E54;font-size:13px">Après avoir vérifié la disponibilité : le bouton ouvre une page où vous vérifiez le montant${amount ? ' (proposé : ' + amount.toLocaleString('fr-FR') + ' IDR)' : ''}, puis le lien Xendit est créé et envoyé au client par e-mail.</p>`;
+  }
+  const html = `<div style="font-family:Arial,sans-serif;color:#2E2429"><h2 style="color:#3F2A3A">Nouvelle demande — ${esc(formName)}</h2><table style="border-collapse:collapse">${rows.join('')}</table>${payBtn}<p style="color:#8B5A46">Envoyé depuis unayabali.com</p></div>`;
 
   if (!env.RESEND_API_KEY) return new Response('Formulaire non configuré (RESEND_API_KEY manquante).', { status: 500 });
   const r = await fetch('https://api.resend.com/emails', {
