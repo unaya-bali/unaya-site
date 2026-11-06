@@ -53,6 +53,8 @@ export async function onRequestPost({ request, env }) {
     const val = String(v).slice(0, 5000);
     rows.push(`<tr><td style="padding:6px 12px;color:#5A3552;vertical-align:top"><b>${esc(k)}</b></td><td style="padding:6px 12px">${esc(val).replace(/\n/g, '<br>')}</td></tr>`);
   }
+  // Location de scooter : passeport obligatoire (contrôle aussi côté serveur)
+  if (svc === 'scooter' && !attachments.length) return new Response(lang === 'en' ? 'Please add a photo of the passport (take a photo or choose a file), then send the form again.' : 'Merci d\'ajouter une photo du passeport (prenez une photo ou choisissez un fichier), puis renvoyez le formulaire.', { status: 400, headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
   const replyTo = String(data.get('e_mail') || data.get('email') || '');
   // Services voyageurs et excursions : bouton « Créer le lien de paiement » (lien Xendit en un clic, après vérification des disponibilités)
   let payBtn = '';

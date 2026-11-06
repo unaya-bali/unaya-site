@@ -135,3 +135,20 @@ cards.forEach(function(c){var ok=z==='all'||c.getAttribute('data-zone')===z;c.hi
     });
   });
 })();
+
+// Passeport obligatoire : bloquer l'envoi tant qu'aucune photo / aucun fichier n'est ajouté
+(function () {
+  document.querySelectorAll('.sv-files').forEach(function (box) {
+    var form = box.closest('form'); if (!form) return;
+    var out = box.parentNode.querySelector('.sv-file-n'), fr = document.documentElement.lang !== 'en';
+    form.addEventListener('submit', function (e) {
+      var n = 0; box.querySelectorAll('input[type=file]').forEach(function (x) { n += x.files.length; });
+      if (!n) {
+        e.preventDefault(); e.stopImmediatePropagation();
+        out.style.color = '#B3261E';
+        out.textContent = fr ? 'Merci d\'ajouter une photo du passeport (prenez une photo ou choisissez un fichier).' : 'Please add a photo of the passport (take a photo or choose a file).';
+        box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } else { out.style.color = ''; }
+    }, true);
+  });
+})();
