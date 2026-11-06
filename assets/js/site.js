@@ -106,3 +106,19 @@ f.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)re
 f.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false');});
 cards.forEach(function(c){var ok=z==='all'||c.getAttribute('data-zone')===z;c.hidden=!ok;if(ok)n++;});if(none)none.hidden=n>0;});})();
 (function(){document.querySelectorAll('input[type=file][data-max]').forEach(function(i){i.addEventListener('change',function(){var m=+i.getAttribute('data-max'),t=0;for(var k=0;k<i.files.length;k++)t+=i.files[k].size;var fr=document.documentElement.lang!=='en';if(i.files.length>m||t>10*1024*1024){alert(fr?'Maximum '+m+' photos et 10 Mo au total.':'Maximum '+m+' photos and 10 MB in total.');i.value='';}});});})();
+
+// Prix « à partir de » des pages villas : lus automatiquement dans Beds24 (le prix écrit dans la page sert de secours)
+(function () {
+  var box = document.querySelector('[data-prices]');
+  if (!box || !window.fetch) return;
+  fetch('/api/prices').then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
+    var v = d && d[box.getAttribute('data-prices')];
+    if (!v) return;
+    var fr = document.documentElement.lang === 'fr';
+    var fmt = function (n) { return 'IDR ' + (fr ? String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' ') : Number(n).toLocaleString('en-US')); };
+    ['villa', 'room'].forEach(function (k) {
+      var el = box.querySelector('[data-price="' + k + '"]');
+      if (el && v[k] > 0) el.textContent = fmt(v[k]);
+    });
+  }).catch(function () {});
+})();

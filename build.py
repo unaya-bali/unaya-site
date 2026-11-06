@@ -180,6 +180,10 @@ def fix_booking(body, lang, page):
     propid = BEDS24[page]
     a = body.index('<aside id="reserver"'); b = body.index('</aside>', a) + len('</aside>')
     aside = body[a:b]
+    # Prix « à partir de » mis à jour automatiquement depuis Beds24 (/api/prices, voir assets/js/site.js)
+    aside = aside.replace('<aside id="reserver"', f'<aside id="reserver" data-prices="{page}"', 1)
+    aside = aside.replace("<span style=\"font-family: 'Cormorant Garamond', serif; font-size: 40px;", "<span data-price=\"villa\" style=\"font-family: 'Cormorant Garamond', serif; font-size: 40px;", 1)
+    aside = aside.replace("<span style=\"font-family: 'Cormorant Garamond', serif; font-size: 30px;", "<span data-price=\"room\" style=\"font-family: 'Cormorant Garamond', serif; font-size: 30px;", 1)
     I = "font-family: 'Jost', sans-serif; font-size: 16px; padding: 12px; border: 1px solid #A8705A; background: #F7F2EE; color: #2E2429; width: 100%;"
     L = "flex: 1 1 130px; display: flex; flex-direction: column; gap: 6px; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: #D2A48C;"
     lab = dict(fr=('Arrivée','Départ','Voyageurs','Vérifier les disponibilités','voyageur','voyageurs'), en=('Check-in','Check-out','Guests','Check availability','guest','guests'))[lang]
