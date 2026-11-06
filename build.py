@@ -12,8 +12,8 @@ SRC, DIST = os.path.join(ROOT, 'src'), os.path.join(ROOT, 'dist')
 SITE = 'https://unayabali.com'
 ROUTES = json.load(open(os.path.join(SRC, 'routes.json'), encoding='utf-8'))
 PORTAL = 'https://owners.unayabali.com'
-# Réservation en ligne : 'beds24' (paiement Midtrans actif) ou 'whatsapp' (demande de disponibilité, en attendant la validation Midtrans)
-BOOKING_MODE = 'whatsapp'
+# Réservation en ligne : 'beds24' (paiement Xendit actif via la passerelle Beds24) ou 'whatsapp' (demande de disponibilité)
+BOOKING_MODE = 'beds24'
 WHATSAPP = {'VillaSuma': '6285190211324', 'VillaYuga': '6281330617077', 'VillaRumahJambu': '6285190211324'}
 # Cloudflare Turnstile (case anti-robot) : clé PUBLIQUE du widget (la clé secrète va dans Cloudflare, variable TURNSTILE_SECRET)
 TURNSTILE_SITEKEY = '0x4AAAAAAFl92qPSywb2bEJt'
@@ -202,6 +202,8 @@ def fix_booking(body, lang, page):
     i = aside.index('<div style="display: flex; flex-wrap: wrap; gap: 12px;">')
     j = aside.index('</button>', i) + len('</button>')
     aside = aside[:i] + form + aside[j:]
+    if not wa:
+        aside = aside.replace('Calendrier synchronisé en temps réel (Beds24) · Paiement sécurisé', 'Paiement sécurisé · Acompte 30 % à la réservation, solde 14 jours avant l\'arrivée (<a href="/fr/conditions-reservation/" style="color: inherit;">conditions</a>)').replace('Real-time synchronised calendar (Beds24) · Secure payment', 'Secure payment · 30% deposit at booking, balance 14 days before arrival (<a href="/booking-terms/" style="color: inherit;">terms</a>)')
     if wa:
         aside = aside.replace('Calendrier synchronisé en temps réel (Beds24) · Paiement sécurisé', 'Réponse rapide sur WhatsApp · Sans engagement').replace('Real-time synchronised calendar (Beds24) · Secure payment', 'Quick reply on WhatsApp · No commitment')
     return body[:a] + aside + body[b:]
