@@ -11,30 +11,32 @@ export async function onRequest({ request, env }) {
   const T = lang === 'en'
     ? { err: 'Payment unavailable', msg: 'We could not start the payment. Please contact us at info@unayabali.com — your booking is kept.' }
     : { err: 'Paiement indisponible', msg: "Nous n'avons pas pu lancer le paiement. Écrivez-nous à info@unayabali.com — votre réservation est conservée." };
+  // Code d'erreur affiché en petit (aucune donnée secrète) pour le diagnostic
+  const fail = (code, status) => page(lang, T.err, T.msg + `<br><small style="color:#8a7d76">Code : ${String(code).replace(/[<>&"]/g, '')}</small>`, status);
 
   const bookId = String(form.get('bookid') || '').replace(/\D/g, '');
   let amount = Math.round(parseFloat(String(form.get('amount') || '0').replace(/[^\d.]/g, '')) || 0);
   const prov = provider(env);
-  if (!bookId || (prov === 'midtrans' ? !env.MIDTRANS_SERVER_KEY : !env.XENDIT_SECRET_KEY)) return page(lang, T.err, T.msg, 400);
+  if (!bookId || (prov === 'midtrans' ? !env.MIDTRANS_SERVER_KEY : !env.XENDIT_SECRET_KEY)) return fail('E1', 400);
 
   let guest = {};
   try {
     const b = await getBooking(env, bookId);
     if (b) {
-      if (!UNAYA_PROPS.has(String(b.propertyId)) || String(b.status) === 'cancelled') return page(lang, T.err, T.msg, 400);
+      if (!UNAYA_PROPS.has(String(b.propertyId)) || String(b.status) === 'cancelled') return fail('E2-' + b.propertyId + '-' + b.status, 400);
       const total = Math.round(Number(b.price) || 0);
       // Le montant est calculé ici (acompte = DEPOSIT_PERCENT % du total), jamais pris tel quel depuis le navigateur.
       if (total > 0) amount = Math.ceil(total * (Number(env.DEPOSIT_PERCENT || 30) / 100));
       guest = { first_name: b.firstName || '', last_name: b.lastName || '', email: b.email || '', phone: b.phone || b.mobile || '' };
     } else if (isLive(env)) {
-      return page(lang, T.err, T.msg, 400); // en mode réel, la vérification Beds24 est obligatoire
+      return fail('E3', 400); // en mode réel, la vérification Beds24 est obligatoire
     } else if (amount < 1000) {
       amount = Number(env.TEST_AMOUNT || 100000); // mode test sans API Beds24 : montant fictif
     }
   } catch (e) {
-    return page(lang, T.err, T.msg, 502);
+    return fail('E4 ' + (e && e.message || ''), 502);
   }
-  if (amount < 1000) return page(lang, T.err, T.msg, 400);
+  if (amount < 1000) return fail('E5', 400);
 
   const orderId = `UNAYA-${bookId}-${Date.now().toString(36)}`;
   const finish = `${url.origin}${lang === 'en' ? '/payment/' : '/fr/paiement/'}?bookid=${bookId}`;
@@ -49,14 +51,14 @@ export async function onRequest({ request, env }) {
         currency: 'IDR',
         description: (lang === 'en' ? 'Unaya booking #' : 'Réservation Unaya n°') + bookId,
         ...(guest.email ? { payer_email: guest.email } : {}),
-        customer: { given_names: guest.first_name || undefined, surname: guest.last_name || undefined, email: guest.email || undefined, mobile_number: guest.phone || undefined },
+        customer: { given_names: guest.first_name || undefined, surname: guest.last_name || undefined, email: guest.email || undefined, mobile_number: /^\+\d{8,15}$/.test(String(guest.phone || '').replace(/[\s().-]/g, '')) ? String(guest.phone).replace(/[\s().-]/g, '') : undefined },
         success_redirect_url: finish,
         failure_redirect_url: finish,
         locale: 'en',
         invoice_duration: 86400,
       }),
     });
-    if (!x.ok) return page(lang, T.err, T.msg, 502);
+    if (!x.ok) { let c = ''; try { c = (await x.json()).error_code || ''; } catch {} return fail('E6 ' + x.status + ' ' + c, 502); }
     const xj = await x.json();
     return Response.redirect(xj.invoice_url, 303);
   }
