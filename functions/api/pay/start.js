@@ -1,7 +1,7 @@
 // Étape 1 : Beds24 (Passerelle personnalisée) envoie ici le client après sa réservation.
 // Réglage Beds24 : URL = https://<site>/api/pay/start   Post data = bookid=[BOOKID]&amount=[PAYMENTAMOUNT]
 // On vérifie la réservation, on crée la transaction Midtrans (Snap) et on redirige le client vers la page de paiement.
-import { snapUrl, midAuth, getBooking, isProd, isLive, UNAYA_PROPS, page, provider, xenAuth } from '../../../lib/pay.js';
+import { snapUrl, midAuth, getBooking, isProd, isLive, UNAYA_PROPS, page, provider, xenAuth, amountDue } from '../../../lib/pay.js';
 
 export async function onRequest({ request, env }) {
   const url = new URL(request.url);
@@ -27,9 +27,12 @@ export async function onRequest({ request, env }) {
       if (!UNAYA_PROPS.has(String(b.propertyId))) return fail('E2-' + b.propertyId + '-' + b.status, 400);
       const dep = String(b.departure || '');
       if (dep && dep < new Date().toISOString().slice(0, 10)) return fail('E7', 400); // séjour déjà passé
-      const total = Math.round(Number(b.price) || 0);
-      // Le montant est calculé ici (acompte = DEPOSIT_PERCENT % du total), jamais pris tel quel depuis le navigateur.
-      if (total > 0) amount = Math.ceil(total * (Number(env.DEPOSIT_PERCENT || 30) / 100));
+      // Le montant est calculé ici à partir de Beds24 (acompte, solde ou 100 %), jamais pris tel quel depuis le navigateur.
+      const due = amountDue(b, Number(env.DEPOSIT_PERCENT || 30));
+      if (due.kind !== 'none') {
+        if (due.amount < 1000) return fail('E8', 400); // déjà entièrement payée
+        amount = due.amount;
+      }
       guest = { first_name: b.firstName || '', last_name: b.lastName || '', email: b.email || '', phone: b.phone || b.mobile || '' };
     } else if (isLive(env)) {
       return fail('E3', 400); // en mode réel, la vérification Beds24 est obligatoire
