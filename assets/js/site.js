@@ -122,3 +122,16 @@ cards.forEach(function(c){var ok=z==='all'||c.getAttribute('data-zone')===z;c.hi
     });
   }).catch(function () {});
 })();
+// Passeport : afficher les fichiers choisis / photos prises
+(function () {
+  document.querySelectorAll('.sv-files').forEach(function (box) {
+    var out = box.parentNode.querySelector('.sv-file-n'), fr = document.documentElement.lang !== 'en';
+    box.querySelectorAll('input[type=file]').forEach(function (i) {
+      i.addEventListener('change', function () {
+        var n = 0, names = [];
+        box.querySelectorAll('input[type=file]').forEach(function (x) { for (var k = 0; k < x.files.length; k++) { n++; names.push(x.files[k].name); } });
+        out.textContent = n ? '✓ ' + n + (fr ? (n > 1 ? ' fichiers ajoutés' : ' fichier ajouté') : (n > 1 ? ' files added' : ' file added')) : '';
+      });
+    });
+  });
+})();
