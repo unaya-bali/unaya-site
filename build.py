@@ -5,7 +5,7 @@ Utilisation :  python3 build.py
 Les textes des pages sont dans src/pages/fr/ et src/pages/en/ (HTML).
 L'en-tête, le menu et le pied de page sont définis ci-dessous, une seule fois pour tout le site.
 """
-import os, re, json, shutil, html, hashlib
+import json, os, re, json, shutil, html, hashlib
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 SRC, DIST = os.path.join(ROOT, 'src'), os.path.join(ROOT, 'dist')
@@ -231,6 +231,73 @@ def transform(body, lang, page):
     body = re.sub(r'<img [^>]+>', lazy, body)
     return body
 
+# ---- SEO (14/11/2026) ----
+GOOGLE_VERIFY = ''  # code « google-site-verification » de la Search Console (méthode « balise HTML »), si utilisé
+SEO_TITLES = {
+ ('fr','Main'): 'Unaya Bali — Gestion de villas et locations de vacances à Bali',
+ ('en','Main'): 'Unaya Bali — Villa Management & Holiday Villas in Bali',
+ ('fr','Villas'): 'Villas à louer à Bali avec piscine (Uluwatu, Tanah Lot) — Unaya Bali',
+ ('en','Villas'): 'Private Pool Villas for Rent in Bali (Uluwatu, Tanah Lot) — Unaya Bali',
+ ('fr','VillaSuma'): 'Villa Suma, Balangan Uluwatu — villa 5 chambres avec piscine | Unaya Bali',
+ ('en','VillaSuma'): 'Villa Suma, Balangan Uluwatu — 5-Bedroom Pool Villa | Unaya Bali',
+ ('fr','VillaYuga'): 'Villa Yuga, Nyanyi Tanah Lot — villa 4 chambres avec piscine | Unaya Bali',
+ ('en','VillaYuga'): 'Villa Yuga, Nyanyi Tanah Lot — 4-Bedroom Pool Villa | Unaya Bali',
+ ('fr','VillaRumahJambu'): 'Rumah Jambu, Uluwatu — maison balinaise avec jardin | Unaya Bali',
+ ('en','VillaRumahJambu'): 'Rumah Jambu, Uluwatu — Authentic Balinese House | Unaya Bali',
+ ('fr','Proprietaires'): 'Gestion locative de villa à Bali — Unaya Bali',
+ ('en','Proprietaires'): 'Bali Villa Management for Owners — Unaya Bali',
+ ('fr','ProprietairesTarifs'): 'Tarifs gestion de villa à Bali, commission dès 18 % — Unaya Bali',
+ ('en','ProprietairesTarifs'): 'Bali Villa Management Fees, Commission from 18% — Unaya Bali',
+ ('fr','ProprietairesServices'): 'Services de gestion de villa à Bali — Unaya Bali',
+ ('en','ProprietairesServices'): 'Bali Villa Management Services — Unaya Bali',
+ ('fr','ConfierMaVilla'): 'Confier ma villa en gestion à Bali — Unaya Bali',
+ ('en','ConfierMaVilla'): 'List Your Villa for Management in Bali — Unaya Bali',
+ ('fr','Investir'): 'Investir dans une villa à Bali : le guide — Unaya Bali',
+ ('en','Investir'): 'Investing in a Villa in Bali: the Guide — Unaya Bali',
+ ('fr','Terrains'): 'Terrains à Bali (bail, zone rose) — Unaya Bali',
+ ('en','Terrains'): 'Land for Lease in Bali (Pink Zone) — Unaya Bali',
+ ('fr','ServicesVoyageurs'): 'Transfert aéroport, chauffeur et scooter à Bali — Unaya Bali',
+ ('en','ServicesVoyageurs'): 'Bali Airport Transfer, Private Driver & Scooter Rental — Unaya Bali',
+ ('fr','Experiences'): 'Excursions privées à Bali avec guide francophone — Unaya Experiences',
+ ('en','Experiences'): 'Private Day Trips in Bali with a Guide or Driver — Unaya Experiences',
+ ('fr','APropos'): 'À propos — Unaya Bali, gestion de villas à Uluwatu',
+ ('en','APropos'): 'About Us — Unaya Bali, Villa Management in Uluwatu',
+}
+ORG_ID = SITE + '/#organisation'
+LODGING = {
+ 'VillaSuma': dict(name='Villa Suma', loc='Balangan, Uluwatu', img='suma-g1.jpg', rooms=5, guests=10),
+ 'VillaYuga': dict(name='Villa Yuga', loc='Nyanyi, Tanah Lot', img='yuga-g1.jpg', rooms=4, guests=8),
+ 'VillaRumahJambu': dict(name='Rumah Jambu', loc='Balangan, Uluwatu', img='rj-g1.jpg', rooms=2, guests=4),
+}
+PARENT = {'VillaSuma':'Villas','VillaYuga':'Villas','VillaRumahJambu':'Villas','TerrainMelasti':'Terrains',
+          'ProprietairesServices':'Proprietaires','ProprietairesTarifs':'Proprietaires','ConfierMaVilla':'Proprietaires','SiteWeb':'Proprietaires'}
+
+def jsonld(lang, page, title, body):
+    canon = SITE + url(page, lang)
+    org = {'@type': 'Organization', '@id': ORG_ID, 'name': 'Unaya Management', 'alternateName': ['Unaya Bali', 'Unaya', 'PT Unaya Bali Grup'],
+           'url': SITE + '/', 'logo': SITE + '/assets/images/og-unaya.jpg', 'email': 'info@unayabali.com', 'telephone': '+62 851 9021 1324',
+           'address': {'@type': 'PostalAddress', 'streetAddress': 'Jalan Balangan Hijau VI No. 15', 'addressLocality': 'Jimbaran, Kuta Selatan', 'addressRegion': 'Bali', 'addressCountry': 'ID'},
+           'areaServed': 'Bali, Indonesia', 'sameAs': [SOCIAL['instagram'], SOCIAL['linktree'], 'https://www.instagram.com/yuga_nyanyi_bali/', 'https://www.instagram.com/suma_bali_/']}
+    graph = [org, {'@type': 'WebSite', '@id': SITE + '/#website', 'url': SITE + '/', 'name': 'Unaya Bali', 'alternateName': 'Unaya Management', 'publisher': {'@id': ORG_ID}, 'inLanguage': ['fr', 'en']}]
+    if page in LODGING:
+        v = LODGING[page]
+        graph.append({'@type': 'LodgingBusiness', '@id': canon + '#villa', 'name': v['name'], 'url': canon, 'image': SITE + '/assets/images/' + v['img'],
+                      'description': DESC.get((lang, page), ''), 'address': {'@type': 'PostalAddress', 'addressLocality': v['loc'], 'addressRegion': 'Bali', 'addressCountry': 'ID'},
+                      'numberOfRooms': v['rooms'], 'petsAllowed': page == 'VillaRumahJambu', 'checkinTime': '14:00', 'checkoutTime': '11:00',
+                      'amenityFeature': [{'@type': 'LocationFeatureSpecification', 'name': n, 'value': True} for n in ('Private pool', 'Wi-Fi', 'Air conditioning', 'Kitchen', 'Free parking')],
+                      'telephone': '+62 851 9021 1324', 'priceRange': 'IDR', 'parentOrganization': {'@id': ORG_ID}})
+    if page == 'FAQ':
+        qa = re.findall(r'<details[^>]*>\s*<summary[^>]*>(.*?)</summary>(.*?)</details>', body, re.S)
+        clean = lambda x: re.sub(r'\s+', ' ', re.sub(r'<[^>]+>', ' ', html.unescape(x))).strip()
+        if qa: graph.append({'@type': 'FAQPage', 'mainEntity': [{'@type': 'Question', 'name': clean(q), 'acceptedAnswer': {'@type': 'Answer', 'text': clean(a)}} for q, a in qa]})
+    if page != 'Main':
+        home = T[lang]['nav'] and ('Accueil' if lang == 'fr' else 'Home')
+        items = [(home, SITE + url('Main', lang))]
+        if page in PARENT: items.append((dict(T[lang]['nav']).get(PARENT[page]) or PARENT[page], SITE + url(PARENT[page], lang)))
+        items.append((title.split(' — ')[0].split(' | ')[0], canon))
+        graph.append({'@type': 'BreadcrumbList', 'itemListElement': [{'@type': 'ListItem', 'position': i + 1, 'name': n, 'item': u} for i, (n, u) in enumerate(items)]})
+    return '<script type="application/ld+json">' + json.dumps({'@context': 'https://schema.org', '@graph': graph}, ensure_ascii=False).replace('</', '<\\/') + '</script>'
+
 def layout(lang, page, title, desc, body):
     other = 'en' if lang == 'fr' else 'fr'
     canon = SITE + url(page, lang)
@@ -241,7 +308,7 @@ def layout(lang, page, title, desc, body):
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{html.escape(title)}</title>
 <meta name="description" content="{html.escape(desc)}">
-<link rel="canonical" href="{canon}">
+<link rel="canonical" href="{canon}">{'<meta name="robots" content="noindex">' if page in ('Merci','Paiement') else ''}{f'<meta name="google-site-verification" content="{GOOGLE_VERIFY}">' if GOOGLE_VERIFY else ''}
 <link rel="alternate" hreflang="{lang}" href="{canon}">
 <link rel="alternate" hreflang="{other}" href="{SITE + url(page, other)}">
 <link rel="alternate" hreflang="x-default" href="{SITE + url(page, 'en')}">
@@ -251,6 +318,7 @@ def layout(lang, page, title, desc, body):
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/css/site.css?v={ASSET_V}">
+{jsonld(lang, page, title, body)}
 </head>
 <body>
 {header(lang, page)}
@@ -274,14 +342,16 @@ def build():
             raw = open(os.path.join(d, fn), encoding='utf-8').read()
             m = re.match(r'<!-- title: (.*?) -->\n', raw)
             title = m.group(1) if m else 'Unaya Management'
+            title = SEO_TITLES.get((lang, page)) or title.replace('— Unaya Management', '— Unaya Bali')
             body = raw[m.end():] if m else raw
             desc = DESC.get((lang, page)) or DESC[(lang, 'Main')]
             out = layout(lang, page, title, desc, transform(body, lang, page))
             path = os.path.join(DIST, url(page, lang).strip('/'), 'index.html')
             os.makedirs(os.path.dirname(path), exist_ok=True)
             open(path, 'w', encoding='utf-8').write(out)
-            if page not in ('Merci','Paiement'): urls.append(SITE + url(page, lang))
-    open(os.path.join(DIST, 'sitemap.xml'), 'w').write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + ''.join(f'<url><loc>{u}</loc></url>\n' for u in urls) + '</urlset>\n')
+            if page not in ('Merci','Paiement'): urls.append((SITE + url(page, lang), SITE + url(page, 'fr'), SITE + url(page, 'en')))
+    today = __import__('datetime').date.today().isoformat()
+    open(os.path.join(DIST, 'sitemap.xml'), 'w').write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n' + ''.join(f'<url><loc>{u}</loc><lastmod>{today}</lastmod><xhtml:link rel="alternate" hreflang="fr" href="{fr}"/><xhtml:link rel="alternate" hreflang="en" href="{en}"/><xhtml:link rel="alternate" hreflang="x-default" href="{en}"/></url>\n' for u, fr, en in urls) + '</urlset>\n')
     open(os.path.join(DIST, '_headers'), 'w').write('/assets/*\n  Cache-Control: public, max-age=604800\n')
     open(os.path.join(DIST, 'robots.txt'), 'w').write(f'User-agent: *\nAllow: /\nSitemap: {SITE}/sitemap.xml\n')
     shutil.copy(os.path.join(SRC, '404.html'), os.path.join(DIST, '404.html')) if os.path.exists(os.path.join(SRC, '404.html')) else None
