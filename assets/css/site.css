@@ -761,3 +761,24 @@ footer a{display:inline-block;padding:4px 0}
 .ar-lease dd{margin:0;font-size:15px}
 .ar-lease p{font-size:13px;color:var(--prune);margin:12px 0 0}
 @media (max-width:640px){.ar-lease dl div{grid-template-columns:1fr;gap:2px}}
+/* « La villa » : 3 cartes avec photo, centrées */
+.ar-lv2{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;max-width:1180px;margin:0 auto}
+.ar-lv2__c{background:#fff;border-radius:22px;overflow:hidden;box-shadow:0 1px 0 var(--ligne),0 14px 40px rgba(63,42,58,.08);display:flex;flex-direction:column;transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s}
+.ar-lv2__c:hover{transform:translateY(-6px);box-shadow:0 1px 0 var(--ligne),0 24px 56px rgba(63,42,58,.14)}
+.ar-lv2__img{position:relative;aspect-ratio:4/3;overflow:hidden}
+.ar-lv2__img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .7s cubic-bezier(.2,.7,.2,1)}
+.ar-lv2__c:hover .ar-lv2__img img{transform:scale(1.06)}
+.ar-lv2__img::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(46,36,41,0) 55%,rgba(46,36,41,.45))}
+.ar-lv2__n{position:absolute;right:20px;bottom:10px;z-index:1;font:500 56px/1 'Cormorant Garamond',serif;color:rgba(255,255,255,.9)}
+.ar-lv2__b{position:relative;padding:34px 30px 30px;text-align:center;flex:1}
+.ar-lv2__ic{position:absolute;left:50%;top:0;transform:translate(-50%,-50%);width:56px;height:56px;border-radius:50%;background:var(--aubergine);color:#F7F2EE;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 6px #fff}
+.ar-lv2__ic .u-ic{color:#F7F2EE}
+.ar-lv2__b h3{font:500 28px/1.15 'Cormorant Garamond',serif;color:var(--aubergine);margin:12px 0 18px;letter-spacing:0;text-transform:none}
+.ar-lv2__b ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.ar-lv2__b li{font-size:15.5px;line-height:1.45;color:var(--encre);padding-bottom:10px;border-bottom:1px dashed #E6DCD4}
+.ar-lv2__b li:last-child{border-bottom:0;padding-bottom:0}
+.u-head--c{text-align:center;margin-left:auto;margin-right:auto}
+.u-head--c p{margin-left:auto;margin-right:auto}
+.cx-card--surf{max-width:1180px;margin:40px auto 0}
+@media (max-width:900px){.ar-lv2{grid-template-columns:1fr;max-width:520px}}
+.cx-card--surf{width:100%;box-sizing:border-box}

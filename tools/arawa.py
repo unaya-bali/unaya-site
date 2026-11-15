@@ -267,8 +267,10 @@ def detail(l, t, page):
     s += sec(head(t['ph'], t['pl']) + '<div class="u-feats u-feats--4">' + ''.join(f'<div class="u-feat">{ic(k)}<h3>{h}</h3><p>{p}</p></div>' for k, h, p in t['phil']) + '</div>', 'white')
     gal = ''.join(f'<figure><img src="/assets/images/{f}" alt="{a if fr else b}" loading="lazy"></figure>' for f, a, b in GAL)
     s += sec(head(t['gh'], t['gl']) + f'<div class="ar-gal" data-gallery>{gal}</div>', id='galerie')
-    lv = ''.join(f'<div class="ld-ar"><h3>{h}</h3><ul>' + ''.join(f'<li>{x}</li>' for x in li) + '</ul></div>' for h, li in t['lv'])
-    s += sec(head(t['vh'], t['vl']) + f'<div class="ld-around ar-lv">{lv}</div>' + (surf_html(l) if vv else ''), 'white')
+    LVIMG = [('arawa-cuisine.jpg', 'home', '01'), ('arawa-chambre-2.jpg', 'bed', '02'), ('arawa-sdb-1.jpg', 'leaf', '03')]
+    lv = ''.join(f'<article class="ar-lv2__c"><div class="ar-lv2__img"><img src="/assets/images/{LVIMG[i][0]}" alt="{h}" loading="lazy"><span class="ar-lv2__n">{LVIMG[i][2]}</span></div>'
+                 f'<div class="ar-lv2__b"><span class="ar-lv2__ic">{ic(LVIMG[i][1], 26)}</span><h3>{h}</h3><ul>' + ''.join(f'<li>{x}</li>' for x in li) + '</ul></div></article>' for i, (h, li) in enumerate(t['lv']))
+    s += sec(head(t['vh'], t['vl'], True) + f'<div class="ar-lv2">{lv}</div>' + (surf_html(l) if vv else ''), 'white')
     ph = ''.join(f'<figure><img src="/assets/images/{f}" alt="{c}" loading="lazy"><figcaption>{c}</figcaption></figure>' for f, c in zip(t.get('chf', ['arawa-chantier-1.jpg', 'arawa-chantier-2.jpg', 'arawa-chantier-3.jpg']), t['chc']))
     s += sec(head(t['ch'], t['cl']) + (prog_html(l) if vv else '') + f'<div class="ar-site">{ph}</div>')
     pl = ''.join(f'<figure><a href="/assets/images/{f}" target="_blank" rel="noopener"><img src="/assets/images/{f}" alt="{c}" loading="lazy"></a><figcaption>{c}</figcaption></figure>' for f, c in zip(['arawa-plan-masse.jpg', 'arawa-plan-rdc.jpg', 'arawa-plan-etage.jpg'], t['plc']))
