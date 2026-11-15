@@ -132,6 +132,7 @@ def footer(lang, page):
 <div style="flex: 1 1 260px; min-width: 0; display: flex; flex-direction: column; gap: 10px;">
 <div style="{H}">{t['f_contact']}</div>
 <span>Jalan Balangan Hijau VI No. 15<br>Jimbaran, Kuta Selatan<br>Badung, Bali — {t['country']}</span>
+<a href="{wa_url(lang, page)}" target="_blank" rel="noopener" style="color: #E9DED6;">WhatsApp {WA_SHOW}</a>
 <a href="mailto:info@unayabali.com" style="color: #E9DED6;">info@unayabali.com</a>
 </div>
 <div style="flex: 1 1 260px; min-width: 0; display: flex; flex-direction: column; gap: 10px;">
@@ -212,11 +213,85 @@ def fix_booking(body, lang, page):
         aside = aside.replace('Calendrier synchronisé en temps réel (Beds24) · Paiement sécurisé', 'Réponse rapide sur WhatsApp · Sans engagement').replace('Real-time synchronised calendar (Beds24) · Secure payment', 'Quick reply on WhatsApp · No commitment')
     return body[:a] + aside + body[b:]
 
+
+# ---- Conversion (15/11/2026) : WhatsApp partout, barre de réservation mobile, villas sur l'accueil ----
+WA_MAIN = '6285190211324'
+WA_SHOW = '+62 851 9021 1324'
+VNAME = {'VillaSuma': 'Villa Suma', 'VillaYuga': 'Villa Yuga', 'VillaRumahJambu': 'Rumah Jambu'}
+PRICE0 = {'VillaSuma': 5800000, 'VillaYuga': 2900000, 'VillaRumahJambu': 1200000}  # repli si /api/prices ne répond pas
+def wa_text(lang, page):
+    fr = lang == 'fr'
+    if page in VNAME:
+        return (f"Bonjour Unaya, je suis intéressé(e) par {'la ' if page != 'VillaRumahJambu' else ''}{VNAME[page]}. Mes dates : " if fr else f"Hello Unaya, I'm interested in {VNAME[page]}. My dates: ")
+    if page in ('Terrains', 'TerrainMelasti'):
+        return ("Bonjour Unaya, je souhaite des informations sur le terrain de Melasti." if fr else "Hello Unaya, I'd like information about the Melasti land.")
+    if page in OWNER_PAGES or page == 'Investir':
+        return ("Bonjour Unaya, je souhaite des informations sur la gestion de ma villa." if fr else "Hello Unaya, I'd like information about managing my villa.")
+    if page in ('ServicesVoyageurs', 'Experiences'):
+        return ("Bonjour Unaya, je voudrais réserver un service pendant mon séjour : " if fr else "Hello Unaya, I'd like to book a service during my stay: ")
+    if page == 'Villas':
+        return ("Bonjour Unaya, je cherche une villa. Mes dates : " if fr else "Hello Unaya, I'm looking for a villa. My dates: ")
+    return ("Bonjour Unaya, " if fr else "Hello Unaya, ")
+def wa_url(lang, page):
+    from urllib.parse import quote
+    return f'https://wa.me/{WA_MAIN}?text={quote(wa_text(lang, page))}'
+WA_SVG = '<svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><path fill="currentColor" d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3Zm0 23.6c-2 0-4-.6-5.7-1.6l-.4-.2-3.9 1 1-3.8-.3-.4A10.6 10.6 0 1 1 16 26.6Zm5.8-7.9c-.3-.2-1.9-.9-2.2-1s-.5-.2-.7.2-.8 1-1 1.2-.4.2-.7.1a8.7 8.7 0 0 1-4.3-3.8c-.3-.6.3-.5.9-1.7.1-.2 0-.4 0-.5l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6a1.2 1.2 0 0 0-.9.4 3.7 3.7 0 0 0-1.1 2.7 6.5 6.5 0 0 0 1.3 3.4 14.6 14.6 0 0 0 5.6 5c2.1.9 2.9 1 4 .8.6-.1 1.9-.8 2.2-1.5s.3-1.4.2-1.5-.3-.2-.6-.4Z"/></svg>'
+def wa_float(lang, page):
+    if page in ('Merci', 'Paiement'):
+        return ''
+    lbl = 'Écrire sur WhatsApp' if lang == 'fr' else 'Chat on WhatsApp'
+    return f'<a class="wa-float{" wa-float--bar" if page in BEDS24 else ""}" href="{wa_url(lang, page)}" target="_blank" rel="noopener" aria-label="{lbl}">{WA_SVG}<span>WhatsApp</span></a>'
+def fmt_idr(n, lang):
+    return 'IDR ' + (f'{n:,}'.replace(',', ' ') if lang == 'fr' else f'{n:,}')
+def bk_bar(lang, page):
+    if page not in BEDS24:
+        return ''
+    fr = lang == 'fr'
+    return (f'<div class="bk-bar" data-prices="{page}" aria-hidden="false"><div class="bk-bar__p"><small>{"À partir de" if fr else "From"}</small>'
+            f'<strong data-price="villa">{fmt_idr(PRICE0[page], lang)}</strong><small>{"/ nuit · villa entière" if fr else "/ night · entire villa"}</small></div>'
+            f'<a class="bk-bar__b" href="#reserver">{"Disponibilités" if fr else "Availability"}</a></div>')
+def villa_cards(lang):
+    src = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'src', 'pages', lang, 'Villas.html'), encoding='utf-8').read()
+    cards = re.findall(r'<a class="vl-card".*?</a>', src, flags=re.S)
+    return [add_price(c, lang) for c in cards]
+def add_price(card, lang):
+    m = re.search(r'href="[^"]*/(suma|yuga|rumah-jambu)/"', card)
+    if not m:
+        return card
+    page = {'suma': 'VillaSuma', 'yuga': 'VillaYuga', 'rumah-jambu': 'VillaRumahJambu'}[m.group(1)]
+    fr = lang == 'fr'
+    price = (f'<span class="vl-card__price" data-prices="{page}">{"À partir de" if fr else "From"} <strong data-price="villa">{fmt_idr(PRICE0[page], lang)}</strong> {"/ nuit" if fr else "/ night"}</span>')
+    return card.replace('<p>', price + '<p>', 1)
+def home_villas(lang):
+    fr = lang == 'fr'
+    cards = ''.join(villa_cards(lang))
+    h = 'Nos villas' if fr else 'Our villas'
+    sub = ('Réservez en direct sur notre site : −15 % dès 7 nuits, −20 % dès 28 nuits.' if fr else 'Book direct on our website: −15% from 7 nights, −20% from 28 nights.')
+    more = ('Voir toutes les villas' if fr else 'See all villas')
+    return (f'<section class="u-sec h-villas" id="villas"><div class="u-wrap"><div class="u-head"><h2>{h}</h2><p>{sub}</p></div>'
+            f'<div class="vl-grid">{cards}</div><p style="margin:28px 0 0"><a class="u-link" href="{url("Villas", lang)}">{more}</a></p></div></section>\n')
+def contact_wa(lang):
+    fr = lang == 'fr'
+    return (f'<div class="c-item c-item--wa"><span class="c-wa-ic">{WA_SVG}</span><div><strong>WhatsApp</strong><span><a href="{wa_url(lang, "Contact")}" target="_blank" rel="noopener">{WA_SHOW}</a><br>'
+            f'{"Le plus rapide : réponse en général dans l’heure, de 8 h à 20 h." if fr else "The fastest way: we usually reply within the hour, 8 am to 8 pm."}</span></div></div>')
+
 def transform(body, lang, page):
     body = body.replace('<a href="#">info@unayabali.com</a>', '<a href="mailto:info@unayabali.com">info@unayabali.com</a>')
     body = body.replace('<a href="#" style="font-size: 20px;">info@unayabali.com</a>', '<a href="mailto:info@unayabali.com" style="font-size: 20px;">info@unayabali.com</a>')
     if page == 'Main':
         body = body.replace('<!-- 5. ZONES -->\n<section ', '<!-- 5. ZONES -->\n<section id="zones" ', 1)
+        alt = 'Piscine d’une villa gérée par Unaya à Bali' if lang == 'fr' else 'Pool at a villa managed by Unaya in Bali'
+        body = body.replace('<div class="h-home__arch"><img src="/assets/logos/unaya-management-vertical-fonce.svg" alt="Unaya Management"></div>',
+                            f'<div class="h-home__arch h-home__arch--photo"><picture><source media="(max-width: 980px)" srcset="/assets/images/yuga-piscine.jpg"><img src="/assets/images/suma-piscine-drone.jpg" alt="{alt}" fetchpriority="high"></picture></div>', 1)
+        imgs = re.findall(r'<span class="h-door__img"><img src="https://images\.unsplash\.com[^"]*"', body)
+        for old, new in zip(imgs, ['/assets/images/yuga-drone.jpg', '/assets/images/suma-piscine-2.jpg']):
+            body = body.replace(old, '<span class="h-door__img"><img src="' + new + '"', 1)
+        i = body.index('class="h-doors"'); j = body.index('</section>', i) + len('</section>')
+        body = body[:j] + '\n' + home_villas(lang) + body[j:]
+    if page == 'Villas':
+        body = re.sub(r'<a class="vl-card".*?</a>', lambda m: add_price(m.group(0), lang), body, flags=re.S)
+    if page == 'Contact':
+        body = body.replace('<div class="c-side"><div class="c-item">', '<div class="c-side">' + contact_wa(lang) + '<div class="c-item">', 1)
     if page in BEDS24:
         body = body.replace('<!-- GALERIE -->\n<section ', '<!-- GALERIE -->\n<section data-gallery ', 1)
         body = re.sub(r'<a href="#"( style="position: absolute;[^"]*")>', r'<a href="#" data-open-gallery\1>', body)
@@ -326,6 +401,7 @@ def layout(lang, page, title, desc, body):
 {with_subnav(body, lang, page)}
 </main>
 {footer(lang, page)}
+{bk_bar(lang, page)}{wa_float(lang, page)}
 <script src="/assets/js/site.js?v={ASSET_V}" defer></script>{'<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>' if TURNSTILE_SITEKEY and 'cf-turnstile' in body else ''}
 </body>
 </html>

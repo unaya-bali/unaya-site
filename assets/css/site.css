@@ -560,3 +560,30 @@ a{color:var(--aubergine)}a:hover{color:var(--cuivre-texte)}
 .sv-file--cam::before{content:"";width:18px;height:18px;flex:none;background:currentColor;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8'%3E%3Cpath d='M3 8h4l2-3h6l2 3h4v11H3z'/%3E%3Ccircle cx='12' cy='13' r='4'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8'%3E%3Cpath d='M3 8h4l2-3h6l2 3h4v11H3z'/%3E%3Ccircle cx='12' cy='13' r='4'/%3E%3C/svg%3E") center/contain no-repeat}
 .sv-file input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
 .sv-file-n{font-size:14px;color:#2E7D4F}
+
+/* ---- Conversion 15/11/2026 : WhatsApp, barre de réservation mobile, villas sur l'accueil ---- */
+.wa-float{position:fixed;right:18px;bottom:18px;z-index:60;display:inline-flex;align-items:center;gap:10px;background:#25D366;color:#fff;text-decoration:none;font:500 15px 'Jost',sans-serif;padding:12px 18px 12px 14px;border-radius:999px;box-shadow:0 8px 24px rgba(0,0,0,.18);transition:transform .2s}
+.wa-float:hover{transform:translateY(-2px)}
+.wa-float svg{flex:none}
+.bk-bar{display:none}
+@media (max-width:980px){
+.bk-bar{position:fixed;left:0;right:0;bottom:0;z-index:55;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 16px calc(10px + env(safe-area-inset-bottom));background:var(--aubergine);color:#F7F2EE;box-shadow:0 -6px 20px rgba(0,0,0,.15);transition:transform .25s}
+.bk-bar__p{display:flex;flex-direction:column;line-height:1.2;min-width:0}
+.bk-bar__p small{font-size:12px;color:#D9C6BA}
+.bk-bar__p strong{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:22px;white-space:nowrap}
+.bk-bar__b{flex:none;background:#D2A48C;color:#3F2A3A;text-decoration:none;font:500 14px 'Jost',sans-serif;letter-spacing:.08em;text-transform:uppercase;padding:14px 18px}
+body.bk-inview .bk-bar{transform:translateY(110%)}
+.wa-float--bar{bottom:84px}
+body.bk-inview .wa-float--bar{bottom:18px}
+body:has(.bk-bar) footer{padding-bottom:70px}
+}
+@media (max-width:640px){.wa-float span{display:none}.wa-float{padding:14px;right:14px;bottom:14px}.wa-float--bar{bottom:80px}}
+.c-item--wa .c-wa-ic{color:#25D366;flex:none}
+.vl-card__price{font-size:15px;color:var(--prune)}
+.vl-card__price strong{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:22px;color:var(--aubergine)}
+.h-villas .u-head p{margin:8px 0 0}
+.h-home__arch--photo{background:var(--perle)}
+.h-home__arch--photo img{width:100%!important;max-width:none!important;height:100%;object-fit:cover;position:absolute!important;inset:0}
+.h-home__arch--photo::before{z-index:1;border-color:rgba(247,242,238,.7)}
+@media (max-width:980px){.h-home__arch--photo{order:-1;max-width:none!important;height:360px!important}}
+@media (max-width:640px){.h-home__arch--photo{height:230px!important}.h-home{padding-top:28px!important}}

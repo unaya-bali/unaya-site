@@ -109,18 +109,26 @@ cards.forEach(function(c){var ok=z==='all'||c.getAttribute('data-zone')===z;c.hi
 
 // Prix « à partir de » des pages villas : lus automatiquement dans Beds24 (le prix écrit dans la page sert de secours)
 (function () {
-  var box = document.querySelector('[data-prices]');
-  if (!box || !window.fetch) return;
+  var boxes = document.querySelectorAll('[data-prices]');
+  if (!boxes.length || !window.fetch) return;
   fetch('/api/prices').then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
-    var v = d && d[box.getAttribute('data-prices')];
-    if (!v) return;
+    if (!d) return;
     var fr = document.documentElement.lang === 'fr';
     var fmt = function (n) { return 'IDR ' + (fr ? String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' ') : Number(n).toLocaleString('en-US')); };
-    ['villa', 'room'].forEach(function (k) {
-      var el = box.querySelector('[data-price="' + k + '"]');
-      if (el && v[k] > 0) el.textContent = fmt(v[k]);
+    boxes.forEach(function (box) {
+      var v = d[box.getAttribute('data-prices')];
+      if (!v) return;
+      ['villa', 'room'].forEach(function (k) {
+        box.querySelectorAll('[data-price="' + k + '"]').forEach(function (el) { if (v[k] > 0) el.textContent = fmt(v[k]); });
+      });
     });
   }).catch(function () {});
+})();
+// Barre de réservation mobile : masquée quand l'encadré de réservation est à l'écran
+(function () {
+  var bar = document.querySelector('.bk-bar'), box = document.getElementById('reserver');
+  if (!bar || !box || !('IntersectionObserver' in window)) return;
+  new IntersectionObserver(function (e) { document.body.classList.toggle('bk-inview', e[0].isIntersecting); }, { threshold: 0.15 }).observe(box);
 })();
 // Passeport : afficher les fichiers choisis / photos prises
 (function () {
