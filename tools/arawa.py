@@ -269,7 +269,19 @@ def detail(l, t, page):
                   f'<div class="ar-lv2__b"><span class="ar-lv2__ic">{ic(k, 26)}</span><h3>{h}</h3><p class="ar-lv2__p">{p}</p></div></article>' for i, (k, h, p) in enumerate(t['phil']))
     s += sec(head(t['ph'], t['pl'], True) + f'<div class="ar-lv2 ar-lv2--4">{phc}</div>', 'white')
     gal = ''.join(f'<figure><img src="/assets/images/{f}" alt="{a if fr else b}" loading="lazy"></figure>' for f, a, b in GAL)
-    s += sec(head(t['gh'], t['gl']) + f'<div class="ar-gal" data-gallery>{gal}</div>', id='galerie')
+    vt = (dict(k='La vidéo', h='Arawa <em>Villas.</em>', p='Séjour ouvert sur la piscine privée, suites lumineuses, matériaux naturels et beaucoup de verdure. Faites le tour de la villa en une minute.',
+               b1=f'Voir les {len(GAL)} photos', b2='Activer le son', b3='Couper le son', n='Vidéo de synthèse (3D) du projet, non contractuelle.')
+          if fr else
+          dict(k='The film', h='Arawa <em>Villas.</em>', p='Open-plan living onto a private pool, light-filled suites, natural materials and plenty of greenery. Take the one-minute tour.',
+               b1=f'View all {len(GAL)} photos', b2='Sound on', b3='Sound off', n='3D rendering of the project, not contractual.'))
+    s += ('<section class="u-sec ar-vid-sec" id="galerie"><div class="u-wrap"><div class="ar-vid">'
+          f'<div class="ar-vid__txt"><p class="ar-vid__k">{vt["k"]}</p><h2>{vt["h"]}</h2><p>{vt["p"]}</p>'
+          f'<div class="ar-vid__btns"><a class="u-btn u-btn--solid" href="#galerie" data-open-gallery>{vt["b1"]}</a>'
+          f'<button type="button" class="u-btn u-btn--line ar-vid__snd" data-on="{vt["b2"]}" data-off="{vt["b3"]}">{vt["b2"]}</button></div>'
+          f'<p class="ar-vid__n">{vt["n"]}</p></div>'
+          '<div class="ar-vid__frame"><video data-vid muted loop playsinline preload="metadata" poster="/assets/images/arawa-video-poster.jpg">'
+          '<source src="/assets/video/arawa-video.mp4" type="video/mp4"></video></div>'
+          f'</div><div hidden data-gallery>{gal}</div></div></section>\n')
     LVIMG = [('arawa-cuisine.jpg', 'home', '01'), ('arawa-chambre-2.jpg', 'bed', '02'), ('arawa-sdb-1.jpg', 'leaf', '03')]
     lv = ''.join(f'<article class="ar-lv2__c"><div class="ar-lv2__img"><img src="/assets/images/{LVIMG[i][0]}" alt="{h}" loading="lazy"><span class="ar-lv2__n">{LVIMG[i][2]}</span></div>'
                  f'<div class="ar-lv2__b"><span class="ar-lv2__ic">{ic(LVIMG[i][1], 26)}</span><h3>{h}</h3><ul>' + ''.join(f'<li>{x}</li>' for x in li) + '</ul></div></article>' for i, (h, li) in enumerate(t['lv']))

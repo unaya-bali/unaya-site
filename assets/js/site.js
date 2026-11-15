@@ -189,3 +189,15 @@ cards.forEach(function(c){var ok=z==='all'||c.getAttribute('data-zone')===z;c.hi
     });
   });
 })();
+
+// Vidéos de présentation : lecture quand elles sont à l'écran, bouton son
+(function () {
+  document.querySelectorAll('video[data-vid]').forEach(function (v) {
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if ('IntersectionObserver' in window && !reduce) {
+      new IntersectionObserver(function (e) { if (e[0].isIntersecting) { var p = v.play(); if (p) p.catch(function () {}); } else v.pause(); }, { threshold: 0.3 }).observe(v);
+    } else { v.controls = true; }
+    var box = v.closest('section'), b = box && box.querySelector('.ar-vid__snd');
+    if (b) b.addEventListener('click', function () { v.muted = !v.muted; if (!v.muted) { var p = v.play(); if (p) p.catch(function () {}); } b.textContent = v.muted ? b.getAttribute('data-on') : b.getAttribute('data-off'); });
+  });
+})();
