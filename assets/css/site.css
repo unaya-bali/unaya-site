@@ -622,3 +622,24 @@ footer a{display:inline-block;padding:4px 0}
 .subnav a:last-child:nth-child(odd){grid-column:1/-1}
 }
 .h-home__arch--photo img{object-position:center 60%}
+
+/* Villas à vendre (Arawa) */
+.ar-pr{display:flex;flex-direction:column;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.15)}
+.ar-pr span{font-size:13px;letter-spacing:.12em;text-transform:uppercase;opacity:.8}
+.ar-pr strong{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:32px;line-height:1.1}
+.ar-pr strong small{font-family:'Jost',sans-serif;font-size:14px;font-weight:400;opacity:.8;margin-right:4px}
+.ar-pr em{font-style:normal;font-size:14px;opacity:.8}
+.ar-gal{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.ar-gal figure{margin:0;aspect-ratio:4/3;overflow:hidden}
+.ar-gal figure:first-child{grid-column:span 2;grid-row:span 2;aspect-ratio:auto}
+.ar-gal img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
+.ar-gal img:hover{transform:scale(1.03)}
+.ar-site,.ar-plans{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.ar-site figure,.ar-plans figure{margin:0}
+.ar-site img{width:100%;aspect-ratio:3/4;object-fit:cover;display:block}
+.ar-plans img{width:100%;aspect-ratio:3/2;object-fit:contain;background:#fff;border:1px solid var(--ligne);display:block}
+.ar-site figcaption,.ar-plans figcaption{font-size:14px;color:var(--prune);margin-top:8px}
+.ar-loc{display:flex;flex-direction:column;gap:24px;align-items:flex-start;max-width:720px}
+.ar-loc .ld-tbl{width:100%}
+.ar-lv .ld-ar h3{margin-top:0}
+@media (max-width:900px){.ar-gal{grid-template-columns:1fr 1fr}.ar-site,.ar-plans{grid-template-columns:1fr}.ar-site img{aspect-ratio:4/3}}

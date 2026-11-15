@@ -19,21 +19,21 @@ WHATSAPP = {'VillaSuma': '6285190211324', 'VillaYuga': '6281330617077', 'VillaRu
 TURNSTILE_SITEKEY = '0x4AAAAAAFl92qPSywb2bEJt'
 SOCIAL = {'instagram': 'https://www.instagram.com/unayabali/', 'linktree': 'https://linktr.ee/Unaya_Management'}
 OWNER_PAGES = ['Proprietaires', 'ProprietairesServices', 'ProprietairesTarifs', 'ConfierMaVilla']
-INVEST_PAGES = ['Investir', 'Terrains', 'TerrainMelasti']
-INVEST_SUB = {'fr': [('Investir', 'Le guide pour investir'), ('Terrains', 'Terrains disponibles')], 'en': [('Investir', 'Investment guide'), ('Terrains', 'Available land')]}
+INVEST_PAGES = ['Investir', 'Terrains', 'TerrainMelasti', 'VillasAVendre', 'ArawaVillas']
+INVEST_SUB = {'fr': [('Investir', 'Le guide pour investir'), ('VillasAVendre', 'Villas à vendre'), ('Terrains', 'Terrains disponibles')], 'en': [('Investir', 'Investment guide'), ('VillasAVendre', 'Villas for sale'), ('Terrains', 'Available land')]}
 BEDS24 = {'VillaSuma': '359817', 'VillaYuga': '359816', 'VillaRumahJambu': '359818'}  # propriétés Unaya
 
 T = {  # textes communs
  'fr': dict(nav=[('Proprietaires','Propriétaires'),('Villas','Nos villas'),('Investir','Investir à Bali'),('ServicesVoyageurs','Services voyageurs'),('APropos','À propos'),('Contact','Contact')],
             book='Réserver', owner='Confier ma villa', menu='Menu', skip='Aller au contenu', main_menu='Menu principal',
             sub=[('Proprietaires',"Vue d'ensemble"),('ProprietairesServices','Nos services'),('ProprietairesTarifs','Formules & tarifs'),('ConfierMaVilla','Confier ma villa')], sub_label='Propriétaires', portal='Espace propriétaire',
-            f_nav='Navigation', f_contact='Contact', f_company='Société', f_links=[('Proprietaires','Propriétaires'),('Villas','Nos villas'),('Investir','Investir à Bali'),('Terrains','Terrains'),('ServicesVoyageurs','Services voyageurs'),('FAQ','FAQ'),('Contact','Contact')],
+            f_nav='Navigation', f_contact='Contact', f_company='Société', f_links=[('Proprietaires','Propriétaires'),('Villas','Nos villas'),('Investir','Investir à Bali'),('VillasAVendre','Villas à vendre'),('Terrains','Terrains'),('ServicesVoyageurs','Services voyageurs'),('FAQ','FAQ'),('Contact','Contact')],
             legal=[('MentionsLegales','Mentions légales'),('Confidentialite','Confidentialité'),('Conditions','Conditions de réservation')],
             country='Indonésie', build='Unaya Build — Investir à Bali', ogloc='fr_FR'),
  'en': dict(nav=[('Proprietaires','Owners'),('Villas','Our villas'),('Investir','Invest in Bali'),('ServicesVoyageurs','Guest services'),('APropos','About'),('Contact','Contact')],
             book='Book', owner='List my villa', menu='Menu', skip='Skip to content', main_menu='Main menu',
             sub=[('Proprietaires','Overview'),('ProprietairesServices','Our services'),('ProprietairesTarifs','Plans & pricing'),('ConfierMaVilla','List my villa')], sub_label='Owners', portal='Owner portal',
-            f_nav='Navigation', f_contact='Contact', f_company='Company', f_links=[('Proprietaires','Owners'),('Villas','Our villas'),('Investir','Invest in Bali'),('Terrains','Land'),('ServicesVoyageurs','Guest services'),('FAQ','FAQ'),('Contact','Contact')],
+            f_nav='Navigation', f_contact='Contact', f_company='Company', f_links=[('Proprietaires','Owners'),('Villas','Our villas'),('Investir','Invest in Bali'),('VillasAVendre','Villas for sale'),('Terrains','Land'),('ServicesVoyageurs','Guest services'),('FAQ','FAQ'),('Contact','Contact')],
             legal=[('MentionsLegales','Legal notice'),('Confidentialite','Privacy'),('Conditions','Booking terms')],
             country='Indonesia', build='Unaya Build — Invest in Bali', ogloc='en_US'),
 }
@@ -45,6 +45,10 @@ DESC = {
  ('en','SiteWeb'):"A website for your Bali villa: more visibility, a better guest experience, cost-effective marketing and more direct bookings. Included in our plans.",
  ('fr','Terrains'):"Terrains à Bali sélectionnés et vérifiés par Unaya Build : titre foncier, zonage, accès. Bail ou PT PMA, construction et mise en location.",
 ('en','Terrains'):"Land in Bali selected and checked by Unaya Build: land title, zoning, access. Leasehold or PT PMA, construction and renting out.",
+('fr','VillasAVendre'):"Villas à vendre à Bali choisies par Unaya : villas avec piscine à Uluwatu, en bail (leasehold), à habiter ou à louer, gestion locative possible.",
+('en','VillasAVendre'):"Villas for sale in Bali chosen by Unaya: pool villas in Uluwatu, leasehold, to live in or rent out, with rental management available.",
+('fr','ArawaVillas'):"Arawa Villas à Balangan, Uluwatu : 2 villas de 2 chambres avec piscine privée, livrées meublées fin décembre 2026, dès 170 000 USD en bail.",
+('en','ArawaVillas'):"Arawa Villas in Balangan, Uluwatu: two 2-bedroom villas with private pool, handed over furnished end of December 2026, from USD 170,000 leasehold.",
 ('fr','TerrainMelasti'):"Terrain de 500 m² en zone rose à Melasti, Uluwatu : bail 30 ans + option 30 ans, titre SHM, à 5 min de la plage. IDR 3,15 milliards.",
 ('en','TerrainMelasti'):"500 m² pink-zone plot in Melasti, Uluwatu: 30-year lease + 30-year option, SHM title, 5 min from the beach. IDR 3.15 billion.",
  ('fr','Experiences'):"Unaya Experiences : excursions privées à Bali avec guide francophone ou chauffeur, départ de votre villa. 10 circuits à la journée, activités et calcul du prix en ligne.",
@@ -93,7 +97,7 @@ def url(name, lang):
 def subnav(lang, page):
     t = T[lang]
     if page in INVEST_PAGES:
-        cur = 'Terrains' if page == 'TerrainMelasti' else page
+        cur = {'TerrainMelasti': 'Terrains', 'ArawaVillas': 'VillasAVendre'}.get(page, page)
         return f'<nav class="subnav" aria-label="{"Investir à Bali" if lang == "fr" else "Invest in Bali"}">' + ''.join(
             f'<a href="{url(n, lang)}"{" aria-current=\"page\"" if n == cur else ""}>{lbl}</a>' for n, lbl in INVEST_SUB[lang]) + '</nav>'
     if page not in OWNER_PAGES: return ''
@@ -246,6 +250,8 @@ def wa_text(lang, page):
     fr = lang == 'fr'
     if page in VNAME:
         return (f"Bonjour Unaya, je suis intéressé(e) par {'la ' if page != 'VillaRumahJambu' else ''}{VNAME[page]}. Mes dates : " if fr else f"Hello Unaya, I'm interested in {VNAME[page]}. My dates: ")
+    if page in ('VillasAVendre', 'ArawaVillas'):
+        return ("Bonjour Unaya, je suis intéressé(e) par les Arawa Villas à Balangan." if fr else "Hello Unaya, I'm interested in Arawa Villas in Balangan.")
     if page in ('Terrains', 'TerrainMelasti'):
         return ("Bonjour Unaya, je souhaite des informations sur le terrain de Melasti." if fr else "Hello Unaya, I'd like information about the Melasti land.")
     if page in OWNER_PAGES or page == 'Investir':
@@ -427,7 +433,7 @@ LODGING = {
  'VillaYuga': dict(name='Villa Yuga', loc='Nyanyi, Tanah Lot', img='yuga-g1.jpg', rooms=4, guests=8),
  'VillaRumahJambu': dict(name='Rumah Jambu', loc='Balangan, Uluwatu', img='rj-g1.jpg', rooms=2, guests=4),
 }
-PARENT = {'VillaSuma':'Villas','VillaYuga':'Villas','VillaRumahJambu':'Villas','TerrainMelasti':'Terrains',
+PARENT = {'VillaSuma':'Villas','VillaYuga':'Villas','VillaRumahJambu':'Villas','TerrainMelasti':'Terrains','ArawaVillas':'VillasAVendre',
           'ProprietairesServices':'Proprietaires','ProprietairesTarifs':'Proprietaires','ConfierMaVilla':'Proprietaires','SiteWeb':'Proprietaires'}
 
 def jsonld(lang, page, title, body):

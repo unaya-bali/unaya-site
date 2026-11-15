@@ -90,5 +90,13 @@
   "Experiences": {
     "en": "/experiences/",
     "fr": "/fr/experiences/"
+  },
+  "VillasAVendre": {
+    "en": "/villas-for-sale/",
+    "fr": "/fr/villas-a-vendre/"
+  },
+  "ArawaVillas": {
+    "en": "/villas-for-sale/arawa-balangan/",
+    "fr": "/fr/villas-a-vendre/arawa-balangan/"
   }
 }
