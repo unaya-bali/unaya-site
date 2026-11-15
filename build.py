@@ -19,19 +19,21 @@ WHATSAPP = {'VillaSuma': '6285190211324', 'VillaYuga': '6281330617077', 'VillaRu
 TURNSTILE_SITEKEY = '0x4AAAAAAFl92qPSywb2bEJt'
 SOCIAL = {'instagram': 'https://www.instagram.com/unayabali/', 'linktree': 'https://linktr.ee/Unaya_Management'}
 OWNER_PAGES = ['Proprietaires', 'ProprietairesServices', 'ProprietairesTarifs', 'ConfierMaVilla']
+INVEST_PAGES = ['Investir', 'Terrains', 'TerrainMelasti']
+INVEST_SUB = {'fr': [('Investir', 'Le guide pour investir'), ('Terrains', 'Terrains disponibles')], 'en': [('Investir', 'Investment guide'), ('Terrains', 'Available land')]}
 BEDS24 = {'VillaSuma': '359817', 'VillaYuga': '359816', 'VillaRumahJambu': '359818'}  # propriétés Unaya
 
 T = {  # textes communs
- 'fr': dict(nav=[('Proprietaires','Propriétaires'),('Villas','Nos villas'),('Investir','Investir à Bali'),('Terrains','Terrains'),('ServicesVoyageurs','Services voyageurs'),('APropos','À propos'),('Contact','Contact')],
+ 'fr': dict(nav=[('Proprietaires','Propriétaires'),('Villas','Nos villas'),('Investir','Investir à Bali'),('ServicesVoyageurs','Services voyageurs'),('APropos','À propos'),('Contact','Contact')],
             book='Réserver', owner='Confier ma villa', menu='Menu', skip='Aller au contenu', main_menu='Menu principal',
             sub=[('Proprietaires',"Vue d'ensemble"),('ProprietairesServices','Nos services'),('ProprietairesTarifs','Formules & tarifs'),('ConfierMaVilla','Confier ma villa')], sub_label='Propriétaires', portal='Espace propriétaire',
-            f_nav='Navigation', f_contact='Contact', f_company='Société', f_links=[('Proprietaires','Propriétaires'),('Villas','Nos villas'),('ServicesVoyageurs','Services voyageurs'),('FAQ','FAQ'),('Contact','Contact')],
+            f_nav='Navigation', f_contact='Contact', f_company='Société', f_links=[('Proprietaires','Propriétaires'),('Villas','Nos villas'),('Investir','Investir à Bali'),('Terrains','Terrains'),('ServicesVoyageurs','Services voyageurs'),('FAQ','FAQ'),('Contact','Contact')],
             legal=[('MentionsLegales','Mentions légales'),('Confidentialite','Confidentialité'),('Conditions','Conditions de réservation')],
             country='Indonésie', build='Unaya Build — Investir à Bali', ogloc='fr_FR'),
- 'en': dict(nav=[('Proprietaires','Owners'),('Villas','Our villas'),('Investir','Invest in Bali'),('Terrains','Land'),('ServicesVoyageurs','Guest services'),('APropos','About'),('Contact','Contact')],
+ 'en': dict(nav=[('Proprietaires','Owners'),('Villas','Our villas'),('Investir','Invest in Bali'),('ServicesVoyageurs','Guest services'),('APropos','About'),('Contact','Contact')],
             book='Book', owner='List my villa', menu='Menu', skip='Skip to content', main_menu='Main menu',
             sub=[('Proprietaires','Overview'),('ProprietairesServices','Our services'),('ProprietairesTarifs','Plans & pricing'),('ConfierMaVilla','List my villa')], sub_label='Owners', portal='Owner portal',
-            f_nav='Navigation', f_contact='Contact', f_company='Company', f_links=[('Proprietaires','Owners'),('Villas','Our villas'),('ServicesVoyageurs','Guest services'),('FAQ','FAQ'),('Contact','Contact')],
+            f_nav='Navigation', f_contact='Contact', f_company='Company', f_links=[('Proprietaires','Owners'),('Villas','Our villas'),('Investir','Invest in Bali'),('Terrains','Land'),('ServicesVoyageurs','Guest services'),('FAQ','FAQ'),('Contact','Contact')],
             legal=[('MentionsLegales','Legal notice'),('Confidentialite','Privacy'),('Conditions','Booking terms')],
             country='Indonesia', build='Unaya Build — Invest in Bali', ogloc='en_US'),
 }
@@ -90,6 +92,10 @@ def url(name, lang):
 
 def subnav(lang, page):
     t = T[lang]
+    if page in INVEST_PAGES:
+        cur = 'Terrains' if page == 'TerrainMelasti' else page
+        return f'<nav class="subnav" aria-label="{"Investir à Bali" if lang == "fr" else "Invest in Bali"}">' + ''.join(
+            f'<a href="{url(n, lang)}"{" aria-current=\"page\"" if n == cur else ""}>{lbl}</a>' for n, lbl in INVEST_SUB[lang]) + '</nav>'
     if page not in OWNER_PAGES: return ''
     return f'<nav class="subnav" aria-label="{t["sub_label"]}">' + ''.join(
         f'<a href="{url(n, lang)}"{" aria-current=\"page\"" if n == page else ""}>{lbl}</a>' for n, lbl in t['sub']) + f'<a class="subnav-portal" href="{PORTAL}">{t["portal"]} ↗</a></nav>'
@@ -101,11 +107,14 @@ def with_subnav(body, lang, page):
     if b.startswith('<section class="u-hero'):
         i = b.index('</section>') + len('</section>')
         return b[:i] + '\n' + sn + b[i:]
+    if page in INVEST_PAGES and '<section' in body:
+        i = body.index('</section>', body.index('<section')) + len('</section>')
+        return body[:i] + '\n' + sn + body[i:]
     return sn + '\n' + body
 
 def header(lang, page):
     t = T[lang]; other = 'en' if lang == 'fr' else 'fr'
-    nav = ''.join(f'<a href="{url(n, lang)}"{" aria-current=\"page\"" if (n == page or (n == "Proprietaires" and page in OWNER_PAGES)) else ""}>{lbl}</a>' for n, lbl in t['nav'])
+    nav = ''.join(f'<a href="{url(n, lang)}"{" aria-current=\"page\"" if (n == page or (n == "Proprietaires" and page in OWNER_PAGES) or (n == "Investir" and page in INVEST_PAGES)) else ""}>{lbl}</a>' for n, lbl in t['nav'])
     langsw = (f'<a class="lang" href="{url(page, other)}" hreflang="{other}"><strong>FR</strong> · EN</a>' if lang == 'fr'
               else f'<a class="lang" href="{url(page, other)}" hreflang="{other}">FR · <strong>EN</strong></a>')
     return_sub = None
