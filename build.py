@@ -355,7 +355,7 @@ def transform(body, lang, page):
         body = body.replace('<!-- 5. ZONES -->\n<section ', '<!-- 5. ZONES -->\n<section id="zones" ', 1)
         alt = 'Piscine d’une villa gérée par Unaya à Bali' if lang == 'fr' else 'Pool at a villa managed by Unaya in Bali'
         body = body.replace('<div class="h-home__arch"><img src="/assets/logos/unaya-management-vertical-fonce.svg" alt="Unaya Management"></div>',
-                            f'<div class="h-home__arch h-home__arch--photo"><picture><source media="(max-width: 980px)" srcset="/assets/images/yuga-piscine.jpg"><img src="/assets/images/suma-piscine-drone.jpg" alt="{alt}" fetchpriority="high"></picture></div>', 1)
+                            f'<div class="h-home__arch h-home__arch--photo"><picture><source media="(max-width: 980px)" srcset="/assets/images/yuga-piscine.jpg"><img src="/assets/images/yuga-transats.jpg" alt="{alt}" fetchpriority="high"></picture></div>', 1)
         imgs = re.findall(r'<span class="h-door__img"><img src="https://images\.unsplash\.com[^"]*"', body)
         for old, new in zip(imgs, ['/assets/images/yuga-drone.jpg', '/assets/images/suma-piscine-2.jpg']):
             body = body.replace(old, '<span class="h-door__img"><img src="' + new + '"', 1)
