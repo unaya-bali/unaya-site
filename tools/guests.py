@@ -31,7 +31,7 @@ def page(lang):
     cards = re.findall(r'<div id="(\w+)" style="[^"]*"><img class="sv-ph" src="([^"]+)" alt="([^"]*)" loading="lazy"><h2[^>]*>(.*?)</h2><p[^>]*>(.*?)</p><div style="margin-top: auto[^"]*">(.*?)</div>((?:<button|<a ).*?(?:</button>|</a>))</div>', old, flags=re.S)
     steps = re.findall(r'<span style="font-family: \'Cormorant Garamond\'[^"]*color: #A8705A;">\d</span><div><p[^>]*>(.*?)</p><p[^>]*>(.*?)</p></div>', old, flags=re.S)
     s = f'<!-- title: {title} -->\n<div class="hm">\n'
-    s += (f'<section class="hm-hero hm-hero--sm"><img src="/assets/images/suma-entree.jpg" alt="{"L’entrée de la Villa Suma" if fr else "Villa Suma entrance"}" fetchpriority="high">'
+    s += (f'<section class="hm-hero hm-hero--sm"><img src="{re.search(r'<section class="u-hero"><img src="([^"]+)"', old).group(1)}" alt="" fetchpriority="high">'
           f'<div class="hm-hero__in"><p class="hm-hero__k">{x["kick"]}</p><h1>{h1}</h1><p class="hm-hero__sub">{sub}</p>'
           '<ul class="hm-badges">' + ''.join(f'<li><span aria-hidden="true">✓</span>{b}</li>' for b in x['badges']) + '</ul></div></section>\n')
     s += ('<nav class="sv-nav gs-nav" aria-label="Services"><div class="sv-nav__in">' +
