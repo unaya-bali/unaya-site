@@ -722,3 +722,17 @@ footer a{display:inline-block;padding:4px 0}
 .cx-card--w{display:flex;flex-direction:column}.cx-card--w .cx-area{flex:1}
 @media (max-width:640px){.cx-br,.cx-bars--cmp .cx-br{grid-template-columns:1fr auto}}
 .cx-dc-v,.cx-dc-l{pointer-events:none}
+/* Mosaïque photo des fiches Arawa (au-dessus du descriptif) */
+.ar-mz-sec{padding-bottom:0!important}
+.ar-mz{position:relative;display:grid;grid-template-columns:2fr 1fr;grid-template-rows:1fr 1fr;gap:20px;height:clamp(420px,52vw,640px)}
+.ar-mz a{position:relative;display:block;overflow:hidden;border-radius:28px;background:var(--perle)}
+.ar-mz img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+.ar-mz a:hover img{transform:scale(1.04)}
+.ar-mz__big{grid-row:1/3}
+.ar-mz__more::after{content:"";position:absolute;inset:0;background:rgba(46,36,41,.38);transition:background .3s}
+.ar-mz__more:hover::after{background:rgba(46,36,41,.5)}
+.ar-mz__more span{position:absolute;inset:0;z-index:1;display:flex;align-items:center;justify-content:center;color:#fff;font:500 15px 'Jost',sans-serif;letter-spacing:.14em;text-transform:uppercase}
+.ar-mz .ar-mz__plan{position:absolute;left:28px;bottom:28px;z-index:2;background:#fff;color:var(--aubergine);border-radius:10px;padding:12px 20px;font:400 17px 'Jost',sans-serif;text-decoration:none;box-shadow:0 6px 18px rgba(0,0,0,.12);overflow:visible;transition:transform .2s}
+.ar-mz .ar-mz__plan:hover{transform:translateY(-2px)}
+@media (max-width:760px){.ar-mz{grid-template-columns:1fr 1fr;grid-template-rows:auto auto;height:auto;gap:10px}.ar-mz__big{grid-column:1/-1;grid-row:auto;aspect-ratio:4/3}.ar-mz__s{aspect-ratio:1}.ar-mz a{border-radius:18px}.ar-mz .ar-mz__plan{left:14px;top:14px;bottom:auto;font-size:14px;padding:9px 14px}}
+.ar-mz__more span{text-align:center;padding:0 12px}

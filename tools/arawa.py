@@ -203,6 +203,14 @@ def detail(l, t, page):
     price = (f'<aside class="ld-price"><span class="ld-price__k">{t["pk"]}</span>{rows}'
              f'<a class="u-btn u-btn--rose" href="#dossier">{t["pb1"]}</a><a class="ld-wa" href="{wa}" target="_blank" rel="noopener">{t["pb2"]}</a>'
              f'<p>{t["pnote"]}</p>' + (f'<p class="ar-other">{t["other"]}</p>' if t.get('other') else '') + '</aside>')
+    mz = t.get('mosaic', ['arawa-piscine.jpg', 'arawa-salon.jpg', 'arawa-sejour.jpg'])
+    alt = {f: (a if fr else b) for f, a, b in GAL}
+    s += ('<section class="u-sec ar-mz-sec"><div class="u-wrap"><div class="ar-mz">'
+          f'<a class="ar-mz__big" href="#galerie" data-open-gallery><img src="/assets/images/{mz[0]}" alt="{alt.get(mz[0], "")}"></a>'
+          f'<a class="ar-mz__s" href="#galerie" data-open-gallery><img src="/assets/images/{mz[1]}" alt="{alt.get(mz[1], "")}" loading="lazy"></a>'
+          f'<a class="ar-mz__s ar-mz__more" href="#galerie" data-open-gallery><img src="/assets/images/{mz[2]}" alt="{alt.get(mz[2], "")}" loading="lazy"><span>{"Voir les" if fr else "View all"} {len(GAL)} {"photos" if fr else "photos"}</span></a>'
+          f'<a class="ar-mz__plan" href="#plans">{"Voir les plans" if fr else "View floor plans"}</a>'
+          '</div></div></section>\n')
     s += sec(f'<div class="ld-main"><div class="ld-desc">{head(t["dh"])}{desc}</div>{price}</div>')
     vv = page[-1] if page != 'ArawaVillas' else None
     if vv:
@@ -211,13 +219,13 @@ def detail(l, t, page):
         s += sec(cmp_html(l, vv))
     s += sec(head(t['ph'], t['pl']) + '<div class="u-feats u-feats--4">' + ''.join(f'<div class="u-feat">{ic(k)}<h3>{h}</h3><p>{p}</p></div>' for k, h, p in t['phil']) + '</div>', 'white')
     gal = ''.join(f'<figure><img src="/assets/images/{f}" alt="{a if fr else b}" loading="lazy"></figure>' for f, a, b in GAL)
-    s += sec(head(t['gh'], t['gl']) + f'<div class="ar-gal" data-gallery>{gal}</div>')
+    s += sec(head(t['gh'], t['gl']) + f'<div class="ar-gal" data-gallery>{gal}</div>', id='galerie')
     lv = ''.join(f'<div class="ld-ar"><h3>{h}</h3><ul>' + ''.join(f'<li>{x}</li>' for x in li) + '</ul></div>' for h, li in t['lv'])
     s += sec(head(t['vh'], t['vl']) + f'<div class="ld-around ar-lv">{lv}</div>' + (surf_html(l) if vv else ''), 'white')
     ph = ''.join(f'<figure><img src="/assets/images/{f}" alt="{c}" loading="lazy"><figcaption>{c}</figcaption></figure>' for f, c in zip(t.get('chf', ['arawa-chantier-1.jpg', 'arawa-chantier-2.jpg', 'arawa-chantier-3.jpg']), t['chc']))
     s += sec(head(t['ch'], t['cl']) + (prog_html(l) if vv else '') + f'<div class="ar-site">{ph}</div>')
     pl = ''.join(f'<figure><a href="/assets/images/{f}" target="_blank" rel="noopener"><img src="/assets/images/{f}" alt="{c}" loading="lazy"></a><figcaption>{c}</figcaption></figure>' for f, c in zip(['arawa-plan-masse.jpg', 'arawa-plan-rdc.jpg', 'arawa-plan-etage.jpg'], t['plc']))
-    s += sec(head(t['plh'], t['pll']) + f'<div class="ar-plans">{pl}</div>', 'white')
+    s += sec(head(t['plh'], t['pll']) + f'<div class="ar-plans">{pl}</div>', 'white', id='plans')
     tbl = '<dl class="ld-tbl">' + ''.join(f'<div><dt>{a}</dt><dd>{b}</dd></div>' for a, b in t['loc']) + '</dl>'
     if vv: tbl = dist_html(l, t['loc'])
     s += sec(head(t['lh'], t['ll']) + f'<div class="ar-loc">{tbl}<a class="u-btn u-btn--line" href="{GMAP}" target="_blank" rel="noopener">{t["maps"]} ↗</a></div>')
@@ -271,7 +279,7 @@ V = {'B': {'fr': dict(
         bc=[('Home', '/'), ('Villas for sale', '/villas-for-sale/'), ('Arawa Villas', '/villas-for-sale/arawa-balangan/'), ('Villa B', None)],
         t='Arawa Villas · Villa B, Balangan — 2-Bedroom Pool Villa from USD 170,000 | Unaya Bali')},
   'D': {'fr': dict(
-        hero='arawa-piscine.jpg',
+        hero='arawa-piscine.jpg', mosaic=['arawa-piscine-2.jpg', 'arawa-sejour.jpg', 'arawa-chambre-1.jpg'],
         h1='Arawa Villas · Villa D', sub='Villa de 2 chambres avec piscine privée sur la plus grande parcelle restante, 105,41 m², à Balangan. Livrée meublée fin décembre 2026, à partir de 195 000 USD.',
         badges=['Disponible', 'Livraison fin décembre 2026'],
         facts=[('bed', 'Chambres', '2 en suite', '+ WC invités'), ('home', 'Surface', '≈ 106 m²', 'sur 2 niveaux'), ('map', 'Parcelle', '105,41 m²', 'la plus grande restante'), ('doc', 'Bail', '≈ 28 ans', '+ option 30 ans')],
@@ -290,7 +298,7 @@ V = {'B': {'fr': dict(
         bc=[('Accueil', '/fr/'), ('Villas à vendre', '/fr/villas-a-vendre/'), ('Arawa Villas', '/fr/villas-a-vendre/arawa-balangan/'), ('Villa D', None)],
         t='Arawa Villas · Villa D, Balangan — 2 chambres, piscine, dès 195 000 USD | Unaya Bali'),
       'en': dict(
-        hero='arawa-piscine.jpg',
+        hero='arawa-piscine.jpg', mosaic=['arawa-piscine-2.jpg', 'arawa-sejour.jpg', 'arawa-chambre-1.jpg'],
         h1='Arawa Villas · Villa D', sub='Two-bedroom villa with a private pool on the largest remaining plot, 105.41 m², in Balangan. Handed over furnished at the end of December 2026, from USD 195,000.',
         badges=['Available', 'Handover end of December 2026'],
         facts=[('bed', 'Bedrooms', '2 en suite', '+ guest WC'), ('home', 'Size', '≈ 106 m²', 'over 2 floors'), ('map', 'Plot', '105.41 m²', 'largest remaining'), ('doc', 'Lease', '≈ 28 years', '+ 30-year option')],
