@@ -264,7 +264,10 @@ def detail(l, t, page):
         s += f'<div hidden data-arawa="{jattr(dict(price=PRICE[vv], lease=28))}"></div>\n'
         s += sec(sim_html(l, vv), 'white', id='rendement')
         s += sec(cmp_html(l, vv))
-    s += sec(head(t['ph'], t['pl']) + '<div class="u-feats u-feats--4">' + ''.join(f'<div class="u-feat">{ic(k)}<h3>{h}</h3><p>{p}</p></div>' for k, h, p in t['phil']) + '</div>', 'white')
+    PHIMG = ['arawa-residence.jpg', 'arawa-salon.jpg', 'arawa-piscine-2.jpg', 'arawa-chantier-1.jpg']
+    phc = ''.join(f'<article class="ar-lv2__c"><div class="ar-lv2__img"><img src="/assets/images/{PHIMG[i]}" alt="{h}" loading="lazy"><span class="ar-lv2__n">0{i + 1}</span></div>'
+                  f'<div class="ar-lv2__b"><span class="ar-lv2__ic">{ic(k, 26)}</span><h3>{h}</h3><p class="ar-lv2__p">{p}</p></div></article>' for i, (k, h, p) in enumerate(t['phil']))
+    s += sec(head(t['ph'], t['pl'], True) + f'<div class="ar-lv2 ar-lv2--4">{phc}</div>', 'white')
     gal = ''.join(f'<figure><img src="/assets/images/{f}" alt="{a if fr else b}" loading="lazy"></figure>' for f, a, b in GAL)
     s += sec(head(t['gh'], t['gl']) + f'<div class="ar-gal" data-gallery>{gal}</div>', id='galerie')
     LVIMG = [('arawa-cuisine.jpg', 'home', '01'), ('arawa-chambre-2.jpg', 'bed', '02'), ('arawa-sdb-1.jpg', 'leaf', '03')]
