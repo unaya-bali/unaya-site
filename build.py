@@ -353,9 +353,9 @@ def transform(body, lang, page):
     body = body.replace('<a href="#" style="font-size: 20px;">info@unayabali.com</a>', '<a href="mailto:info@unayabali.com" style="font-size: 20px;">info@unayabali.com</a>')
     if page == 'Main':
         body = body.replace('<!-- 5. ZONES -->\n<section ', '<!-- 5. ZONES -->\n<section id="zones" ', 1)
-        alt = 'Piscine d’une villa gérée par Unaya à Bali' if lang == 'fr' else 'Pool at a villa managed by Unaya in Bali'
+        alt = 'La Villa Suma et sa piscine éclairée à la tombée de la nuit, Balangan Uluwatu' if lang == 'fr' else 'Villa Suma and its lit pool at dusk, Balangan Uluwatu'
         body = body.replace('<div class="h-home__arch"><img src="/assets/logos/unaya-management-vertical-fonce.svg" alt="Unaya Management"></div>',
-                            f'<div class="h-home__arch h-home__arch--photo"><picture><source media="(max-width: 980px)" srcset="/assets/images/yuga-piscine.jpg"><img src="/assets/images/yuga-transats.jpg" alt="{alt}" fetchpriority="high"></picture></div>', 1)
+                            f'<div class="h-home__arch h-home__arch--photo"><img src="/assets/images/suma-g1.jpg" alt="{alt}" fetchpriority="high"></div>', 1)
         imgs = re.findall(r'<span class="h-door__img"><img src="https://images\.unsplash\.com[^"]*"', body)
         for old, new in zip(imgs, ['/assets/images/yuga-drone.jpg', '/assets/images/suma-piscine-2.jpg']):
             body = body.replace(old, '<span class="h-door__img"><img src="' + new + '"', 1)
@@ -477,6 +477,7 @@ def _layout(lang, page, title, desc, body):
 <link rel="alternate" hreflang="x-default" href="{SITE + url(page, 'en')}">
 <meta property="og:type" content="website"><meta property="og:title" content="{html.escape(title)}"><meta property="og:description" content="{html.escape(desc)}">
 <meta property="og:url" content="{canon}"><meta property="og:image" content="{SITE}/assets/images/og-unaya.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="Unaya Management"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="{SITE}/assets/images/og-unaya.jpg"><meta property="og:locale" content="{T[lang]['ogloc']}">
+<meta name="color-scheme" content="only light">
 <link rel="icon" href="/assets/logos/symbole.svg" type="image/svg+xml">
 <link rel="preload" href="/assets/fonts/jost-v20-latin-regular.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/assets/fonts/cormorant-garamond-v21-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/css/site.css?v={ASSET_V}">
