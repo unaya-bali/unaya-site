@@ -14,11 +14,12 @@ X['fr'] = dict(
  kick='Unaya Build · Le guide',
  b1='Simuler mes revenus', b2='Voir les biens à vendre',
  keys=[('6 – 10 %', 'rendement net par an d’une villa bien gérée, une fois lancée'), ('20 – 30 ans', 'durée habituelle d’un bail (leasehold), prolongeable'),
-       ('10 %', 'taxe sur les nuitées (PBJT) dans la régence de Badung'), ('2,5 Md IDR', 'capital minimum d’une PT PMA, par activité')],
+       ('10 %', 'taxe sur les nuitées (PBJT) dans la régence de Badung'), ('Mai 2026', 'Bali ferme l’hébergement touristique aux nouvelles PT PMA')],
  own_h='Les 3 façons de détenir un bien', own_p='Un étranger ne peut pas être pleinement propriétaire d’un terrain à Bali. Voici ce qui est possible, et ce que chaque formule permet.',
- own=[('home', 'Leasehold', 'Le plus courant', 'Un bail notarié avec le propriétaire indonésien.', [('Pour qui', 'Tout étranger'), ('Usage', 'Habitation ou location'), ('Durée', 'Selon le bail, souvent 20 à 30 ans'), ('Louer aux touristes', 'Oui, via une PT PMA licenciée')], 'ok'),
+ own=[('home', 'Leasehold', 'Le plus courant', 'Un bail notarié avec le propriétaire indonésien.', [('Pour qui', 'Tout étranger'), ('Usage', 'Habitation'), ('Durée', 'Selon le bail, souvent 20 à 30 ans'), ('Louer aux touristes', 'Fermé aux nouvelles PT PMA*')], 'ok'),
       ('key', 'Hak Pakai', 'Pour y vivre', 'Un droit d’usage d’une maison, pour les résidents.', [('Pour qui', 'Étranger avec titre de séjour'), ('Usage', 'Habitation uniquement'), ('Durée', 'Limitée, prolongeable'), ('Louer aux touristes', 'Non')], 'no'),
-      ('doc', 'PT PMA + HGB', 'Pour louer en règle', 'Une société indonésienne à capitaux étrangers.', [('Pour qui', 'Société à capitaux étrangers'), ('Usage', 'Exploitation commerciale'), ('Durée', 'Limitée, prolongeable'), ('Louer aux touristes', 'Oui, avec licence')], 'ok')],
+      ('doc', 'PT PMA + HGB', 'Pour détenir un titre', 'Une société indonésienne à capitaux étrangers.', [('Pour qui', 'Société à capitaux étrangers'), ('Usage', 'Détenir le terrain et les murs'), ('Durée', 'Limitée, prolongeable'), ('Louer aux touristes', 'Fermé aux nouvelles PT PMA*')], 'ok')],
+ pma=('Depuis mai 2026 : plus de nouvelles licences de location touristique pour les PT PMA', 'La province de Bali a fermé dans OSS 18 activités aux nouvelles sociétés à capitaux étrangers, dont l’hébergement touristique et la location de biens immobiliers. Une PT PMA créée aujourd’hui ne peut plus obtenir de licence pour louer une villa à la nuit. Les PT PMA déjà licenciées gardent la leur. Vous avez un projet ? Écrivez-nous, on vous dit ce qui est faisable aujourd’hui.', '* Sauf PT PMA déjà licenciée avant mai 2026.'),
  nominee=('Le prête-nom : à éviter absolument', 'Acheter au nom d’un ami indonésien ne vous protège en rien : le bien lui appartient légalement. Bali a interdit ces montages fin 2025, avec des sanctions jusqu’aux notaires.'),
  sim_h='Simulez les revenus d’une villa', sim_p='Bougez les curseurs : le revenu net, le rendement et la répartition de chaque roupie se recalculent.',
  sim=dict(rate='Prix moyen par nuit', occ='Taux d’occupation', val='Valeur du bien', nights='nuits louées par an', pre='Scénario', presets=[(55, 'Prudent 55 %'), (65, 'Marché 65 %'), (75, 'Très bien géré 75 %')],
@@ -47,11 +48,12 @@ X['en'] = dict(
  kick='Unaya Build · The guide',
  b1='Simulate my income', b2='See properties for sale',
  keys=[('6 – 10%', 'net yield per year for a well-managed villa, once up and running'), ('20 – 30 yrs', 'usual length of a lease (leasehold), extendable'),
-       ('10%', 'tax on nightly stays (PBJT) in Badung regency'), ('IDR 2.5 bn', 'minimum capital of a PT PMA, per business line')],
+       ('10%', 'tax on nightly stays (PBJT) in Badung regency'), ('May 2026', 'Bali closes tourist accommodation to new PT PMA')],
  own_h='Three ways to hold property', own_p='A foreigner cannot fully own land in Bali. Here is what is possible, and what each option lets you do.',
- own=[('home', 'Leasehold', 'Most common', 'A notarised lease with the Indonesian landowner.', [('For whom', 'Any foreigner'), ('Use', 'Living or renting'), ('Term', 'Per the lease, often 20 to 30 yrs'), ('Rent to tourists', 'Yes, through a licensed PT PMA')], 'ok'),
+ own=[('home', 'Leasehold', 'Most common', 'A notarised lease with the Indonesian landowner.', [('For whom', 'Any foreigner'), ('Use', 'Living'), ('Term', 'Per the lease, often 20 to 30 yrs'), ('Rent to tourists', 'Closed to new PT PMA*')], 'ok'),
       ('key', 'Hak Pakai', 'To live in', 'A right to use a house, for residents.', [('For whom', 'Foreigner with a residence permit'), ('Use', 'Living only'), ('Term', 'Limited, extendable'), ('Rent to tourists', 'No')], 'no'),
-      ('doc', 'PT PMA + HGB', 'To rent legally', 'An Indonesian foreign-owned company.', [('For whom', 'Foreign-owned company'), ('Use', 'Commercial operation'), ('Term', 'Limited, extendable'), ('Rent to tourists', 'Yes, with a licence')], 'ok')],
+      ('doc', 'PT PMA + HGB', 'To hold a title', 'An Indonesian foreign-owned company.', [('For whom', 'Foreign-owned company'), ('Use', 'Holding the land and buildings'), ('Term', 'Limited, extendable'), ('Rent to tourists', 'Closed to new PT PMA*')], 'ok')],
+ pma=('Since May 2026: no new tourist-rental licences for PT PMA', 'Bali province has closed 18 business lines in OSS to new foreign-owned companies, including tourist accommodation and renting out real estate. A PT PMA set up today can no longer get a licence to rent out a villa by the night. PT PMA already licensed keep theirs. Got a project? Write to us and we’ll tell you what is doable today.', '* Except PT PMA already licensed before May 2026.'),
  nominee=('Nominees: avoid them', 'Buying in an Indonesian friend’s name gives you no protection: the property legally belongs to them. Bali banned these arrangements in late 2025, with sanctions reaching notaries.'),
  sim_h='Simulate a villa’s income', sim_p='Move the sliders: net income, yield and where every rupiah goes update instantly.',
  sim=dict(rate='Average nightly rate', occ='Occupancy', val='Property value', nights='nights booked per year', pre='Scenario', presets=[(55, 'Cautious 55%'), (65, 'Market 65%'), (75, 'Very well run 75%')],
@@ -94,8 +96,9 @@ def page(lang):
     cards = ''
     for k, h, tag, p, rows, m in x['own']:
         cards += (f'<article class="ar-lv2__c iv-own{" iv-own--no" if m == "no" else ""}"><div class="ar-lv2__b"><span class="ar-lv2__ic">{ic(k, 26)}</span><span class="iv-tag">{tag}</span><h3>{h}</h3><p class="iv-own__p">{p}</p><dl class="iv-dl">' +
-                  ''.join(f'<div><dt>{a}</dt><dd>{(mark("ok" if not b.startswith(("Non", "No")) else "no") + " ") if i == 3 else ""}{b}</dd></div>' for i, (a, b) in enumerate(rows)) + '</dl></div></article>')
+                  ''.join(f'<div><dt>{a}</dt><dd>{(mark("ok" if not b.startswith(("Non", "No", "Fermé", "Closed")) else "no") + " ") if i == 3 else ""}{b}</dd></div>' for i, (a, b) in enumerate(rows)) + '</dl></div></article>')
     s += (f'<section class="u-sec" id="detenir"><div class="u-wrap"><div class="u-head u-head--c"><h2>{x["own_h"]}</h2><p>{x["own_p"]}</p></div><div class="ar-lv2 iv-owns">{cards}</div>'
+          f'<p class="cx-note iv-c">{x["pma"][2]}</p><div class="iv-warn iv-warn--pma">{ic("doc", 40)}<div><strong>{x["pma"][0]}</strong><p>{x["pma"][1]} <a href="#estimation">→</a></p></div></div>'
           f'<div class="iv-warn">{ic("shield", 40)}<div><strong>{x["nominee"][0]}</strong><p>{x["nominee"][1]}</p></div></div></div></section>\n')
     # 4. Simulateur
     m = x['sim']

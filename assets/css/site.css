@@ -959,3 +959,8 @@ footer a{display:inline-block;padding:4px 0}
 .iv-rng{padding:6px 0}
 .iv-faq>*{min-width:0}
 .iq-formsec__in>*{min-width:0}.iq-form input:not([type=checkbox]),.iq-form select,.iq-form textarea{max-width:100%;min-width:0;box-sizing:border-box;width:100%}
+.iv-own:nth-child(3){box-shadow:0 1px 0 var(--ligne),0 14px 40px rgba(63,42,58,.08)}
+.iv-warn--pma{background:#FFF6E8;border-color:#EBD3A8;color:#6B4A10;margin-top:28px}
+.iv-warn--pma .u-ic{color:#8A6416}.iv-warn--pma strong{color:#5A3D0C}.iv-warn--pma p{color:#5A4520}
+.iv-warn--pma a{color:#8A6416;font-weight:500;text-decoration:none}
+.iv-warn--pma+.iv-warn{margin-top:16px}
