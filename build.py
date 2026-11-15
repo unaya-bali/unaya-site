@@ -294,7 +294,7 @@ def bk_bar(lang, page):
             f'<strong data-price="villa">{fmt_idr(PRICE0[page], lang)}</strong><small>{"/ nuit · villa entière" if fr else "/ night · entire villa"}</small></div>'
             f'<a class="bk-bar__b" href="#reserver">{"Disponibilités" if fr else "Availability"}</a></div>')
 def villa_cards(lang):
-    src = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'src', 'pages', lang, 'Villas.html'), encoding='utf-8').read()
+    src = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'tools', f'Vil_old_{lang}.html'), encoding='utf-8').read()  # cartes simples de l'ancienne page Nos villas
     cards = re.findall(r'<a class="vl-card".*?</a>', src, flags=re.S)
     return [add_price(c, lang) for c in cards]
 def add_price(card, lang):
@@ -304,6 +304,8 @@ def add_price(card, lang):
     page = {'suma': 'VillaSuma', 'yuga': 'VillaYuga', 'rumah-jambu': 'VillaRumahJambu'}[m.group(1)]
     fr = lang == 'fr'
     price = (f'<span class="vl-card__price" data-prices="{page}">{"À partir de" if fr else "From"} <strong data-price="villa">{fmt_idr(PRICE0[page], lang)}</strong> {"/ nuit" if fr else "/ night"}</span>')
+    if page in ('VillaSuma', 'VillaYuga'):
+        price = f'<span class="vl-mode">{"À la chambre ou villa entière" if fr else "By the room or the whole villa"}</span>' + price
     if '<!--PRICE-->' in card:
         return card.replace('<!--PRICE-->', price, 1)
     return card.replace('<p>', price + '<p>', 1)
