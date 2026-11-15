@@ -265,7 +265,9 @@ def wa_text(lang, page):
         return ("Bonjour Unaya, je souhaite des informations sur le terrain de 795 m² à Melasti." if fr else "Hello Unaya, I'd like information about the 795 m² Melasti plot.")
     if page in ('Terrains', 'TerrainMelasti'):
         return ("Bonjour Unaya, je souhaite des informations sur le terrain de Melasti." if fr else "Hello Unaya, I'd like information about the Melasti land.")
-    if page in OWNER_PAGES or page == 'Investir':
+    if page == 'Investir':
+        return ("Bonjour Unaya, je souhaite des informations pour investir à Bali." if fr else "Hello Unaya, I'd like information about investing in Bali.")
+    if page in OWNER_PAGES:
         return ("Bonjour Unaya, je souhaite des informations sur la gestion de ma villa." if fr else "Hello Unaya, I'd like information about managing my villa.")
     if page in ('ServicesVoyageurs', 'Experiences'):
         return ("Bonjour Unaya, je voudrais réserver un service pendant mon séjour : " if fr else "Hello Unaya, I'd like to book a service during my stay: ")
@@ -463,7 +465,7 @@ def jsonld(lang, page, title, body):
                       'numberOfRooms': v['rooms'], 'petsAllowed': page == 'VillaRumahJambu', 'checkinTime': '14:00', 'checkoutTime': '11:00',
                       'amenityFeature': [{'@type': 'LocationFeatureSpecification', 'name': n, 'value': True} for n in ('Private pool', 'Wi-Fi', 'Air conditioning', 'Kitchen', 'Free parking')],
                       'telephone': '+62 851 9021 1324', 'priceRange': 'IDR', 'parentOrganization': {'@id': ORG_ID}})
-    if page == 'FAQ':
+    if page in ('FAQ', 'Investir'):
         qa = re.findall(r'<details[^>]*>\s*<summary[^>]*>(.*?)</summary>(.*?)</details>', body, re.S)
         clean = lambda x: re.sub(r'\s+', ' ', re.sub(r'<[^>]+>', ' ', html.unescape(x))).strip()
         if qa: graph.append({'@type': 'FAQPage', 'mainEntity': [{'@type': 'Question', 'name': clean(q), 'acceptedAnswer': {'@type': 'Answer', 'text': clean(a)}} for q, a in qa]})
@@ -480,8 +482,11 @@ def layout(lang, page, title, desc, body):
     canon = SITE + url(page, lang)
     out = webpify(_layout(lang, page, title, desc, body))
     # version des scripts propres à certaines pages (évite qu'un navigateur garde l'ancienne version en cache)
-    cv = hashlib.md5(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'assets/js/arawa-charts.js'), 'rb').read()).hexdigest()[:8]
-    return out.replace('/assets/js/arawa-charts.js"', f'/assets/js/arawa-charts.js?v={cv}"')
+    base = os.path.dirname(os.path.abspath(__file__))
+    def _ver(m):  # version des scripts de page (cache navigateur 7 jours)
+        f = os.path.join(base, 'assets/js', m.group(1))
+        return m.group(0) if not os.path.exists(f) else f'/assets/js/{m.group(1)}?v={hashlib.md5(open(f, "rb").read()).hexdigest()[:8]}"'
+    return re.sub(r'/assets/js/((?:arawa-charts|invest)\.js)"', _ver, out)
 
 def _layout(lang, page, title, desc, body):
     other = 'en' if lang == 'fr' else 'fr'
