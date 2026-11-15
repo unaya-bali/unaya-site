@@ -21,12 +21,12 @@ X = {
 
 def hero_img(u):
     b = u.split('?')[0]
-    q = lambda w: f'{b}?w={w}&q=60&fm=webp&fit=crop'
-    return (f'<img src="{q(1600)}" srcset="{q(800)} 800w, {q(1200)} 1200w, {q(1600)} 1600w, {q(2000)} 2000w" sizes="100vw" alt="" fetchpriority="high">')
+    q = lambda w: f'{b}?w={w}&q=50&fm=webp&fit=crop'
+    return (f'<img src="{q(1200)}" srcset="{q(800)} 800w, {q(1200)} 1200w, {q(1600)} 1600w" sizes="100vw" alt="" fetchpriority="high" decoding="async">')
 
 def card_img(u):
     b = u.split('?')[0]
-    q = lambda w: f'{b}?w={w}&h={round(w * .5625)}&q=60&fm=webp&fit=crop'
+    q = lambda w: f'{b}?w={w}&h={round(w * .5625)}&q=55&fm=webp&fit=crop'
     return q(900), f'{q(600)} 600w, {q(900)} 900w, {q(1200)} 1200w'
 
 def page(lang):
