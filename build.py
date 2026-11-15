@@ -329,6 +329,16 @@ def fill_alts(body, lang):
         return tag.replace('alt=""', f'alt="{html.escape(txt)}"', 1)
     return re.sub(r'<img [^>]*alt=""[^>]*>', one, body)
 
+# Chiffres réels (Beds24, réservations confirmées, calculés le 15/11/2026) — à mettre à jour de temps en temps
+STATS = dict(guests='263', countries='22', booking='9,8', since=('juillet 2026', 'July 2026'))
+def stats_band(lang):
+    fr = lang == 'fr'
+    items = [(STATS['guests'], f"voyageurs accueillis depuis {STATS['since'][0]}" if fr else f"guests welcomed since {STATS['since'][1]}"),
+             (STATS['countries'], 'nationalités' if fr else 'nationalities'),
+             ((STATS['booking'] if fr else STATS['booking'].replace(',', '.')) + '/10', 'sur Booking.com' if fr else 'on Booking.com')]
+    li = ''.join(f'<div class="st-i"><strong>{n}</strong><span>{t}</span></div>' for n, t in items)
+    return f'<section class="st-band" aria-label="{"Unaya en chiffres" if fr else "Unaya in numbers"}"><div class="st-in">{li}</div></section>\n'
+
 def transform(body, lang, page):
     body = body.replace('<a href="#">info@unayabali.com</a>', '<a href="mailto:info@unayabali.com">info@unayabali.com</a>')
     body = body.replace('<a href="#" style="font-size: 20px;">info@unayabali.com</a>', '<a href="mailto:info@unayabali.com" style="font-size: 20px;">info@unayabali.com</a>')
@@ -342,6 +352,9 @@ def transform(body, lang, page):
             body = body.replace(old, '<span class="h-door__img"><img src="' + new + '"', 1)
         i = body.index('class="h-doors"'); j = body.index('</section>', i) + len('</section>')
         body = body[:j] + '\n' + home_villas(lang) + body[j:]
+    if page in ('Main', 'Proprietaires'):
+        j = body.index('</section>') + len('</section>')
+        body = body[:j] + '\n' + stats_band(lang) + body[j:]
     if page == 'Villas':
         body = re.sub(r'<a class="vl-card".*?</a>', lambda m: add_price(m.group(0), lang), body, flags=re.S)
     if page == 'Contact':

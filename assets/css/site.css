@@ -596,3 +596,10 @@ body:has(.bk-bar) footer{padding-bottom:70px}
 .f-more[open] summary::before{content:"− "}
 .f-more__in{display:flex;flex-direction:column;gap:20px;padding:4px 16px 20px}
 footer a{display:inline-block;padding:4px 0}
+
+.st-band{background:var(--aubergine);color:#F7F2EE}
+.st-in{max-width:1280px;margin:0 auto;padding:28px 32px;display:flex;flex-wrap:wrap;justify-content:center;gap:16px 64px}
+.st-i{display:flex;align-items:baseline;gap:10px}
+.st-i strong{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:38px;line-height:1;color:#D2A48C}
+.st-i span{font-size:15px;color:#E9DED6}
+@media (max-width:640px){.st-in{flex-direction:column;align-items:flex-start;gap:12px;padding:24px 16px}.st-i strong{font-size:32px;min-width:84px}}
