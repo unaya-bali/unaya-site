@@ -170,3 +170,22 @@ cards.forEach(function(c){var ok=z==='all'||c.getAttribute('data-zone')===z;c.hi
     }, true);
   });
 })();
+
+// Fiches villas à vendre : date minimale des visites, partage et copie du lien
+(function () {
+  var today = new Date().toISOString().slice(0, 10);
+  document.querySelectorAll('input[data-mindate]').forEach(function (i) { i.min = today; });
+  document.querySelectorAll('.ar-share').forEach(function (box) {
+    var url = box.getAttribute('data-share-url'), title = box.getAttribute('data-share-title');
+    if (navigator.share && window.matchMedia('(max-width: 760px)').matches) {
+      var b = document.createElement('button'); b.type = 'button'; b.className = 'ar-native'; b.textContent = document.documentElement.lang === 'fr' ? 'Partager…' : 'Share…';
+      b.addEventListener('click', function () { navigator.share({ title: title, url: url }).catch(function () {}); });
+      box.appendChild(b);
+    }
+    var c = box.querySelector('.ar-copy');
+    if (c) c.addEventListener('click', function () {
+      var done = function () { var t = c.textContent; c.textContent = c.getAttribute('data-ok'); c.classList.add('is-ok'); setTimeout(function () { c.textContent = t; c.classList.remove('is-ok'); }, 1800); };
+      if (navigator.clipboard) navigator.clipboard.writeText(url).then(done, done); else { var ta = document.createElement('textarea'); ta.value = url; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); } catch (e) {} ta.remove(); done(); }
+    });
+  });
+})();

@@ -27,7 +27,7 @@ T = {'fr': dict(
         'Chaque villa a deux chambres avec salle de bain et dressing à l’étage, un grand séjour ouvert sur la piscine au rez-de-chaussée, et elle est livrée entièrement meublée et équipée. Vous pouvez y vivre, la louer, ou faire les deux.'],
     why=['Bien visitable dès maintenant, sans l’incertitude d’un achat sur plan', 'Livrée meublée et équipée, prête à louer', 'Garantie d’un an après la remise des clés', 'Gestion locative possible avec Unaya'],
     pk='Prix', villas=[('Villa B', '170 000', '91,80 m²'), ('Villa D', '195 000', '105,41 m²')], pfrom='à partir de', plot='parcelle',
-    pb1='Demander la brochure ou une visite', pb2='Écrire sur WhatsApp', pnote='Prix en dollars américains, bail d’environ 28 ans avec option de prolongation de 30 ans.',
+    pb1='Demander la brochure ou une visite', pb2='Écrire sur WhatsApp', pnote='Prix en dollars américains, bail d’environ 28 ans (jusqu’en mars 2055), prolongeable 30 ans au prix du marché.',
     ph='La philosophie Arawa', pl='Arawa ne se contente pas de vendre une villa. Le projet tient sur quatre idées simples.',
     phil=[('arch', 'Une construction soignée', 'Béton armé, bois d’ulin et de teck choisis à Java, mobilier et menuiseries fabriqués sur mesure par Arawa.'),
           ('sun', 'La lumière naturelle', 'Hauts plafonds, grandes baies vitrées : la maison s’ouvre sur la piscine et le jardin.'),
@@ -79,7 +79,7 @@ T = {'fr': dict(
         'Each villa has two bedrooms upstairs, each with its own bathroom and walk-in wardrobe, and a large living space opening onto the pool downstairs. It comes fully furnished and equipped. Live in it, rent it out, or both.'],
     why=['You can visit the real property now, no off-plan uncertainty', 'Handed over furnished and equipped, ready to rent', 'One-year warranty after handover', 'Rental management available with Unaya'],
     pk='Price', villas=[('Villa B', '170,000', '91.80 m²'), ('Villa D', '195,000', '105.41 m²')], pfrom='from', plot='plot',
-    pb1='Ask for the brochure or a viewing', pb2='Chat on WhatsApp', pnote='Prices in US dollars, lease of about 28 years with a 30-year extension option.',
+    pb1='Ask for the brochure or a viewing', pb2='Chat on WhatsApp', pnote='Prices in US dollars, lease of about 28 years (until March 2055), extendable by 30 years at market price.',
     ph='The Arawa philosophy', pl='Arawa is about more than selling a villa. The project rests on four simple ideas.',
     phil=[('arch', 'Careful construction', 'Reinforced concrete, ironwood and teak selected in Java, furniture and joinery made to measure by Arawa.'),
           ('sun', 'Natural light', 'High ceilings and large glass doors: the house opens onto the pool and garden.'),
@@ -189,6 +189,50 @@ def prog_html(l):
     return (f'<div class="cx-prog"><div class="cx-ring" data-pct="87.5" data-text="85–90 %" data-label="{"Avancement des travaux : 85 à 90 %" if fr else "Construction progress: 85 to 90%"}"></div>'
             f'<div><p class="cx-prog__k">{"Avancement des travaux" if fr else "Construction progress"}</p><ol class="cx-tl">{tl}</ol></div></div>')
 
+SOLD = 4  # villas déjà vendues sur 6 (A, C, E, F) — à mettre à jour
+def sold_html(l):
+    fr = l == 'fr'
+    dots = ''.join(f'<i class="{"is-sold" if x in "ACEF" else "is-free"}" title="Villa {x} : {("vendue" if fr else "sold") if x in "ACEF" else ("disponible" if fr else "available")}">{x}</i>' for x in 'ABCDEF')
+    return f'<div class="ar-sold"><span class="ar-sold__dots">{dots}</span><span>{f"{SOLD} villas sur 6 déjà vendues" if fr else f"{SOLD} of 6 villas already sold"}</span></div>'
+def pdf_url(l, vv):
+    return f'/assets/docs/arawa-{("villa-" + vv.lower()) if vv else "residence"}-{l}.pdf'
+def share_html(l, page_url, title):
+    fr = l == 'fr'
+    u = quote('https://unayabali.com' + page_url, safe='')
+    tt = quote(title)
+    return (f'<div class="ar-share" data-share-url="https://unayabali.com{page_url}" data-share-title="{title}"><span>{"Partager" if fr else "Share"}</span>'
+            f'<a href="https://wa.me/?text={tt}%20{u}" target="_blank" rel="noopener" aria-label="WhatsApp">WhatsApp</a>'
+            f'<a href="https://www.facebook.com/sharer/sharer.php?u={u}" target="_blank" rel="noopener" aria-label="Facebook">Facebook</a>'
+            f'<a href="mailto:?subject={tt}&amp;body={u}" aria-label="E-mail">E-mail</a>'
+            f'<button type="button" class="ar-copy" data-ok="{"Lien copié" if fr else "Link copied"}">{"Copier le lien" if fr else "Copy link"}</button></div>')
+def lease_html(l):
+    fr = l == 'fr'
+    rows = ([('Remise des clés', 'fin décembre 2026'), ('Fin du bail du terrain', '21 mars 2055, soit environ 28 ans après la remise des clés'),
+             ('Prolongation', 'option de 30 ans de plus, au prix du marché à ce moment-là (prévue dans le bail du terrain)'), ('Garantie', '1 an après la remise des clés')] if fr else
+            [('Handover', 'end of December 2026'), ('Land lease ends', '21 March 2055, about 28 years after handover'),
+             ('Extension', '30-year option, at the market price at that time (set out in the land lease)'), ('Warranty', '1 year after handover')])
+    return (f'<div class="ar-lease"><h3>{"Bail et garanties" if fr else "Lease and warranty"}</h3><dl>' + ''.join(f'<div><dt>{a}</dt><dd>{b}</dd></div>' for a, b in rows) + '</dl>'
+            f'<p>{"Dates tirées du bail du terrain. Faites vérifier le contrat d’achat par votre notaire ou votre avocat." if fr else "Dates taken from the land lease. Have the purchase contract checked by your notary or lawyer."}</p></div>')
+def visit_html(l, vv):
+    fr = l == 'fr'
+    L2 = L; I2 = I
+    villa = f'Villa {vv}' if vv else ('Villa B ou D' if fr else 'Villa B or D')
+    h = 'Planifier une visite' if fr else 'Book a viewing'
+    lead = ('Sur place à Balangan, ou en vidéo si vous êtes loin. Choisissez un jour, nous vous confirmons l’heure sur WhatsApp.' if fr else
+            'On site in Balangan, or by video if you are far away. Pick a day and we confirm the time on WhatsApp.')
+    lab = (('Nom', 'WhatsApp', 'E-mail', 'Type de visite', 'Date souhaitée', 'Moment de la journée', 'Message (facultatif)') if fr else
+           ('Name', 'WhatsApp', 'Email', 'Viewing type', 'Preferred date', 'Time of day', 'Message (optional)'))
+    vt = ['Sur place à Balangan', 'En vidéo (WhatsApp ou Zoom)'] if fr else ['On site in Balangan', 'By video (WhatsApp or Zoom)']
+    mo = ['Matin', 'Après-midi', 'Peu importe'] if fr else ['Morning', 'Afternoon', 'Any time']
+    form = (f'<form class="ar-visit" style="width:100%;background:#FFFFFF;border:1px solid #E6DCD4;padding:32px;display:flex;flex-direction:column;gap:18px;">'
+            f'<div style="display:flex;flex-wrap:wrap;gap:18px;"><label style="{L2}">{lab[0]}<input type="text" style="{I2}"></label><label style="{L2}">{lab[1]}<input type="tel" required placeholder="+61 412 345 678" style="{I2}"></label><label style="{L2}">{lab[2]}<input type="email" style="{I2}"></label></div>'
+            f'<div style="display:flex;flex-wrap:wrap;gap:18px;"><label style="{L2}">{lab[3]}<select style="{I2}">' + ''.join(f'<option>{o}</option>' for o in vt) + f'</select></label>'
+            f'<label style="{L2}">{lab[4]}<input type="date" data-mindate style="{I2}"></label><label style="{L2}">{lab[5]}<select style="{I2}">' + ''.join(f'<option>{o}</option>' for o in mo) + '</select></label></div>'
+            f'<label style="{L2}">{lab[6]}<textarea rows="3" style="{I2}">{("Visite de la " if fr else "Viewing of ") + villa + " — Arawa Villas, Balangan."}</textarea></label>'
+            f'<label style="display: flex; gap: 10px; align-items: flex-start; font-size: 15px;"><input type="checkbox" style="margin-top: 5px;">{"J’accepte que mes données soient utilisées pour organiser la visite (politique de confidentialité)." if fr else "I agree that my data may be used to arrange the viewing (privacy policy)."}</label>'
+            f'<button type="button" style="display:inline-block;padding:16px 30px;background:#3F2A3A;color:#F7F2EE;font-size:14px;letter-spacing:.14em;text-transform:uppercase;font-weight:500;border:none;font-family:\'Jost\',sans-serif;cursor:pointer;align-self:flex-start;">{"Demander la visite" if fr else "Request the viewing"}</button></form>')
+    return f'<div class="ld-form">{head(h, lead)}{form}</div>'
+
 def detail(l, t, page):
     fr = l == 'fr'
     bc = ' <span>›</span> '.join(f'<a href="{u}">{n}</a>' if u else n for n, u in t['bc'])
@@ -196,13 +240,17 @@ def detail(l, t, page):
     s = f'<!-- title: {t["t"]} -->\n'
     s += (f'<section class="ld-hero"><img src="/assets/images/{t.get("hero", "arawa-facade.jpg")}" alt="" fetchpriority="high"><div class="ld-hero__in">'
           f'<nav class="art-bc" aria-label="breadcrumb">{bc}</nav><p class="ld-kick">{t["kick"]}</p><h1>{t["h1"]}</h1><p>{t["sub"]}</p>'
-          f'<div class="ld-badges"><span class="ld-badge ld-badge--ok">{t["badges"][0]}</span><span class="ld-badge">{t["badges"][1]}</span></div></div></section>\n')
+          f'<div class="ld-badges"><span class="ld-badge ld-badge--ok">{t["badges"][0]}</span><span class="ld-badge">{t["badges"][1]}</span><span class="ld-badge">{("4 villas sur 6 vendues" if fr else "4 of 6 villas sold")}</span></div></div></section>\n')
     s += '<section class="ld-facts"><div class="ld-facts__in">' + ''.join(f'<div class="ld-fact">{ic(k,30)}<span>{a}</span><strong>{b}</strong><em>{c}</em></div>' for k, a, b, c in t['facts']) + '</div></section>\n'
     desc = ''.join(f'<p>{p}</p>' for p in t['dp']) + '<ul class="u-checks">' + ''.join(f'<li>{w}</li>' for w in t['why']) + '</ul>'
     rows = ''.join(f'<div class="ar-pr"><span>{(f"<a href={chr(34)}{VHREF[n[-1]][l]}{chr(34)}>{n} →</a>" if page == "ArawaVillas" else n)}</span><strong><small>{t["pfrom"]}</small> USD {p}</strong><em>{t["plot"]} {pl}</em></div>' for n, p, pl in t['villas'])
-    price = (f'<aside class="ld-price"><span class="ld-price__k">{t["pk"]}</span>{rows}'
-             f'<a class="u-btn u-btn--rose" href="#dossier">{t["pb1"]}</a><a class="ld-wa" href="{wa}" target="_blank" rel="noopener">{t["pb2"]}</a>'
-             f'<p>{t["pnote"]}</p>' + (f'<p class="ar-other">{t["other"]}</p>' if t.get('other') else '') + '</aside>')
+    vv = page[-1] if page != 'ArawaVillas' else None
+    purl = VHREF[vv][l] if vv else RES[l]
+    dl = (f'<div class="ar-dl"><a href="{pdf_url(l, vv)}" download>{"Télécharger la fiche (PDF)" if fr else "Download the brochure (PDF)"}</a>'
+          f'<a href="/assets/docs/arawa-plans.pdf" download>{"Télécharger les plans (PDF)" if fr else "Download the floor plans (PDF)"}</a></div>')
+    price = (f'<aside class="ld-price"><span class="ld-price__k">{t["pk"]}</span>{rows}{sold_html(l)}'
+             f'<a class="u-btn u-btn--rose" href="#visite">{"Planifier une visite" if fr else "Book a viewing"}</a><a class="ld-wa" href="{wa}" target="_blank" rel="noopener">{t["pb2"]}</a>'
+             f'{dl}<p>{t["pnote"]}</p>' + (f'<p class="ar-other">{t["other"]}</p>' if t.get('other') else '') + share_html(l, purl, t['h1'] + ' — Balangan, Bali') + '</aside>')
     mz = t.get('mosaic', ['arawa-piscine.jpg', 'arawa-salon.jpg', 'arawa-sejour.jpg'])
     alt = {f: (a if fr else b) for f, a, b in GAL}
     s += ('<section class="u-sec ar-mz-sec"><div class="u-wrap"><div class="ar-mz">'
@@ -211,8 +259,7 @@ def detail(l, t, page):
           f'<a class="ar-mz__s ar-mz__more" href="#galerie" data-open-gallery><img src="/assets/images/{mz[2]}" alt="{alt.get(mz[2], "")}" loading="lazy"><span>{"Voir les" if fr else "View all"} {len(GAL)} {"photos" if fr else "photos"}</span></a>'
           f'<a class="ar-mz__plan" href="#plans">{"Voir les plans" if fr else "View floor plans"}</a>'
           '</div></div></section>\n')
-    s += sec(f'<div class="ld-main"><div class="ld-desc">{head(t["dh"])}{desc}</div>{price}</div>')
-    vv = page[-1] if page != 'ArawaVillas' else None
+    s += sec(f'<div class="ld-main"><div class="ld-desc">{head(t["dh"])}{desc}{lease_html(l)}</div>{price}</div>')
     if vv:
         s += f'<div hidden data-arawa="{jattr(dict(price=PRICE[vv], lease=28))}"></div>\n'
         s += sec(sim_html(l, vv), 'white', id='rendement')
@@ -238,6 +285,7 @@ def detail(l, t, page):
             f'<label style="{L}">{t["fl"][4]}<textarea rows="5" style="{I}">{t["fmsg"]}</textarea></label>'
             f'<label style="display: flex; gap: 10px; align-items: flex-start; font-size: 15px;"><input type="checkbox" style="margin-top: 5px;">{t["fc"]}</label>'
             f'<button type="button" style="display:inline-block;padding:16px 30px;background:#3F2A3A;color:#F7F2EE;font-size:14px;letter-spacing:.14em;text-transform:uppercase;font-weight:500;border:none;font-family:\'Jost\',sans-serif;cursor:pointer;align-self:flex-start;">{t["fs"]}</button></form>')
+    s += sec(visit_html(l, vv), id='visite')
     s += sec(f'<div class="ld-form">{head(t["fh"],t["fp"])}{form}<p class="ld-legal">{t["legal"]}</p></div>', 'white', id='dossier')
     if vv: s += '<script src="/assets/js/arawa-charts.js" defer></script>\n'
     open(R + f'pages/{l}/{page}.html', 'w').write(s)
@@ -252,7 +300,7 @@ V = {'B': {'fr': dict(
         dp=['La villa B se trouve au milieu de la rangée est de la résidence, entre les villas A et C. Sa parcelle fait 91,80 m² (13,50 × 6,80 m). C’est la villa la plus accessible du projet.',
             'Elle suit le plan des autres villas Arawa : au rez-de-chaussée, un grand séjour avec cuisine ouvert sur la piscine privée, un WC invités, une petite cabana et une douche extérieure ; à l’étage, deux chambres avec chacune sa salle de bain et son dressing, et une terrasse. Elle est livrée entièrement meublée et équipée.',
             'Le chantier est bien avancé : façades, menuiseries en bois, piscine et escalier sont en place, les finitions intérieures sont en cours (photos du 9 novembre 2026).'],
-        villas=[('Villa B', '170 000', '91,80 m²')], pnote='Prix en dollars américains, bail d’environ 28 ans avec option de prolongation de 30 ans.',
+        villas=[('Villa B', '170 000', '91,80 m²')], pnote='Prix en dollars américains, bail d’environ 28 ans (jusqu’en mars 2055), prolongeable 30 ans au prix du marché.',
         other=f'Voir aussi la <a href="/fr/villas-a-vendre/arawa-villa-d/">villa D</a> (105,41 m², dès 195 000 USD) ou <a href="/fr/villas-a-vendre/arawa-balangan/">la résidence Arawa</a>.',
         ch='Où en est la villa B', cl='Photos prises sur place en octobre et novembre 2026.', chc=['Villa B, 9 novembre 2026', 'Villa B, 2 novembre 2026', 'Villa B, 26 octobre 2026'],
         chf=['arawa-chantier-1.jpg', 'arawa-b-chantier-3.jpg', 'arawa-chantier-2.jpg'],
@@ -269,7 +317,7 @@ V = {'B': {'fr': dict(
         dp=['Villa B sits in the middle of the east row of the residence, between villas A and C. Its plot is 91.80 m² (13.50 × 6.80 m). It is the most affordable villa in the project.',
             'It follows the same layout as the other Arawa villas: downstairs, a large living space with an open kitchen facing the private pool, a guest WC, a small cabana and an outdoor shower; upstairs, two bedrooms each with its own bathroom and walk-in wardrobe, plus a terrace. It comes fully furnished and equipped.',
             'Construction is well advanced: façades, wooden joinery, pool and staircase are in place, interior finishing is under way (photos from 9 November 2026).'],
-        villas=[('Villa B', '170,000', '91.80 m²')], pnote='Price in US dollars, lease of about 28 years with a 30-year extension option.',
+        villas=[('Villa B', '170,000', '91.80 m²')], pnote='Price in US dollars, lease of about 28 years (until March 2055), extendable by 30 years at market price.',
         other=f'See also <a href="/villas-for-sale/arawa-villa-d/">villa D</a> (105.41 m², from USD 195,000) or <a href="/villas-for-sale/arawa-balangan/">the Arawa residence</a>.',
         ch='Villa B progress', cl='Photos taken on site in October and November 2026.', chc=['Villa B, 9 November 2026', 'Villa B, 2 November 2026', 'Villa B, 26 October 2026'],
         chf=['arawa-chantier-1.jpg', 'arawa-b-chantier-3.jpg', 'arawa-chantier-2.jpg'],
@@ -288,7 +336,7 @@ V = {'B': {'fr': dict(
             'Comme les villas E et F, elle a accès à un espace de rangement, ce que n’ont pas les villas de l’autre rangée.',
             'À l’intérieur, le plan Arawa : au rez-de-chaussée, un grand séjour avec cuisine ouvert sur la piscine privée, un WC invités, une petite cabana et une douche extérieure ; à l’étage, deux chambres avec chacune sa salle de bain et son dressing, et une terrasse. Livrée entièrement meublée et équipée.',
             'Le gros œuvre et les façades sont terminés, les finitions sont en cours (photos du 9 novembre 2026).'],
-        villas=[('Villa D', '195 000', '105,41 m²')], pnote='Prix en dollars américains, bail d’environ 28 ans avec option de prolongation de 30 ans.',
+        villas=[('Villa D', '195 000', '105,41 m²')], pnote='Prix en dollars américains, bail d’environ 28 ans (jusqu’en mars 2055), prolongeable 30 ans au prix du marché.',
         other=f'Voir aussi la <a href="/fr/villas-a-vendre/arawa-villa-b/">villa B</a> (91,80 m², dès 170 000 USD) ou <a href="/fr/villas-a-vendre/arawa-balangan/">la résidence Arawa</a>.',
         ch='Où en est la villa D', cl='Photos prises sur place le 9 novembre 2026.', chc=['Villa D, façade', 'Villa D, terrasse et piscine', 'Villa D, côté jardin'],
         chf=['arawa-chantier-3.jpg', 'arawa-d-chantier-3.jpg', 'arawa-d-chantier-2.jpg'],
@@ -307,7 +355,7 @@ V = {'B': {'fr': dict(
             'Like villas E and F, it has access to a storage space, which the villas in the other row do not.',
             'Inside, the Arawa layout: downstairs, a large living space with an open kitchen facing the private pool, a guest WC, a small cabana and an outdoor shower; upstairs, two bedrooms each with its own bathroom and walk-in wardrobe, plus a terrace. Fully furnished and equipped.',
             'Structure and façades are finished, finishing works are under way (photos from 9 November 2026).'],
-        villas=[('Villa D', '195,000', '105.41 m²')], pnote='Price in US dollars, lease of about 28 years with a 30-year extension option.',
+        villas=[('Villa D', '195,000', '105.41 m²')], pnote='Price in US dollars, lease of about 28 years (until March 2055), extendable by 30 years at market price.',
         other=f'See also <a href="/villas-for-sale/arawa-villa-b/">villa B</a> (91.80 m², from USD 170,000) or <a href="/villas-for-sale/arawa-balangan/">the Arawa residence</a>.',
         ch='Villa D progress', cl='Photos taken on site on 9 November 2026.', chc=['Villa D, front', 'Villa D, terrace and pool', 'Villa D, garden side'],
         chf=['arawa-chantier-3.jpg', 'arawa-d-chantier-3.jpg', 'arawa-d-chantier-2.jpg'],

@@ -75,7 +75,7 @@ export async function onRequestPost({ request, env }) {
     body: JSON.stringify({
       from: env.FORM_FROM || 'Site Unaya <site@unayabali.com>',
       to: [env.FORM_TO || 'info@unayabali.com'],
-      subject: `${spammy ? '[Spam probable] ' : ''}${isEstim ? '[Estimation revenus]' : (/^terrain/i.test(formName) ? '[Terrain]' : /^(arawa|villasavendre)/i.test(formName) ? '[Villa à vendre]' : /^experiences/i.test(formName) ? '[Excursion]' : '[Site]')} ${formName}`,
+      subject: `${spammy ? '[Spam probable] ' : ''}${isEstim ? '[Estimation revenus]' : (/^terrain/i.test(formName) ? '[Terrain]' : /^(arawa|villasavendre)/i.test(formName) ? ((data.get('type_de_visite') || data.get('viewing_type')) ? '[Visite villa]' : '[Villa à vendre]') : /^experiences/i.test(formName) ? '[Excursion]' : '[Site]')} ${formName}`,
       html: attachments.length ? html.replace('</table>', `</table><p>${attachments.length} photo(s) en pièce jointe.</p>`) : html,
       ...(attachments.length ? { attachments } : {}),
       ...(replyTo.includes('@') ? { reply_to: replyTo } : {}),
