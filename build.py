@@ -478,7 +478,10 @@ def jsonld(lang, page, title, body):
 def layout(lang, page, title, desc, body):
     other = 'en' if lang == 'fr' else 'fr'
     canon = SITE + url(page, lang)
-    return webpify(_layout(lang, page, title, desc, body))
+    out = webpify(_layout(lang, page, title, desc, body))
+    # version des scripts propres à certaines pages (évite qu'un navigateur garde l'ancienne version en cache)
+    cv = hashlib.md5(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'assets/js/arawa-charts.js'), 'rb').read()).hexdigest()[:8]
+    return out.replace('/assets/js/arawa-charts.js"', f'/assets/js/arawa-charts.js?v={cv}"')
 
 def _layout(lang, page, title, desc, body):
     other = 'en' if lang == 'fr' else 'fr'
