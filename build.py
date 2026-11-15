@@ -94,6 +94,7 @@ DESC = {
 }
 
 # Version des fichiers CSS/JS (change à chaque modification → le navigateur recharge la nouvelle version)
+INDEXNOW_KEY = 'af1d1088d769f3c8db2e2ce5758b1914'
 ASSET_V = hashlib.md5(b''.join(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), f), 'rb').read() for f in ('assets/css/site.css', 'assets/js/site.js'))).hexdigest()[:8]
 
 def url(name, lang):
@@ -544,6 +545,7 @@ def build():
     today = __import__('datetime').date.today().isoformat()
     open(os.path.join(DIST, 'sitemap.xml'), 'w').write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n' + ''.join(f'<url><loc>{u}</loc><lastmod>{today}</lastmod><xhtml:link rel="alternate" hreflang="fr" href="{fr}"/><xhtml:link rel="alternate" hreflang="en" href="{en}"/><xhtml:link rel="alternate" hreflang="x-default" href="{en}"/></url>\n' for u, fr, en in urls) + '</urlset>\n')
     open(os.path.join(DIST, '_headers'), 'w').write('/assets/*\n  Cache-Control: public, max-age=604800\n')
+    open(os.path.join(DIST, INDEXNOW_KEY + '.txt'), 'w').write(INDEXNOW_KEY)  # clé publique IndexNow (Bing, Yandex…)
     open(os.path.join(DIST, 'robots.txt'), 'w').write(f'User-agent: *\nAllow: /\nSitemap: {SITE}/sitemap.xml\n')
     shutil.copy(os.path.join(SRC, '404.html'), os.path.join(DIST, '404.html')) if os.path.exists(os.path.join(SRC, '404.html')) else None
     print(f'{len(urls)} pages générées dans dist/')
