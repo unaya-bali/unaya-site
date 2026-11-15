@@ -19,6 +19,16 @@ X = {
             cta=('No villa for your stay yet?', 'Private pool villas in quiet spots. −15% from 7 nights when you book direct.', 'See our villas', '/villas/')),
 }
 
+def hero_img(u):
+    b = u.split('?')[0]
+    q = lambda w: f'{b}?w={w}&q=60&fm=webp&fit=crop'
+    return (f'<img src="{q(1600)}" srcset="{q(800)} 800w, {q(1200)} 1200w, {q(1600)} 1600w, {q(2000)} 2000w" sizes="100vw" alt="" fetchpriority="high">')
+
+def card_img(u):
+    b = u.split('?')[0]
+    q = lambda w: f'{b}?w={w}&h={round(w * .5625)}&q=60&fm=webp&fit=crop'
+    return q(900), f'{q(600)} 600w, {q(900)} 900w, {q(1200)} 1200w'
+
 def page(lang):
     x, fr = X[lang], lang == 'fr'
     old = open(os.path.join(HERE, f'Gst_old_{lang}.html')).read()
@@ -30,8 +40,8 @@ def page(lang):
     icons = [re.sub(r'width="\d+" height="\d+"', 'width="24" height="24"', i, count=1) for i in icons]
     cards = re.findall(r'<div id="(\w+)" style="[^"]*"><img class="sv-ph" src="([^"]+)" alt="([^"]*)" loading="lazy"><h2[^>]*>(.*?)</h2><p[^>]*>(.*?)</p><div style="margin-top: auto[^"]*">(.*?)</div>((?:<button|<a ).*?(?:</button>|</a>))</div>', old, flags=re.S)
     steps = re.findall(r'<span style="font-family: \'Cormorant Garamond\'[^"]*color: #A8705A;">\d</span><div><p[^>]*>(.*?)</p><p[^>]*>(.*?)</p></div>', old, flags=re.S)
-    s = f'<!-- title: {title} -->\n<div class="hm">\n'
-    s += (f'<section class="hm-hero hm-hero--sm"><img src="{re.search(r'<section class="u-hero"><img src="([^"]+)"', old).group(1)}" alt="" fetchpriority="high">'
+    s = f'<!-- title: {title} -->\n<link rel="preconnect" href="https://images.unsplash.com">\n<div class="hm">\n'
+    s += (f'<section class="hm-hero hm-hero--sm">{hero_img(re.search(r'<section class="u-hero"><img src="([^"]+)"', old).group(1))}'
           f'<div class="hm-hero__in"><p class="hm-hero__k">{x["kick"]}</p><h1>{h1}</h1><p class="hm-hero__sub">{sub}</p>'
           '<ul class="hm-badges">' + ''.join(f'<li><span aria-hidden="true">✓</span>{b}</li>' for b in x['badges']) + '</ul></div></section>\n')
     s += ('<nav class="sv-nav gs-nav" aria-label="Services"><div class="sv-nav__in">' +
@@ -45,7 +55,7 @@ def page(lang):
         badge = f'{x["from_"]} {min(nums, key=lambda t: int(re.sub(r"\D", "", t)))}' if nums else x['ask']
         btn = re.sub(r' style="[^"]*"', '', btn, count=1)
         btn = btn.replace('<button type="button" data-open-dialog', '<button type="button" class="u-btn u-btn--solid gs-btn" data-open-dialog').replace('<a href=', '<a class="u-btn gs-btn gs-btn--exp" href=')
-        out += (f'<article class="gs-card{" gs-card--exp" if cid == "experiences" else ""}" id="{cid}"><div class="gs-card__img"><img src="{img}" alt="{alt}" loading="lazy"><span class="gs-card__badge">{badge}</span></div>'
+        out += (f'<article class="gs-card{" gs-card--exp" if cid == "experiences" else ""}" id="{cid}"><div class="gs-card__img"><img src="{card_img(img)[0]}" srcset="{card_img(img)[1]}" sizes="(max-width: 900px) 100vw, 600px" alt="{alt}" loading="lazy"><span class="gs-card__badge">{badge}</span></div>'
                 f'<div class="gs-card__b"><h2>{h}</h2><p class="gs-card__p">{p}</p><dl class="gs-rows">' + ''.join(f'<div><dt>{a}</dt><dd>{b}</dd></div>' for a, b in prices) + '</dl>'
                 + (f'<p class="gs-note">{note.group(1)}</p>' if note else '') + f'{btn}</div></article>')
     s += f'<section class="u-sec hm-sec gs-sec"><div class="u-wrap"><div class="gs-grid">{out}</div></div></section>\n'

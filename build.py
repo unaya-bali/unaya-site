@@ -392,6 +392,14 @@ OWNER_NEXT = {
    portal=('Owner portal', 'Bookings, income, expenses and statements, in real time.', 'Open ↗')),
 }
 
+# Turnstile (anti-robot) chargé seulement quand un formulaire approche de l'écran ou reçoit le focus (15/11/2026)
+TS_LAZY = ("<script>(function(){var d=0;function L(){if(d)return;d=1;var s=document.createElement('script');"
+           "s.src='https://challenges.cloudflare.com/turnstile/v0/api.js';s.async=true;document.head.appendChild(s);}"
+           "var t=document.querySelectorAll('.cf-turnstile');if(!('IntersectionObserver' in window)){L();return;}"
+           "var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){L();io.disconnect();}});},{rootMargin:'800px'});"
+           "t.forEach(function(el){io.observe(el);});document.addEventListener('focusin',function(e){if(e.target.closest&&e.target.closest('form'))L();});"
+           "document.addEventListener('click',function(e){if(e.target.closest&&e.target.closest('[data-open-dialog]'))L();});})();</script>")
+
 def owner_next(lang, page):
     t = OWNER_NEXT[lang]
     fr = lang == 'fr'
@@ -554,7 +562,7 @@ def _layout(lang, page, title, desc, body):
 </main>
 {footer(lang, page)}
 {bk_bar(lang, page)}{wa_float(lang, page)}
-<script src="/assets/js/site.js?v={ASSET_V}" defer></script>{'<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>' if TURNSTILE_SITEKEY and 'cf-turnstile' in body else ''}
+<script src="/assets/js/site.js?v={ASSET_V}" defer></script>{TS_LAZY if TURNSTILE_SITEKEY and 'cf-turnstile' in body else ''}
 </body>
 </html>
 '''
