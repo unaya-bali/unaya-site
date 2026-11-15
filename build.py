@@ -370,25 +370,28 @@ def stats_band(lang):
 
 OWNER_NEXT = {
  'fr': dict(h='Continuer la visite', p='Toutes les pages pour les propriétaires, en un clic.', more='Voir la page', items={
-   'Proprietaires': ('suma-piscine-2.jpg', 'Vue d’ensemble', 'Pourquoi Unaya, nos chiffres et les 4 étapes pour nous confier votre villa.'),
-   'ProprietairesServices': ('yuga-terrasse.jpg', 'Nos services', 'Les 5 pôles : marketing, voyageurs, équipe, entretien et comptabilité.'),
-   'ProprietairesTarifs': ('suma-terrasse.jpg', 'Formules & tarifs', '18 % ou 11 %, sans frais fixe. Le calcul de la commission expliqué.'),
-   'ConfierMaVilla': ('yuga-nuit.jpg', 'Confier ma villa', 'Votre estimation de revenus gratuite, avec une réponse sous 24 h.')},
+   'Proprietaires': ('yuga-drone.jpg', 'Vue d’ensemble', 'Pourquoi Unaya, nos chiffres et les 4 étapes pour nous confier votre villa.'),
+   'ProprietairesServices': ('suma-chambre-1.jpg', 'Nos services', 'Les 5 pôles : marketing, voyageurs, équipe, entretien et comptabilité.'),
+   'ProprietairesTarifs': (None, 'Formules & tarifs', '18 % ou 11 %, sans frais fixe. Le calcul de la commission expliqué.'),
+   'ConfierMaVilla': ('suma-entree.jpg', 'Confier ma villa', 'Votre estimation de revenus gratuite, avec une réponse sous 24 h.')},
    portal=('Espace propriétaire', 'Réservations, revenus, dépenses et relevés, en temps réel.', 'Ouvrir ↗')),
  'en': dict(h='Keep exploring', p='Every page for owners, one click away.', more='View page', items={
-   'Proprietaires': ('suma-piscine-2.jpg', 'Overview', 'Why Unaya, our numbers and the 4 steps to hand over your villa.'),
-   'ProprietairesServices': ('yuga-terrasse.jpg', 'Our services', 'The 5 areas: marketing, guests, team, upkeep and accounting.'),
-   'ProprietairesTarifs': ('suma-terrasse.jpg', 'Plans & pricing', '18% or 11%, no fixed fees. How the commission is calculated.'),
-   'ConfierMaVilla': ('yuga-nuit.jpg', 'List my villa', 'Your free income estimate, with a reply within 24 hours.')},
+   'Proprietaires': ('yuga-drone.jpg', 'Overview', 'Why Unaya, our numbers and the 4 steps to hand over your villa.'),
+   'ProprietairesServices': ('suma-chambre-1.jpg', 'Our services', 'The 5 areas: marketing, guests, team, upkeep and accounting.'),
+   'ProprietairesTarifs': (None, 'Plans & pricing', '18% or 11%, no fixed fees. How the commission is calculated.'),
+   'ConfierMaVilla': ('suma-entree.jpg', 'List my villa', 'Your free income estimate, with a reply within 24 hours.')},
    portal=('Owner portal', 'Bookings, income, expenses and statements, in real time.', 'Open ↗')),
 }
 
 def owner_next(lang, page):
     t = OWNER_NEXT[lang]
-    cards = ''.join(f'<a class="on-card" href="{url(k, lang)}"><span class="on-card__img"><img src="/assets/images/{img}" alt="" loading="lazy"></span><span class="on-card__b"><strong>{h}</strong><span>{d}</span><em>{t["more"]} →</em></span></a>'
+    fr = lang == 'fr'
+    pct = ('<span class="on-card__img on-card__pct" aria-hidden="true"><b>18<small>%</small></b><i></i><b>11<small>%</small></b></span>')
+    cards = ''.join(f'<a class="on-card" href="{url(k, lang)}">{(f"<span class=on-card__img><img src=/assets/images/{img} alt=\"\" loading=lazy></span>") if img else pct}<span class="on-card__b"><strong>{h}</strong><span>{d}</span><em>{t["more"]} →</em></span></a>'
                     for k, (img, h, d) in t['items'].items() if k != page)
     ph, pd, pb = t['portal']
-    cards += f'<a class="on-card on-card--portal" href="https://owners.unayabali.com"><span class="on-card__b"><strong>{ph}</strong><span>{pd}</span><em>{pb}</em></span></a>'
+    phone = '<span class="on-card__img on-card__ph" aria-hidden="true"><span class="on-ph">' + ''.join(f'<i style="height:{h}%"></i>' for h in (40, 58, 50, 74, 66, 88, 80)) + '</span></span>'
+    cards += f'<a class="on-card on-card--portal" href="https://owners.unayabali.com">{phone}<span class="on-card__b"><strong>{ph}</strong><span>{pd}</span><em>{pb}</em></span></a>'
     return f'<section class="u-sec on-next"><div class="u-wrap"><div class="u-head u-head--c"><h2>{t["h"]}</h2><p>{t["p"]}</p></div><div class="on-grid">{cards}</div></div></section>\n'
 
 def transform(body, lang, page):
