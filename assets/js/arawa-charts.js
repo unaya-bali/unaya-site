@@ -22,7 +22,8 @@
   function countUp(node, to, render) {
     var from = parseFloat(node.getAttribute('data-v') || '0');
     node.setAttribute('data-v', to);
-    if (reduce) { node.textContent = render(to); return; }
+    if (reduce || document.hidden) { node.textContent = render(to); return; }
+    clearTimeout(node._cxT); node._cxT = setTimeout(function () { node.textContent = render(to); }, 900); // sécurité si l'animation ne tourne pas
     var t0 = null, dur = 650;
     function step(t) { if (!t0) t0 = t; var p = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - p, 3); node.textContent = render(from + (to - from) * e); if (p < 1) requestAnimationFrame(step); }
     requestAnimationFrame(step);
