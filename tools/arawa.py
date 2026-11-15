@@ -64,7 +64,7 @@ T = {'fr': dict(
     # liste
     lt='Villas à vendre à Bali — Unaya Bali', lkick='Investir à Bali', lh1='Villas à vendre', lsub='Des villas choisies par notre équipe, à acheter pour y vivre, pour les louer, ou les deux.',
     lih='Villas disponibles', lil='Pour chaque projet, nous vérifions l’emplacement, l’avancement et les documents avant de le proposer.',
-    card=dict(zone='Balangan · Uluwatu', title='Arawa Villas', pts=['2 chambres', '≈ 106 m²', 'Piscine privée'], status='2 villas disponibles', price='dès 170 000 USD', deal='Livraison fin déc. 2026', more='Voir les villas'),
+    cards=[dict(img='arawa-facade.jpg', title='Arawa Villas · Villa B', pts=['2 chambres', '≈ 106 m²', 'Parcelle 91,80 m²'], price='dès 170 000 USD'), dict(img='arawa-piscine.jpg', title='Arawa Villas · Villa D', pts=['2 chambres', '≈ 106 m²', 'Parcelle 105,41 m²'], price='dès 195 000 USD')], cz='Balangan · Uluwatu', cst='Disponible', cdeal='Livraison fin déc. 2026', cmore='Voir la villa',
     soon=('Bientôt', 'D’autres villas arrivent. Dites-nous ce que vous cherchez (zone, budget, nombre de chambres), nous vous prévenons en premier.', 'Nous contacter', '/fr/contact/'),
     ls=[('eye', 'Choisies', 'Emplacement, qualité de construction et avancement vérifiés sur place.'), ('doc', 'Expliquées', 'Bail, prix, ce qui est compris : tout est dit clairement.'), ('key', 'Louées', 'Après l’achat, Unaya peut gérer la location de votre villa.')],
     lc=('Vous cherchez autre chose ?', 'Un terrain, une villa à faire construire ou un bien à mettre en location : parlons-en.', ('Voir les terrains', '/fr/terrains/'), ('Nous contacter', '/fr/contact/'))),
@@ -115,7 +115,7 @@ T = {'fr': dict(
     t='Arawa Villas, Balangan — 2-Bedroom Pool Villas for Sale from USD 170,000 | Unaya Bali',
     lt='Villas for Sale in Bali — Unaya Bali', lkick='Invest in Bali', lh1='Villas for sale', lsub='Villas chosen by our team, to buy as a home, a rental, or both.',
     lih='Available villas', lil='For every project we check the location, progress and documents before we list it.',
-    card=dict(zone='Balangan · Uluwatu', title='Arawa Villas', pts=['2 bedrooms', '≈ 106 m²', 'Private pool'], status='2 villas available', price='from USD 170,000', deal='Handover end Dec. 2026', more='View the villas'),
+    cards=[dict(img='arawa-facade.jpg', title='Arawa Villas · Villa B', pts=['2 bedrooms', '≈ 106 m²', '91.80 m² plot'], price='from USD 170,000'), dict(img='arawa-piscine.jpg', title='Arawa Villas · Villa D', pts=['2 bedrooms', '≈ 106 m²', '105.41 m² plot'], price='from USD 195,000')], cz='Balangan · Uluwatu', cst='Available', cdeal='Handover end Dec. 2026', cmore='View the villa',
     soon=('Coming soon', 'More villas are on the way. Tell us what you are looking for (area, budget, bedrooms) and we will let you know first.', 'Contact us', '/contact/'),
     ls=[('eye', 'Chosen', 'Location, build quality and progress checked on site.'), ('doc', 'Explained', 'Lease, price, what is included: all said clearly.'), ('key', 'Rented', 'After you buy, Unaya can manage the rental of your villa.')],
     lc=('Looking for something else?', 'A plot of land, a villa to build or a property to rent out: let’s talk.', ('See available land', '/land/'), ('Contact us', '/contact/')))}
@@ -161,13 +161,12 @@ for l, t in T.items():
     open(R + f'pages/{l}/ArawaVillas.html', 'w').write(s)
 
     # ---- page liste ----
-    c = t['card']
     href = '/fr/villas-a-vendre/arawa-balangan/' if fr else '/villas-for-sale/arawa-balangan/'
     s = f'<!-- title: {t["lt"]} -->\n'
     s += (f'<section class="u-hero"><img src="/assets/images/arawa-piscine-2.jpg" alt="" fetchpriority="high"><div class="u-hero__in"><p class="u-hero__k">{t["lkick"]}</p><h1>{t["lh1"]}</h1><p class="u-hero__sub">{t["lsub"]}</p></div></section>\n')
-    card = (f'<a class="vl-card ld-card" href="{href}"><div class="vl-card__img"><img src="/assets/images/arawa-facade.jpg" alt="Arawa Villas, Balangan" loading="lazy"><span class="vl-card__zone">{c["zone"]}</span></div>'
-            f'<div class="vl-card__b"><span class="ld-card__st">{c["status"]}</span><h3>{c["title"]}</h3><div class="vl-card__meta">' + ''.join(f'<span>{p}</span>' for p in c['pts']) + '</div>'
-            f'<div class="ld-card__p"><span>{c["deal"]}</span><strong>{c["price"]}</strong></div><span class="u-link">{c["more"]}</span></div></a>')
+    card = ''.join(f'<a class="vl-card ld-card" href="{href}"><div class="vl-card__img"><img src="/assets/images/{c["img"]}" alt="{c["title"]}, Balangan" loading="lazy"><span class="vl-card__zone">{t["cz"]}</span></div>'
+            f'<div class="vl-card__b"><span class="ld-card__st">{t["cst"]}</span><h3>{c["title"]}</h3><div class="vl-card__meta">' + ''.join(f'<span>{p}</span>' for p in c['pts']) + '</div>'
+            f'<div class="ld-card__p"><span>{t["cdeal"]}</span><strong>{c["price"]}</strong></div><span class="u-link">{t["cmore"]}</span></div></a>' for c in t['cards'])
     so = t['soon']
     soon = f'<div class="ld-soon">{ic("home",40)}<h3>{so[0]}</h3><p>{so[1]}</p><a class="u-btn u-btn--line" href="{so[3]}">{so[2]}</a></div>'
     s += sec(head(t['lih'], t['lil']) + f'<div class="ld-grid">{card}{soon}</div>')
