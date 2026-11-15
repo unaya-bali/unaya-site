@@ -1312,3 +1312,23 @@ footer a{display:inline-block;padding:4px 0}
 }
 button.gs-btn{font-family:'Jost',sans-serif;border:1px solid var(--aubergine)}
 .hm-hero{background:#3F2A3A}
+/* ---- Page Unaya Experiences (habillage) ---- */
+.xp-page .u-sec{padding:96px 0}
+.xp-page .xp-card{border-radius:22px;border-top-width:1px;box-shadow:0 22px 50px rgba(63,42,58,.1)}
+.xp-page .xp-seasons div{border-radius:16px}
+.xp-page .xp-tar{border-radius:16px;overflow:hidden;border-collapse:separate;border-spacing:0}
+.xp-page .xp-c{border-radius:20px;overflow:hidden;background:#fff;transition:transform .25s,box-shadow .25s}
+.xp-page .xp-c:hover{transform:translateY(-4px);box-shadow:0 18px 40px rgba(63,42,58,.12)}
+.xp-page .xp-c__img{height:200px}
+.xp-page .xp-c__img span{border-radius:999px}
+.xp-page .xp-f{border-radius:20px;overflow:hidden}
+.xp-page .xp-f img{border-radius:0}
+.xp-page .xp-f__p{display:inline-block}
+.xp-page .xp-av{border-radius:18px;background:#fff}
+.xp-page .xp-avh h2{font-size:clamp(40px,4.4vw,58px)}
+.xp-page .u-head--c .hm-k{color:#3F5F4A}
+.xp-page .iv-key strong{color:#3F5F4A}
+.xp-how .iv-tl b{border-color:#3F5F4A;color:#3F5F4A}
+.xp-how .iv-tl::after{background:#3F5F4A}
+.xp-how .iv-tl li:nth-child(4) b{background:#3F5F4A;color:#fff}
+@media (max-width:900px){.xp-page .u-sec{padding:64px 0}}
