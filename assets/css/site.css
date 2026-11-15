@@ -964,3 +964,7 @@ footer a{display:inline-block;padding:4px 0}
 .iv-warn--pma .u-ic{color:#8A6416}.iv-warn--pma strong{color:#5A3D0C}.iv-warn--pma p{color:#5A4520}
 .iv-warn--pma a{color:#8A6416;font-weight:500;text-decoration:none}
 .iv-warn--pma+.iv-warn{margin-top:16px}
+.iv-sol{margin:14px 0 0!important;padding-top:14px;border-top:1px dashed #EBD3A8;display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px}
+.iv-sol strong{font:500 16px/1.5 'Jost',sans-serif;color:#3F2A3A}
+.iv-sol a{display:inline-block;background:#3F2A3A;color:#fff!important;padding:10px 18px;border-radius:999px;font-size:14px;letter-spacing:.04em;text-decoration:none;white-space:nowrap}
+.iv-sol a:hover{background:#5A3552}
