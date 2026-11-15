@@ -13,7 +13,7 @@ def f(n, fr):
 X = {
  'fr': dict(
   title='Formules & tarifs — Unaya Management', kick='Propriétaires · Formules & tarifs',
-  b1=('Choisir ma formule', '#formules'), b2=('Simuler mes revenus', '#estimer'),
+  b1=('Choisir ma formule', '#formules'), b2=('Demander une estimation', '/fr/proprietaires/confier-ma-villa/'),
   badges=['Aucun frais fixe', 'Sans abonnement', 'Commission après plateformes et taxe'],
   pl_h='Deux formules, une seule logique', pl_p='Nous sommes payés quand votre villa est louée. Rien d’autre.',
   groups=('Marketing et suivi', 'Sur place'), pop='Le plus choisi',
@@ -25,7 +25,7 @@ X = {
  ),
  'en': dict(
   title='Plans & pricing — Unaya Management', kick='Owners · Plans & pricing',
-  b1=('Choose my plan', '#formules'), b2=('Simulate my income', '#estimer'),
+  b1=('Choose my plan', '#formules'), b2=('Get an estimate', '/owners/list-your-villa/'),
   badges=['No fixed fees', 'No subscription', 'Commission after platforms and tax'],
   pl_h='Two plans, one logic', pl_p='We get paid when your villa is booked. Nothing else.',
   groups=('Marketing and tracking', 'On site'), pop='Most popular',
@@ -83,8 +83,6 @@ def page(lang):
           f'<div class="pr-calc"><div class="pr-calc__base"><span>{c["gross"]} <b>IDR {f(G, fr)}</b></span><span>→</span><span>{c["base"]} <b>IDR {f(base, fr)}</b></span></div>{rows}'
           f'<div class="pr-leg">' + ''.join(f'<span><i class="pr-seg--{k}"></i>{l}</span>' for k, l in (('plat', c['plat']), ('pbjt', c['pbjt']), ('com', c['com']), ('you', c['you']))) + '</div>'
           f'<p class="cx-note iv-c">{x["calc_note"]}</p></div></div></section>\n')
-    # Simulateur
-    s += re.search(r'<section class="u-sec u-sec--white hm-sec" id="estimer">.*?</section>\n', home.page(lang), flags=re.S).group(0).replace('u-sec u-sec--white hm-sec" id="estimer"', 'u-sec hm-sec" id="estimer"', 1)
     # Rendement
     s += (f'<section class="u-sec u-sec--dark hm-sec hm-ges"><div class="u-wrap"><div class="u-head u-head--c"><p class="hm-k">{x["why_k"]}</p><h2>{why_h}</h2></div><div class="hm-ges__g">' +
           ''.join(f'<div class="hm-step"><span class="hm-step__n">0{i}</span>{svg}<h3>{h}</h3><p>{p}</p></div>' for i, (svg, h, p) in enumerate(why, 1)) + '</div></div></section>\n')
@@ -92,7 +90,7 @@ def page(lang):
     s += (f'<section class="u-sec hm-sec"><div class="u-wrap"><div class="u-head u-head--c"><h2>{x["ok_h"]}</h2></div><div class="ar-lv2 hm-gar hm-gar--4">' +
           ''.join(f'<article class="ar-lv2__c"><div class="ar-lv2__b"><span class="ar-lv2__ic">{size(svg, 26)}</span><h3>{h}</h3><p class="ar-lv2__p">{p}</p></div></article>' for svg, h, p in ok) + '</div></div></section>\n')
     s += (f'<section class="u-cta"><img src="/assets/images/suma-jardin.jpg" alt="" loading="lazy"><div class="u-cta__in"><h2>{x["cta_h"]}</h2><p>{x["cta_p"]}</p>'
-          f'<div class="u-btns"><a class="u-btn u-btn--rose" href="{x["cta_b"][1]}">{x["cta_b"][0]}</a></div></div></section>\n</div>\n<script src="/assets/js/invest.js" defer></script>\n')
+          f'<div class="u-btns"><a class="u-btn u-btn--rose" href="{x["cta_b"][1]}">{x["cta_b"][0]}</a></div></div></section>\n</div>\n')
     return s
 
 if __name__ == '__main__':
