@@ -204,4 +204,5 @@
 
   /* ---------- 4. Apparition des étapes et chiffres clés ---------- */
   document.querySelectorAll('.iv-tl, .iv-keys').forEach(function (n) { onView(n, function () { n.classList.add('is-in'); }); });
+  setTimeout(function () { document.querySelectorAll('.iv-tl, .iv-keys').forEach(function (n) { n.classList.add('is-in'); }); }, 2500);
 })();
