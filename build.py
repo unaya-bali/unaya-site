@@ -19,7 +19,7 @@ WHATSAPP = {'VillaSuma': '6285190211324', 'VillaYuga': '6281330617077', 'VillaRu
 TURNSTILE_SITEKEY = '0x4AAAAAAFl92qPSywb2bEJt'
 SOCIAL = {'instagram': 'https://www.instagram.com/unayabali/', 'linktree': 'https://linktr.ee/Unaya_Management'}
 OWNER_PAGES = ['Proprietaires', 'ProprietairesServices', 'ProprietairesTarifs', 'ConfierMaVilla']
-INVEST_PAGES = ['Investir', 'Terrains', 'TerrainMelasti', 'VillasAVendre', 'ArawaVillas']
+INVEST_PAGES = ['Investir', 'Terrains', 'TerrainMelasti', 'VillasAVendre', 'ArawaVillas', 'ArawaVillaB', 'ArawaVillaD']
 INVEST_SUB = {'fr': [('Investir', 'Le guide pour investir'), ('VillasAVendre', 'Villas à vendre'), ('Terrains', 'Terrains disponibles')], 'en': [('Investir', 'Investment guide'), ('VillasAVendre', 'Villas for sale'), ('Terrains', 'Available land')]}
 BEDS24 = {'VillaSuma': '359817', 'VillaYuga': '359816', 'VillaRumahJambu': '359818'}  # propriétés Unaya
 
@@ -49,6 +49,10 @@ DESC = {
 ('en','VillasAVendre'):"Villas for sale in Bali chosen by Unaya: pool villas in Uluwatu, leasehold, to live in or rent out, with rental management available.",
 ('fr','ArawaVillas'):"Arawa Villas à Balangan, Uluwatu : 2 villas de 2 chambres avec piscine privée, livrées meublées fin décembre 2026, dès 170 000 USD en bail.",
 ('en','ArawaVillas'):"Arawa Villas in Balangan, Uluwatu: two 2-bedroom villas with private pool, handed over furnished end of December 2026, from USD 170,000 leasehold.",
+('fr','ArawaVillaB'):"Arawa Villas, villa B à Balangan : 2 chambres en suite, piscine privée, parcelle de 91,80 m², livrée meublée fin décembre 2026, dès 170 000 USD.",
+('en','ArawaVillaB'):"Arawa Villas, villa B in Balangan: 2 en-suite bedrooms, private pool, 91.80 m² plot, handed over furnished end of December 2026, from USD 170,000.",
+('fr','ArawaVillaD'):"Arawa Villas, villa D à Balangan : 2 chambres en suite, piscine privée, parcelle de 105,41 m² avec rangement, livrée meublée fin décembre 2026, dès 195 000 USD.",
+('en','ArawaVillaD'):"Arawa Villas, villa D in Balangan: 2 en-suite bedrooms, private pool, 105.41 m² plot with storage, handed over furnished end of December 2026, from USD 195,000.",
 ('fr','TerrainMelasti'):"Terrain de 500 m² en zone rose à Melasti, Uluwatu : bail 30 ans + option 30 ans, titre SHM, à 5 min de la plage. IDR 3,15 milliards.",
 ('en','TerrainMelasti'):"500 m² pink-zone plot in Melasti, Uluwatu: 30-year lease + 30-year option, SHM title, 5 min from the beach. IDR 3.15 billion.",
  ('fr','Experiences'):"Unaya Experiences : excursions privées à Bali avec guide francophone ou chauffeur, départ de votre villa. 10 circuits à la journée, activités et calcul du prix en ligne.",
@@ -97,7 +101,7 @@ def url(name, lang):
 def subnav(lang, page):
     t = T[lang]
     if page in INVEST_PAGES:
-        cur = {'TerrainMelasti': 'Terrains', 'ArawaVillas': 'VillasAVendre'}.get(page, page)
+        cur = {'TerrainMelasti': 'Terrains', 'ArawaVillas': 'VillasAVendre', 'ArawaVillaB': 'VillasAVendre', 'ArawaVillaD': 'VillasAVendre'}.get(page, page)
         return f'<nav class="subnav" aria-label="{"Investir à Bali" if lang == "fr" else "Invest in Bali"}">' + ''.join(
             f'<a href="{url(n, lang)}"{" aria-current=\"page\"" if n == cur else ""}>{lbl}</a>' for n, lbl in INVEST_SUB[lang]) + '</nav>'
     if page not in OWNER_PAGES: return ''
@@ -250,6 +254,9 @@ def wa_text(lang, page):
     fr = lang == 'fr'
     if page in VNAME:
         return (f"Bonjour Unaya, je suis intéressé(e) par {'la ' if page != 'VillaRumahJambu' else ''}{VNAME[page]}. Mes dates : " if fr else f"Hello Unaya, I'm interested in {VNAME[page]}. My dates: ")
+    if page in ('ArawaVillaB', 'ArawaVillaD'):
+        v = page[-1]
+        return (f"Bonjour Unaya, je suis intéressé(e) par la villa {v} des Arawa Villas à Balangan." if fr else f"Hello Unaya, I'm interested in villa {v} at Arawa Villas in Balangan.")
     if page in ('VillasAVendre', 'ArawaVillas'):
         return ("Bonjour Unaya, je suis intéressé(e) par les Arawa Villas à Balangan." if fr else "Hello Unaya, I'm interested in Arawa Villas in Balangan.")
     if page in ('Terrains', 'TerrainMelasti'):
@@ -433,7 +440,7 @@ LODGING = {
  'VillaYuga': dict(name='Villa Yuga', loc='Nyanyi, Tanah Lot', img='yuga-g1.jpg', rooms=4, guests=8),
  'VillaRumahJambu': dict(name='Rumah Jambu', loc='Balangan, Uluwatu', img='rj-g1.jpg', rooms=2, guests=4),
 }
-PARENT = {'VillaSuma':'Villas','VillaYuga':'Villas','VillaRumahJambu':'Villas','TerrainMelasti':'Terrains','ArawaVillas':'VillasAVendre',
+PARENT = {'VillaSuma':'Villas','VillaYuga':'Villas','VillaRumahJambu':'Villas','TerrainMelasti':'Terrains','ArawaVillas':'VillasAVendre','ArawaVillaB':'ArawaVillas','ArawaVillaD':'ArawaVillas',
           'ProprietairesServices':'Proprietaires','ProprietairesTarifs':'Proprietaires','ConfierMaVilla':'Proprietaires','SiteWeb':'Proprietaires'}
 
 def jsonld(lang, page, title, body):

@@ -643,3 +643,6 @@ footer a{display:inline-block;padding:4px 0}
 .ar-loc .ld-tbl{width:100%}
 .ar-lv .ld-ar h3{margin-top:0}
 @media (max-width:900px){.ar-gal{grid-template-columns:1fr 1fr}.ar-site,.ar-plans{grid-template-columns:1fr}.ar-site img{aspect-ratio:4/3}}
+.ar-pr span a{color:inherit;text-decoration:none;border-bottom:1px solid currentColor}
+.ar-other{font-size:14px;line-height:1.6}
+.ar-other a{color:inherit}

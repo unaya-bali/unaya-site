@@ -98,5 +98,13 @@
   "ArawaVillas": {
     "en": "/villas-for-sale/arawa-balangan/",
     "fr": "/fr/villas-a-vendre/arawa-balangan/"
+  },
+  "ArawaVillaB": {
+    "fr": "/fr/villas-a-vendre/arawa-villa-b/",
+    "en": "/villas-for-sale/arawa-villa-b/"
+  },
+  "ArawaVillaD": {
+    "fr": "/fr/villas-a-vendre/arawa-villa-d/",
+    "en": "/villas-for-sale/arawa-villa-d/"
   }
 }
