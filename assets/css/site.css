@@ -1273,3 +1273,41 @@ footer a{display:inline-block;padding:4px 0}
 .vr-t .vr-d{font-size:17px;line-height:1.6}.vr-filters{max-width:100%}@media (max-width:900px){.vr-filters{display:flex;width:100%;box-sizing:border-box;padding-bottom:4px}.vr-t .vr-d{font-size:16px}}
 .vl-mode{display:inline-flex;align-items:center;gap:6px;align-self:flex-start;font-size:13px;letter-spacing:.03em;padding:6px 12px;border-radius:999px;background:#E3F3F0;color:#0B6F62;margin:2px 0 10px}.vl-mode::before{content:'';width:7px;height:7px;border-radius:50%;background:#0E9180}.vr-t .vl-mode{margin:0 0 14px}
 .vl-prices{display:flex!important;flex-direction:column;gap:6px}.vl-p{display:block}.vl-p small{font-size:13px;color:var(--prune);margin-right:2px}.vl-p .fx{display:block;font-size:12px;color:var(--prune);opacity:.8;margin-top:1px}.vr-t .vl-prices strong{font-size:26px}
+/* ---- Page Services voyageurs (gs-*) ---- */
+.gs-nav .sv-nav__in{grid-template-columns:repeat(4,1fr)}
+.gs-grid{display:grid;grid-template-columns:1fr 1fr;gap:26px}
+.gs-card{display:flex;flex-direction:column;background:#fff;border:1px solid var(--ligne);border-radius:24px;overflow:hidden;scroll-margin-top:170px;transition:box-shadow .25s,transform .25s}
+.gs-card:hover{box-shadow:0 22px 50px rgba(63,42,58,.12);transform:translateY(-3px)}
+.gs-card__img{position:relative;aspect-ratio:16/9;overflow:hidden}
+.gs-card__img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .7s}
+.gs-card:hover .gs-card__img img{transform:scale(1.04)}
+.gs-card__badge{position:absolute;left:18px;bottom:18px;background:#fff;color:var(--aubergine);font:500 20px 'Cormorant Garamond',serif;padding:7px 16px;border-radius:999px;box-shadow:0 8px 20px rgba(0,0,0,.15)}
+.gs-card__b{display:flex;flex-direction:column;gap:14px;padding:30px 32px 32px;flex:1}
+.gs-card h2{font:500 36px/1.1 'Cormorant Garamond',serif;color:var(--aubergine);margin:0}
+.gs-card__p{margin:0;font-size:16px;line-height:1.6;color:var(--prune)}
+.gs-rows{margin:auto 0 0}
+.gs-rows div{display:flex;justify-content:space-between;gap:12px;padding:11px 0;border-top:1px dashed #E6DCD4}
+.gs-rows dt{font-size:15px}.gs-rows dd{margin:0;font:500 21px 'Cormorant Garamond',serif;color:#0B6F62;white-space:nowrap}
+.gs-note{margin:0;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--cuivre)}
+.gs-btn{align-self:stretch;text-align:center;cursor:pointer;margin-top:6px}
+.gs-card--exp{background:#2F4A3A;border-color:#2F4A3A;color:#E4EDE6}
+.gs-card--exp h2{color:#fff}.gs-card--exp .gs-card__p,.gs-card--exp .gs-rows dt{color:#D3E2D6}
+.gs-card--exp .gs-rows div{border-color:rgba(255,255,255,.18)}.gs-card--exp .gs-rows dd{color:#BFE3C8}
+.gs-card--exp .gs-note{color:#C9DBC9}
+.gs-btn--exp{background:#E9C46A;border-color:#E9C46A;color:#2F2A1A!important}
+.iv-tl--3{grid-template-columns:repeat(3,1fr);max-width:960px}
+.iv-tl--3::before{left:16.66%;right:16.66%}.iv-tl--3::after{left:16.66%}.iv-tl--3.is-in::after{width:66.68%}
+.iv-tl--3 li:nth-child(3) b{background:#0E9180;color:#fff}.iv-tl--3 li:nth-child(4) b{background:#fff;color:#0B6F62}
+.gs-vil{display:flex;align-items:center;gap:22px;max-width:900px;margin:56px auto 0;padding:24px 30px;border-radius:20px;background:#F3EBE5}
+.gs-vil strong{font:500 26px 'Cormorant Garamond',serif;color:var(--aubergine)}
+.gs-vil p{margin:4px 0 0;color:var(--prune)}
+.gs-vil .u-btn{margin-left:auto;flex:none}
+@media (max-width:900px){
+ .gs-grid{grid-template-columns:1fr}
+ .gs-card__b{padding:24px 22px 26px}
+ .gs-card h2{font-size:32px}
+ .iv-tl--3{grid-template-columns:1fr}
+ .iv-tl--3::before,.iv-tl--3::after{left:31px}.iv-tl--3.is-in::after{width:2px}
+ .gs-vil{flex-direction:column;align-items:flex-start;padding:22px}.gs-vil .u-btn{margin-left:0}
+}
+button.gs-btn{font-family:'Jost',sans-serif;border:1px solid var(--aubergine)}
