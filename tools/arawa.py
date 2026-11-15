@@ -122,6 +122,73 @@ T = {'fr': dict(
 
 L = "display:flex;flex-direction:column;gap:8px;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:#5A3552;flex:1 1 240px;"
 I = "font-family:'Jost',sans-serif;font-size:16px;padding:14px;border:1px solid #D9CCC2;background:#FFFFFF;color:#2E2429;"
+import html as _h
+def jattr(o): return _h.escape(json.dumps(o, ensure_ascii=False), quote=True)
+PRICE = {'B': 170000, 'D': 195000}
+PLOT = {'B': 91.80, 'D': 105.41}
+def money(n, fr): return (f'{n:,}'.replace(',', ' ') + ' $') if fr else f'${n:,}'
+def m2(v, fr): return (f'{v:.2f}'.replace('.', ',') if fr else f'{v:.2f}') + ' m²'
+def sim_html(l, v):
+    fr = l == 'fr'
+    tx = (dict(h='Ce que la villa peut rapporter', lead='Bougez les curseurs : prix par nuit et taux d’occupation. Les chiffres et les graphiques se recalculent.',
+               sc='Scénarios', pre=[(60, 'Prudent · 60 %'), (74, 'Promoteur, bas · 74 %'), (84, 'Promoteur, central · 84 %')],
+               rate='Prix par nuit', occ='Taux d’occupation', nights='nuits louées par an',
+               k=['Revenus par an', 'Revenu net par an', 'Rendement net', 'Prix couvert en'],
+               d='Où vont les revenus', a='Revenu net cumulé sur les 28 ans du bail',
+               note='Simulation indicative, sans garantie de revenus. Les scénarios « promoteur » reprennent les hypothèses d’Arawa : 175 $ la nuit et 50 % de charges (plateformes 15 %, gestion 15 %, taxe 10 %, frais d’exploitation 10 %). Le scénario prudent (60 %) est ajouté par Unaya. Ne tient compte ni de l’impôt sur le revenu, ni des gros travaux, ni de la prolongation du bail.')
+          if fr else
+          dict(h='What the villa could earn', lead='Move the sliders: nightly rate and occupancy. Figures and charts update as you go.',
+               sc='Scenarios', pre=[(60, 'Cautious · 60%'), (74, 'Developer, low · 74%'), (84, 'Developer, mid · 84%')],
+               rate='Nightly rate', occ='Occupancy', nights='nights booked per year',
+               k=['Revenue per year', 'Net income per year', 'Net yield', 'Price covered in'],
+               d='Where the revenue goes', a='Cumulative net income over the 28-year lease',
+               note='Indicative simulation, no guaranteed income. The “developer” scenarios use Arawa’s assumptions: $175 a night and 50% costs (platforms 15%, management 15%, tax 10%, running costs 10%). The cautious scenario (60%) is added by Unaya. Excludes income tax, major works and the lease extension.'))
+    pre = ''.join(f'<button type="button" class="cx-chip" data-preset="{o}" aria-pressed="false">{lab}</button>' for o, lab in tx['pre'])
+    kp = ''.join(f'<div class="cx-kpi{" cx-kpi--net" if i == 1 else ""}"><span>{lab}</span><strong data-k="{key}">–</strong></div>' for i, (lab, key) in enumerate(zip(tx['k'], ['rev', 'net', 'yld', 'pay'])))
+    return (head(tx['h'], tx['lead']) +
+            f'<div class="cx-sim"><div class="cx-ctrl"><div class="cx-presets" role="group" aria-label="{tx["sc"]}"><span>{tx["sc"]}</span>{pre}</div>'
+            f'<label class="cx-sl"><span>{tx["rate"]} <output data-out="rate"></output></span><input type="range" name="rate" min="100" max="300" step="5" value="175"></label>'
+            f'<label class="cx-sl"><span>{tx["occ"]} <output data-out="occ"></output> <em>· <output data-out="nights"></output> {tx["nights"]}</em></span><input type="range" name="occ" min="40" max="95" step="1" value="74"></label></div>'
+            f'<div class="cx-kpis">{kp}</div>'
+            f'<div class="cx-grid"><figure class="cx-card"><figcaption>{tx["d"]}</figcaption><div class="cx-donut"></div><ul class="cx-dleg"></ul></figure>'
+            f'<figure class="cx-card cx-card--w"><figcaption>{tx["a"]}</figcaption><div class="cx-area"></div></figure></div>'
+            f'<p class="cx-note">{tx["note"]}</p></div>')
+def cmp_html(l, v):
+    fr = l == 'fr'
+    o = 'D' if v == 'B' else 'B'
+    def rows(f, unit_fmt):
+        return [dict(l=f'Villa {x}', v=f(x), t=unit_fmt(f(x)), hl=(x == v)) for x in ('B', 'D')]
+    ppm = lambda x: round(PRICE[x] / PLOT[x])
+    blocks = [('Prix' if fr else 'Price', rows(lambda x: PRICE[x], lambda n: money(n, fr))),
+              ('Parcelle' if fr else 'Plot', rows(lambda x: PLOT[x], lambda n: m2(n, fr))),
+              ('Prix au m² de parcelle' if fr else 'Price per m² of plot', rows(ppm, lambda n: money(n, fr)))]
+    h = 'Villa B ou villa D ?' if fr else 'Villa B or villa D?'
+    lead = (f'Même villa, même finition. La villa {v} est en foncé. Au m² de parcelle, les deux prix sont presque identiques : la villa D coûte plus cher parce que son terrain est plus grand.'
+            if fr else f'Same villa, same finish. Villa {v} is shown in dark. Per m² of plot the two prices are almost identical: villa D costs more because its plot is larger.')
+    html_ = ''.join(f'<figure class="cx-card"><figcaption>{t}</figcaption><div class="cx-bars cx-bars--cmp" data-rows="{jattr(r)}"></div></figure>' for t, r in blocks)
+    return head(h, lead) + f'<div class="cx-cmp">{html_}</div>'
+def surf_html(l):
+    fr = l == 'fr'
+    data = [('Étage' if fr else 'Upstairs', 54.39), ('Rez-de-chaussée' if fr else 'Ground floor', 51.35), ('Deck de la piscine' if fr else 'Pool deck', 19.74), ('Jardin' if fr else 'Garden', 15.29), ('Piscine' if fr else 'Pool', 11.50)]
+    rows = [dict(l=a, v=b, t=m2(b, fr), hl=i < 2, tip=f'<b>{a}</b><br>{m2(b, fr)} · {round(b / 152.27 * 100)} %' + (' du total' if fr else ' of total')) for i, (a, b) in enumerate(data)]
+    cap = ('Surfaces du plan type · 152,27 m² au total, dont ≈ 106 m² habitables' if fr else 'Typical plan areas · 152.27 m² in total, of which ≈ 106 m² indoor')
+    return f'<figure class="cx-card cx-card--surf"><figcaption>{cap}</figcaption><div class="cx-bars" data-rows="{jattr(rows)}"></div></figure>'
+def dist_html(l, loc):
+    import re as _re
+    fr = l == 'fr'
+    rows = []
+    for a, b in loc:
+        n = [int(x) for x in _re.findall(r'\d+', b)]
+        rows.append(dict(l=a, v=sum(n) / len(n), t=b, tip=f'<b>{a}</b><br>{b}' + (' en voiture' if fr else ' by car')))
+    return f'<figure class="cx-card cx-card--dist"><figcaption>{"Temps de trajet en voiture" if fr else "Driving time"}</figcaption><div class="cx-bars cx-bars--dist" data-rows="{jattr(rows)}"></div></figure>'
+def prog_html(l):
+    fr = l == 'fr'
+    steps = ([('Juin 2026', 'Premières photos du chantier'), ('Oct.–nov. 2026', 'Façades, menuiseries, piscines'), ('Fin déc. 2026', 'Remise des clés, villa meublée')] if fr else
+             [('June 2026', 'First site photos'), ('Oct–Nov 2026', 'Façades, joinery, pools'), ('End Dec 2026', 'Handover, villa furnished')])
+    tl = ''.join(f'<li class="{"is-done" if i < 2 else "is-next"}"><b>{a}</b><span>{b}</span></li>' for i, (a, b) in enumerate(steps))
+    return (f'<div class="cx-prog"><div class="cx-ring" data-pct="87.5" data-text="85–90 %" data-label="{"Avancement des travaux : 85 à 90 %" if fr else "Construction progress: 85 to 90%"}"></div>'
+            f'<div><p class="cx-prog__k">{"Avancement des travaux" if fr else "Construction progress"}</p><ol class="cx-tl">{tl}</ol></div></div>')
+
 def detail(l, t, page):
     fr = l == 'fr'
     bc = ' <span>›</span> '.join(f'<a href="{u}">{n}</a>' if u else n for n, u in t['bc'])
@@ -137,16 +204,22 @@ def detail(l, t, page):
              f'<a class="u-btn u-btn--rose" href="#dossier">{t["pb1"]}</a><a class="ld-wa" href="{wa}" target="_blank" rel="noopener">{t["pb2"]}</a>'
              f'<p>{t["pnote"]}</p>' + (f'<p class="ar-other">{t["other"]}</p>' if t.get('other') else '') + '</aside>')
     s += sec(f'<div class="ld-main"><div class="ld-desc">{head(t["dh"])}{desc}</div>{price}</div>')
+    vv = page[-1] if page != 'ArawaVillas' else None
+    if vv:
+        s += f'<div hidden data-arawa="{jattr(dict(price=PRICE[vv], lease=28))}"></div>\n'
+        s += sec(sim_html(l, vv), 'white', id='rendement')
+        s += sec(cmp_html(l, vv))
     s += sec(head(t['ph'], t['pl']) + '<div class="u-feats u-feats--4">' + ''.join(f'<div class="u-feat">{ic(k)}<h3>{h}</h3><p>{p}</p></div>' for k, h, p in t['phil']) + '</div>', 'white')
     gal = ''.join(f'<figure><img src="/assets/images/{f}" alt="{a if fr else b}" loading="lazy"></figure>' for f, a, b in GAL)
     s += sec(head(t['gh'], t['gl']) + f'<div class="ar-gal" data-gallery>{gal}</div>')
     lv = ''.join(f'<div class="ld-ar"><h3>{h}</h3><ul>' + ''.join(f'<li>{x}</li>' for x in li) + '</ul></div>' for h, li in t['lv'])
-    s += sec(head(t['vh'], t['vl']) + f'<div class="ld-around ar-lv">{lv}</div>', 'white')
+    s += sec(head(t['vh'], t['vl']) + f'<div class="ld-around ar-lv">{lv}</div>' + (surf_html(l) if vv else ''), 'white')
     ph = ''.join(f'<figure><img src="/assets/images/{f}" alt="{c}" loading="lazy"><figcaption>{c}</figcaption></figure>' for f, c in zip(t.get('chf', ['arawa-chantier-1.jpg', 'arawa-chantier-2.jpg', 'arawa-chantier-3.jpg']), t['chc']))
-    s += sec(head(t['ch'], t['cl']) + f'<div class="ar-site">{ph}</div>')
+    s += sec(head(t['ch'], t['cl']) + (prog_html(l) if vv else '') + f'<div class="ar-site">{ph}</div>')
     pl = ''.join(f'<figure><a href="/assets/images/{f}" target="_blank" rel="noopener"><img src="/assets/images/{f}" alt="{c}" loading="lazy"></a><figcaption>{c}</figcaption></figure>' for f, c in zip(['arawa-plan-masse.jpg', 'arawa-plan-rdc.jpg', 'arawa-plan-etage.jpg'], t['plc']))
     s += sec(head(t['plh'], t['pll']) + f'<div class="ar-plans">{pl}</div>', 'white')
     tbl = '<dl class="ld-tbl">' + ''.join(f'<div><dt>{a}</dt><dd>{b}</dd></div>' for a, b in t['loc']) + '</dl>'
+    if vv: tbl = dist_html(l, t['loc'])
     s += sec(head(t['lh'], t['ll']) + f'<div class="ar-loc">{tbl}<a class="u-btn u-btn--line" href="{GMAP}" target="_blank" rel="noopener">{t["maps"]} ↗</a></div>')
     st = '<div class="u-path u-path--4">' + ''.join(f'<div class="u-path__s"><span class="u-path__dot">{ic(k,34)}</span><div><h3>{h}</h3><p>{p}</p></div></div>' for k, h, p in t['steps']) + '</div>'
     s += sec(head(t['ah'], t['al']) + st, 'white')
@@ -158,6 +231,7 @@ def detail(l, t, page):
             f'<label style="display: flex; gap: 10px; align-items: flex-start; font-size: 15px;"><input type="checkbox" style="margin-top: 5px;">{t["fc"]}</label>'
             f'<button type="button" style="display:inline-block;padding:16px 30px;background:#3F2A3A;color:#F7F2EE;font-size:14px;letter-spacing:.14em;text-transform:uppercase;font-weight:500;border:none;font-family:\'Jost\',sans-serif;cursor:pointer;align-self:flex-start;">{t["fs"]}</button></form>')
     s += sec(f'<div class="ld-form">{head(t["fh"],t["fp"])}{form}<p class="ld-legal">{t["legal"]}</p></div>', 'white', id='dossier')
+    if vv: s += '<script src="/assets/js/arawa-charts.js" defer></script>\n'
     open(R + f'pages/{l}/{page}.html', 'w').write(s)
 
 VHREF = {'B': {'fr': '/fr/villas-a-vendre/arawa-villa-b/', 'en': '/villas-for-sale/arawa-villa-b/'}, 'D': {'fr': '/fr/villas-a-vendre/arawa-villa-d/', 'en': '/villas-for-sale/arawa-villa-d/'}}
