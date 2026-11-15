@@ -49,7 +49,7 @@
       var r = +rate.value, o = +occ.value / 100, nights = Math.round(365 * o), gross = r * nights;
       var comm = gross * c.comm, pbjt = gross / 11, fee = (gross - comm - pbjt) * c.fee, cost = gross * c.cost;
       var net = gross - comm - pbjt - fee - cost;
-      return { nights: nights, gross: gross, comm: comm, pbjt: pbjt, fee: fee, cost: cost, net: net, yld: net / c.fx / (+val.value) * 100 };
+      return { nights: nights, gross: gross, comm: comm, pbjt: pbjt, fee: fee, cost: cost, net: net, yld: val ? net / c.fx / (+val.value) * 100 : 0 };
     }
     /* Cascade (waterfall) */
     var narrow = wfBox.clientWidth < 480, W = narrow ? 380 : 640, H = narrow ? 280 : 300, m = { t: 34, r: 6, b: 46, l: 6 };
@@ -88,6 +88,7 @@
       });
     }
     /* Jauge de rendement */
+    if (ygBox) {
     var GW = 360, GH = 96, gm = 16, MAXY = 15;
     var gsv = el('svg', { viewBox: '0 0 ' + GW + ' ' + GH }, ygBox);
     var gx = function (v) { return gm + (GW - 2 * gm) * Math.min(v, MAXY) / MAXY; };
@@ -100,7 +101,9 @@
     el('line', { x1: 0, x2: 0, y1: 26, y2: 58, stroke: '#3F2A3A', 'stroke-width': 2 }, mk);
     el('circle', { cx: 0, cy: 46, r: 7, fill: '#fff', stroke: '#3F2A3A', 'stroke-width': 2.5 }, mk);
     var mt = el('text', { x: 0, y: 18, 'text-anchor': 'middle', class: 'iv-gm' }, mk);
+    }
     function drawYg(d) {
+      if (!ygBox) return;
       var x = gx(Math.max(0, d.yld));
       mk.style.transform = 'translateX(' + x + 'px)';
       mt.textContent = L.you + ' · ' + fmt(d.yld, 1) + PC;
@@ -109,24 +112,26 @@
       if (msg) msg.textContent = d.yld < 6 ? (FR ? 'sous la fourchette du marché' : 'below the market range') : d.yld <= 10 ? (FR ? 'dans la fourchette du marché' : 'within the market range') : (FR ? 'au-dessus du marché : vérifiez vos hypothèses' : 'above the market: check your assumptions');
     }
     function update(anim) {
-      [rate, occ, val].forEach(fill);
+      [rate, occ, val].forEach(function (s) { if (s) fill(s); });
       var d = calc(); cur = d;
       sim.querySelector('[data-out=rate]').textContent = 'IDR ' + fmt(+rate.value);
       sim.querySelector('[data-out=occ]').textContent = occ.value + PC;
       sim.querySelector('[data-out=nights]').textContent = d.nights;
-      sim.querySelector('[data-out=val]').textContent = usd(+val.value);
+      if (val) sim.querySelector('[data-out=val]').textContent = usd(+val.value);
       countUp(sim.querySelector('[data-k=gross]'), d.gross, idrM);
       countUp(sim.querySelector('[data-k=net]'), d.net, idrM);
       countUp(sim.querySelector('[data-k=month]'), d.net / 12, idrM);
-      countUp(sim.querySelector('[data-k=yld]'), d.yld, function (v) { return fmt(v, 1) + PC; });
-      countUp(sim.querySelector('[data-k=yld2]'), d.yld, function (v) { return fmt(v, 1) + PC; });
+      countUp(sim.querySelector('[data-k=feey]'), d.fee, idrM);
+      if (val) countUp(sim.querySelector('[data-k=yld]'), d.yld, function (v) { return fmt(v, 1) + PC; });
+      if (val) countUp(sim.querySelector('[data-k=yld2]'), d.yld, function (v) { return fmt(v, 1) + PC; });
       var nu = sim.querySelector('[data-k=netusd]'); if (nu) nu.textContent = '≈ ' + usd(Math.round(d.net / c.fx / 100) * 100);
       drawWf(d); drawYg(d);
       sim.querySelectorAll('[data-occ]').forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-occ') === occ.value ? 'true' : 'false'); });
     }
     var raf;
-    [rate, occ, val].forEach(function (s) { s.addEventListener('input', function () { cancelAnimationFrame(raf); raf = requestAnimationFrame(function () { update(false); }); }); });
+    [rate, occ, val].forEach(function (s) { if (s) s.addEventListener('input', function () { cancelAnimationFrame(raf); raf = requestAnimationFrame(function () { update(false); }); }); });
     sim.querySelectorAll('[data-occ]').forEach(function (b) { b.addEventListener('click', function () { occ.value = b.getAttribute('data-occ'); update(true); }); });
+    sim.querySelectorAll('[data-fee]').forEach(function (b) { b.addEventListener('click', function () { c.fee = +b.getAttribute('data-fee') / 100; sim.querySelectorAll('[data-fee]').forEach(function (o) { o.setAttribute('aria-pressed', o === b ? 'true' : 'false'); }); update(true); }); });
     update(false);
     onView(sim, function () { sim.classList.add('is-in'); });
   })();

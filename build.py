@@ -311,8 +311,8 @@ def home_villas(lang):
     h = 'Nos villas' if fr else 'Our villas'
     sub = ('Réservez en direct sur notre site : −15 % dès 7 nuits, −20 % dès 28 nuits.' if fr else 'Book direct on our website: −15% from 7 nights, −20% from 28 nights.')
     more = ('Voir toutes les villas' if fr else 'See all villas')
-    return (f'<section class="u-sec h-villas" id="villas"><div class="u-wrap"><div class="u-head"><h2>{h}</h2><p>{sub}</p></div>'
-            f'<div class="vl-grid">{cards}</div><p style="margin:28px 0 0"><a class="u-link" href="{url("Villas", lang)}">{more}</a></p></div></section>\n')
+    return (f'<section class="u-sec h-villas hm-sec" id="villas"><div class="u-wrap"><div class="u-head u-head--c"><h2>{h}</h2><p>{sub}</p></div>'
+            f'<div class="vl-grid">{cards}</div><p class="hm-c" style="margin:36px 0 0"><a class="u-btn u-btn--line" href="{url("Villas", lang)}">{more}</a></p></div></section>\n')
 def contact_wa(lang):
     fr = lang == 'fr'
     return (f'<div class="c-item c-item--wa"><span class="c-wa-ic">{WA_SVG}</span><div><strong>WhatsApp</strong><span><a href="{wa_url(lang, "Contact")}" target="_blank" rel="noopener">{WA_SHOW}</a><br>'
@@ -379,9 +379,8 @@ def transform(body, lang, page):
         imgs = re.findall(r'<span class="h-door__img"><img src="https://images\.unsplash\.com[^"]*"', body)
         for old, new in zip(imgs, ['/assets/images/yuga-drone.jpg', '/assets/images/suma-piscine-2.jpg']):
             body = body.replace(old, '<span class="h-door__img"><img src="' + new + '"', 1)
-        i = body.index('class="h-doors"'); j = body.index('</section>', i) + len('</section>')
-        body = body[:j] + '\n' + home_villas(lang) + body[j:]
-    if page in ('Main', 'Proprietaires'):
+        body = body.replace('<!-- VILLAS -->', home_villas(lang), 1)
+    if page == 'Proprietaires':
         j = body.index('</section>') + len('</section>')
         body = body[:j] + '\n' + stats_band(lang) + body[j:]
     if page == 'Villas':
