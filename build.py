@@ -253,6 +253,7 @@ WA_MAIN = '6285190211324'
 WA_SHOW = '+62 851 9021 1324'
 VNAME = {'VillaSuma': 'Villa Suma', 'VillaYuga': 'Villa Yuga', 'VillaRumahJambu': 'Rumah Jambu'}
 PRICE0 = {'VillaSuma': 5800000, 'VillaYuga': 2900000, 'VillaRumahJambu': 1200000}  # repli si /api/prices ne répond pas
+ROOM0 = {'VillaSuma': 1040000, 'VillaYuga': 650000}  # prix d'une chambre, repli (15/11/2026)
 def wa_text(lang, page):
     fr = lang == 'fr'
     if page in VNAME:
@@ -304,8 +305,12 @@ def add_price(card, lang):
     page = {'suma': 'VillaSuma', 'yuga': 'VillaYuga', 'rumah-jambu': 'VillaRumahJambu'}[m.group(1)]
     fr = lang == 'fr'
     price = (f'<span class="vl-card__price" data-prices="{page}">{"À partir de" if fr else "From"} <strong data-price="villa">{fmt_idr(PRICE0[page], lang)}</strong> {"/ nuit" if fr else "/ night"}</span>')
-    if page in ('VillaSuma', 'VillaYuga'):
-        price = f'<span class="vl-mode">{"À la chambre ou villa entière" if fr else "By the room or the whole villa"}</span>' + price
+    if page in ROOM0:
+        night = '/ nuit' if fr else '/ night'
+        price = (f'<span class="vl-mode">{"À la chambre ou villa entière" if fr else "By the room or the whole villa"}</span>'
+                 f'<span class="vl-card__price vl-prices" data-prices="{page}">'
+                 f'<span class="vl-p"><small>{"Villa entière dès" if fr else "Whole villa from"}</small> <strong data-price="villa">{fmt_idr(PRICE0[page], lang)}</strong> {night}</span>'
+                 f'<span class="vl-p"><small>{"Chambre dès" if fr else "Room from"}</small> <strong data-price="room">{fmt_idr(ROOM0[page], lang)}</strong> {night}</span></span>')
     if '<!--PRICE-->' in card:
         return card.replace('<!--PRICE-->', price, 1)
     return card.replace('<p>', price + '<p>', 1)
