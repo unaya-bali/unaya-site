@@ -4,7 +4,7 @@ from ui import ic, sec, head, cta, btn, faq
 from urllib.parse import quote
 R = '/home/claude/unaya-site/src/'
 WA = '6285190211324'
-GMAP = 'https://maps.app.goo.gl/otksPEBt1Gy6dxUA6'
+GMAP = 'https://maps.app.goo.gl/otksPEBt1Gy6dxUA6'  # -8.8057373, 115.1356918
 
 GAL = [('arawa-facade.jpg', 'Façade et piscine privée', 'Front of the villa and private pool'),
        ('arawa-salon.jpg', 'Salon ouvert sur la piscine', 'Living room opening onto the pool'),
@@ -280,7 +280,8 @@ def detail(l, t, page):
     s += sec(head(t['plh'], t['pll']) + f'<div class="ar-plans">{pl}</div>', 'white', id='plans')
     tbl = '<dl class="ld-tbl">' + ''.join(f'<div><dt>{a}</dt><dd>{b}</dd></div>' for a, b in t['loc']) + '</dl>'
     if vv: tbl = dist_html(l, t['loc'])
-    s += sec(head(t['lh'], t['ll']) + f'<div class="ar-loc">{tbl}<a class="u-btn u-btn--line" href="{GMAP}" target="_blank" rel="noopener">{t["maps"]} ↗</a></div>')
+    mapt = 'Emplacement des Arawa Villas, Balangan' if fr else 'Arawa Villas location, Balangan'
+    s += sec(head(t['lh'], t['ll']) + f'<div class="ld-zone ar-zone"><div class="ld-map"><iframe title="{mapt}" src="https://maps.google.com/maps?q=-8.8057373,115.1356918&amp;t=k&amp;z=16&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe><a class="u-btn u-btn--line" href="{GMAP}" target="_blank" rel="noopener">{t["maps"]} ↗</a></div>{tbl}</div>')
     st = '<div class="u-path u-path--4">' + ''.join(f'<div class="u-path__s"><span class="u-path__dot">{ic(k,34)}</span><div><h3>{h}</h3><p>{p}</p></div></div>' for k, h, p in t['steps']) + '</div>'
     s += sec(head(t['ah'], t['al']) + st, 'white')
     s += sec(head(t['qh']) + faq(t['qs']))

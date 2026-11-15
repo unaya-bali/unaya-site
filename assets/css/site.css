@@ -788,3 +788,4 @@ footer a{display:inline-block;padding:4px 0}
 .ar-lv2__p{margin:0;font-size:15.5px;line-height:1.6;color:var(--encre)}
 @media (max-width:1100px){.ar-lv2--4{grid-template-columns:1fr 1fr;max-width:760px}}
 @media (max-width:620px){.ar-lv2--4{grid-template-columns:1fr;max-width:520px}.ar-lv2--4 .ar-lv2__img{aspect-ratio:4/3}}
+.ar-zone .ld-map iframe{height:460px;border-radius:22px;box-shadow:0 14px 40px rgba(63,42,58,.1)}.ar-zone .cx-card--dist{border-radius:22px}
