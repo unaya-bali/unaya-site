@@ -1201,3 +1201,23 @@ footer a{display:inline-block;padding:4px 0}
  .pr-seg{padding:0 6px}.pr-seg b{font-size:14px}
 }
 @media (max-width:900px){.pr-seg{padding:0 4px}.pr-seg b{font-size:12.5px;letter-spacing:-.02em}}
+/* ---- Bloc « Continuer la visite » (pages propriétaires) ---- */
+.on-next{padding:90px 0!important;border-top:1px solid var(--ligne)}
+.on-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.on-card{display:flex;flex-direction:column;text-decoration:none;color:inherit;background:#fff;border:1px solid var(--ligne);border-radius:20px;overflow:hidden;transition:transform .25s,box-shadow .25s}
+.on-card:hover{transform:translateY(-4px);box-shadow:0 18px 40px rgba(63,42,58,.12)}
+.on-card__img{display:block;aspect-ratio:16/10;overflow:hidden}
+.on-card__img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s}
+.on-card:hover .on-card__img img{transform:scale(1.05)}
+.on-card__b{display:flex;flex-direction:column;gap:8px;padding:20px 22px 22px;flex:1}
+.on-card strong{font:500 24px/1.15 'Cormorant Garamond',serif;color:var(--aubergine)}
+.on-card__b>span{font-size:14.5px;line-height:1.55;color:var(--prune)}
+.on-card em{margin-top:auto;padding-top:6px;font-style:normal;font-size:14px;color:var(--cuivre-texte,#8B5A46);letter-spacing:.03em}
+.on-card--portal{background:#D2A48C;border-color:#D2A48C;justify-content:flex-end}
+.on-card--portal .on-card__b{justify-content:flex-end}
+.on-card--portal strong{color:#3F2A3A;font-size:28px}
+.on-card--portal .on-card__b>span{color:#3F2A3A}
+.on-card--portal em{color:#3F2A3A;font-weight:500}
+@media (max-width:1000px){.on-grid{grid-template-columns:1fr 1fr}}
+@media (max-width:600px){.on-next{padding:60px 0!important}.on-grid{grid-template-columns:1fr}.on-card{flex-direction:row}.on-card__img{flex:0 0 38%;aspect-ratio:auto}.on-card__b{padding:16px}.on-card strong{font-size:21px}.on-card--portal{flex-direction:column}}
+@media (max-width:600px){.on-next .u-wrap{padding-left:16px;padding-right:16px}}

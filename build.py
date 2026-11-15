@@ -368,6 +368,29 @@ def stats_band(lang):
     li = ''.join(f'<div class="st-i"><strong>{n}</strong><span>{t}</span></div>' for n, t in items)
     return f'<section class="st-band" aria-label="{"Unaya en chiffres" if fr else "Unaya in numbers"}"><div class="st-in">{li}</div></section>\n'
 
+OWNER_NEXT = {
+ 'fr': dict(h='Continuer la visite', p='Toutes les pages pour les propriétaires, en un clic.', more='Voir la page', items={
+   'Proprietaires': ('suma-piscine-2.jpg', 'Vue d’ensemble', 'Pourquoi Unaya, nos chiffres et les 4 étapes pour nous confier votre villa.'),
+   'ProprietairesServices': ('yuga-terrasse.jpg', 'Nos services', 'Les 5 pôles : marketing, voyageurs, équipe, entretien et comptabilité.'),
+   'ProprietairesTarifs': ('suma-terrasse.jpg', 'Formules & tarifs', '18 % ou 11 %, sans frais fixe. Le calcul de la commission expliqué.'),
+   'ConfierMaVilla': ('yuga-nuit.jpg', 'Confier ma villa', 'Votre estimation de revenus gratuite, avec une réponse sous 24 h.')},
+   portal=('Espace propriétaire', 'Réservations, revenus, dépenses et relevés, en temps réel.', 'Ouvrir ↗')),
+ 'en': dict(h='Keep exploring', p='Every page for owners, one click away.', more='View page', items={
+   'Proprietaires': ('suma-piscine-2.jpg', 'Overview', 'Why Unaya, our numbers and the 4 steps to hand over your villa.'),
+   'ProprietairesServices': ('yuga-terrasse.jpg', 'Our services', 'The 5 areas: marketing, guests, team, upkeep and accounting.'),
+   'ProprietairesTarifs': ('suma-terrasse.jpg', 'Plans & pricing', '18% or 11%, no fixed fees. How the commission is calculated.'),
+   'ConfierMaVilla': ('yuga-nuit.jpg', 'List my villa', 'Your free income estimate, with a reply within 24 hours.')},
+   portal=('Owner portal', 'Bookings, income, expenses and statements, in real time.', 'Open ↗')),
+}
+
+def owner_next(lang, page):
+    t = OWNER_NEXT[lang]
+    cards = ''.join(f'<a class="on-card" href="{url(k, lang)}"><span class="on-card__img"><img src="/assets/images/{img}" alt="" loading="lazy"></span><span class="on-card__b"><strong>{h}</strong><span>{d}</span><em>{t["more"]} →</em></span></a>'
+                    for k, (img, h, d) in t['items'].items() if k != page)
+    ph, pd, pb = t['portal']
+    cards += f'<a class="on-card on-card--portal" href="https://owners.unayabali.com"><span class="on-card__b"><strong>{ph}</strong><span>{pd}</span><em>{pb}</em></span></a>'
+    return f'<section class="u-sec on-next"><div class="u-wrap"><div class="u-head u-head--c"><h2>{t["h"]}</h2><p>{t["p"]}</p></div><div class="on-grid">{cards}</div></div></section>\n'
+
 def transform(body, lang, page):
     body = body.replace('<a href="#">info@unayabali.com</a>', '<a href="mailto:info@unayabali.com">info@unayabali.com</a>')
     body = body.replace('<a href="#" style="font-size: 20px;">info@unayabali.com</a>', '<a href="mailto:info@unayabali.com" style="font-size: 20px;">info@unayabali.com</a>')
@@ -380,6 +403,10 @@ def transform(body, lang, page):
         for old, new in zip(imgs, ['/assets/images/yuga-drone.jpg', '/assets/images/suma-piscine-2.jpg']):
             body = body.replace(old, '<span class="h-door__img"><img src="' + new + '"', 1)
         body = body.replace('<!-- VILLAS -->', home_villas(lang), 1)
+    if page in OWNER_PAGES:
+        nxt = owner_next(lang, page)
+        i = body.rfind('<section class="u-cta"')
+        body = body[:i] + nxt + body[i:] if i >= 0 else body.rstrip() + '\n' + nxt
     if page == 'Villas':
         body = re.sub(r'<a class="vl-card".*?</a>', lambda m: add_price(m.group(0), lang), body, flags=re.S)
     if page == 'Contact':
