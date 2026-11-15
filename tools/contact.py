@@ -43,9 +43,6 @@ def page(lang):
     s = f'<!-- title: {title} -->\n<link rel="preconnect" href="https://images.unsplash.com">\n<div class="hm">\n'
     s += (f'<section class="hm-hero hm-hero--sm">{hero_img(img)}<div class="hm-hero__in"><p class="hm-hero__k">{x["kick"]}</p><h1>{h1}</h1><p class="hm-hero__sub">{sub}</p>'
           '<ul class="hm-badges">' + ''.join(f'<li><span aria-hidden="true">✓</span>{b}</li>' for b in x['badges']) + '</ul></div></section>\n')
-    s += ('<section class="iv-keys ct-ways"><div class="iv-keys__in">' +
-          ''.join(f'<a class="iv-key ct-way{" ct-way--wa" if i == 0 else ""}" href="{u}"{" target=_blank rel=noopener" if u.startswith("http") else ""}><small>{a}</small><strong>{b}</strong><span>{c}</span></a>' for i, (a, b, c, u) in enumerate(x['ways'])) +
-          '</div></section>\n')
     s += main + '\n'
     s += (f'<section class="u-sec u-sec--white hm-sec"><div class="u-wrap"><div class="u-head u-head--c"><h2>{x["who_h"]}</h2></div><div class="ar-lv2 hm-doors">' +
           ''.join(f'<a class="ar-lv2__c hm-door" href="{u}"><div class="ar-lv2__img"><img src="/assets/images/{im}" alt="" loading="lazy"></div><div class="ar-lv2__b"><h3>{h}</h3><p class="ar-lv2__p">{p}</p><span class="u-link">{l}</span></div></a>' for im, h, p, l, u in x['who']) +
