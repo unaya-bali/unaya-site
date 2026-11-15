@@ -1234,3 +1234,40 @@ footer a{display:inline-block;padding:4px 0}
 @media (max-width:600px){.on-card--portal{flex-direction:row}.on-card__pct b{font-size:34px}.on-card__pct{gap:10px}}
 @media (max-width:600px){.on-next>.u-wrap{padding-left:16px!important;padding-right:16px!important;box-sizing:border-box}.on-card__img{position:relative}.on-card__img img{position:absolute;inset:0}.on-card{min-height:150px}}
 @media (max-width:600px){.on-ph{width:64%;border-width:5px;padding:10px 7px 0;gap:3px}.on-card__ph{padding-top:16px}}
+/* ---- Page Nos villas (vr-*) ---- */
+.vr-filters{justify-content:center;margin:0 auto 40px!important}
+.vr-list{display:flex;flex-direction:column;gap:70px}
+.vr-row{display:grid;grid-template-columns:1.15fr 1fr;gap:56px;align-items:center}
+.vr-row[hidden]{display:none}
+.vr-row--rev .vr-mos{order:2}
+.vr-mos{position:relative;display:grid;grid-template-columns:2fr 1fr;grid-template-rows:1fr 1fr;gap:10px;height:440px}
+.vr-mos img{width:100%;height:100%;object-fit:cover;display:block;border-radius:14px}
+.vr-mos .vr-mos__a{grid-row:1/3;border-radius:200px 200px 14px 14px}
+.vr-mos .vl-card__zone{position:absolute;left:16px;bottom:16px}
+.vr-n{display:block;font:500 56px/1 'Cormorant Garamond',serif;color:#E3D2C7}
+.vr-t h3{font:400 clamp(38px,4vw,54px)/1.05 'Cormorant Garamond',serif;color:var(--aubergine);margin:2px 0 14px}
+.vr-t .vl-card__meta{margin-bottom:14px}
+.vr-t .vl-card__price{display:block;font-size:15px;margin-bottom:14px}
+.vr-t .vl-card__price strong{font:500 30px 'Cormorant Garamond',serif;color:#0B6F62}
+.vr-d{font-size:17px;line-height:1.6;color:var(--prune);margin:0 0 24px}
+.vr-soon{display:flex;align-items:center;gap:22px;max-width:900px;margin:70px auto 0;padding:24px 30px;border:1px dashed #CDBFB7;border-radius:20px;background:rgba(255,255,255,.5)}
+.vr-soon .u-ic{flex:none;color:var(--cuivre)}
+.vr-soon strong{font:500 24px 'Cormorant Garamond',serif;color:var(--aubergine)}
+.vr-soon p{margin:4px 0 0;color:var(--prune);font-size:15px}
+.vr-soon .u-btn{margin-left:auto;flex:none}
+.vr-big{display:block;font:500 58px/1 'Cormorant Garamond',serif;color:#D2A48C;margin-bottom:10px}
+.vr-quotes .u-quote{border-radius:18px}
+@media (max-width:900px){
+ .vr-list{gap:56px}
+ .vr-row{grid-template-columns:1fr;gap:26px}
+ .vr-row--rev .vr-mos{order:0}
+ .vr-mos{height:300px;gap:6px}
+ .vr-mos .vr-mos__a{border-radius:140px 140px 12px 12px}
+ .vr-n{font-size:42px}
+ .vr-soon{flex-direction:column;align-items:flex-start;padding:22px;margin-top:50px}
+ .vr-soon .u-btn{margin-left:0}
+ .vr-filters{flex-wrap:nowrap;overflow-x:auto;justify-content:flex-start}
+ .vr-filters button{flex:none}
+}
+.vr-row.vl-card{background:transparent;border:0;padding:0;box-shadow:none;transform:none}.vr-row.vl-card:hover{transform:none;box-shadow:none}
+.vr-t .vr-d{font-size:17px;line-height:1.6}.vr-filters{max-width:100%}@media (max-width:900px){.vr-filters{display:flex;width:100%;box-sizing:border-box;padding-bottom:4px}.vr-t .vr-d{font-size:16px}}

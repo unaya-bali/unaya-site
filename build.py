@@ -304,6 +304,8 @@ def add_price(card, lang):
     page = {'suma': 'VillaSuma', 'yuga': 'VillaYuga', 'rumah-jambu': 'VillaRumahJambu'}[m.group(1)]
     fr = lang == 'fr'
     price = (f'<span class="vl-card__price" data-prices="{page}">{"À partir de" if fr else "From"} <strong data-price="villa">{fmt_idr(PRICE0[page], lang)}</strong> {"/ nuit" if fr else "/ night"}</span>')
+    if '<!--PRICE-->' in card:
+        return card.replace('<!--PRICE-->', price, 1)
     return card.replace('<p>', price + '<p>', 1)
 def home_villas(lang):
     fr = lang == 'fr'
@@ -412,6 +414,7 @@ def transform(body, lang, page):
         body = body[:i] + nxt + body[i:] if i >= 0 else body.rstrip() + '\n' + nxt
     if page == 'Villas':
         body = re.sub(r'<a class="vl-card".*?</a>', lambda m: add_price(m.group(0), lang), body, flags=re.S)
+        body = re.sub(r'<article class="vl-card.*?</article>', lambda m: add_price(m.group(0), lang), body, flags=re.S)
     if page == 'Contact':
         body = body.replace('<div class="c-side"><div class="c-item">', '<div class="c-side">' + contact_wa(lang) + '<div class="c-item">', 1)
     if page in BEDS24:
