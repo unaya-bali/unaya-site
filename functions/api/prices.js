@@ -21,7 +21,11 @@ async function compute() {
       }).then(r => (r.ok ? r.json() : null)).catch(() => null).then(j => ({ name, j })));
     }
   }
+  // Taux de change indicatifs (EUR, USD, AUD) pour afficher une valeur approximative sous les prix en IDR
+  const fxJob = fetch('https://open.er-api.com/v6/latest/IDR').then(r => (r.ok ? r.json() : null)).catch(() => null);
   const out = {};
+  const fx = await fxJob;
+  if (fx && fx.rates) out.fx = { EUR: fx.rates.EUR, USD: fx.rates.USD, AUD: fx.rates.AUD };
   for (const { name, j } of await Promise.all(jobs)) {
     if (!j) continue;
     const v = VILLAS[name], o = (out[name] ||= { villa: null, room: null });
@@ -35,7 +39,7 @@ async function compute() {
 
 export async function onRequestGet({ request, waitUntil }) {
   const cache = caches.default;
-  const key = new Request(new URL('/api/prices?v=1', request.url).toString());
+  const key = new Request(new URL('/api/prices?v=2', request.url).toString());
   const hit = await cache.match(key);
   if (hit) return hit;
   let data = {};

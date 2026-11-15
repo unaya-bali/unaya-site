@@ -41,7 +41,7 @@
     lb.innerHTML = '<button class="lb-close" aria-label="Fermer">×</button><button class="lb-prev" aria-label="Précédente">‹</button><img alt=""><button class="lb-next" aria-label="Suivante">›</button>';
     document.body.appendChild(lb);
     var big = lb.querySelector('img'), cur = 0;
-    function show(n) { cur = (n + imgs.length) % imgs.length; big.src = imgs[cur].src; big.alt = imgs[cur].alt; }
+    function show(n) { cur = (n + imgs.length) % imgs.length; big.src = imgs[cur].getAttribute('data-full') || imgs[cur].currentSrc || imgs[cur].src; big.alt = imgs[cur].alt; }
     function open(n) { show(n); lb.classList.add('is-open'); lb.querySelector('.lb-close').focus(); }
     function close() { lb.classList.remove('is-open'); }
     imgs.forEach(function (im, n) { im.style.cursor = 'zoom-in'; im.addEventListener('click', function () { open(n); }); });
@@ -119,7 +119,17 @@ cards.forEach(function(c){var ok=z==='all'||c.getAttribute('data-zone')===z;c.hi
       var v = d[box.getAttribute('data-prices')];
       if (!v) return;
       ['villa', 'room'].forEach(function (k) {
-        box.querySelectorAll('[data-price="' + k + '"]').forEach(function (el) { if (v[k] > 0) el.textContent = fmt(v[k]); });
+        box.querySelectorAll('[data-price="' + k + '"]').forEach(function (el) {
+          if (v[k] > 0) el.textContent = fmt(v[k]);
+          var idr = v[k] > 0 ? v[k] : +el.textContent.replace(/[^\d]/g, '');
+          if (!d.fx || !d.fx.EUR || !idr || box.classList.contains('bk-bar')) return;
+          var r5 = function (x) { return Math.max(5, Math.round(x / 5) * 5); };
+          var e = r5(idr * d.fx.EUR), u = r5(idr * d.fx.USD), a = r5(idr * d.fx.AUD);
+          var t = fr ? '≈ ' + e + ' € · ' + u + ' US$ · ' + a + ' A$' : '≈ €' + e + ' · US$' + u + ' · A$' + a;
+          var s = el.parentNode.querySelector('.fx[data-for="' + k + '"]');
+          if (!s) { s = document.createElement('span'); s.className = 'fx'; s.setAttribute('data-for', k); el.parentNode.appendChild(s); }
+          s.textContent = t;
+        });
       });
     });
   }).catch(function () {});

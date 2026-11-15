@@ -49,8 +49,22 @@ DESC = {
 ('en','Experiences'):"Unaya Experiences: private day trips in Bali with a French-speaking guide or a driver, from your villa. 10 day tours, activities and an online price calculator.",
  ('fr','Investir'):"Investir à Bali : bail ou PT PMA, acheter ou faire construire, taxes et location en règle. Unaya Build vous accompagne du terrain à la mise en location.",
  ('en','Investir'):"Investing in Bali: leasehold or PT PMA, buying or building, taxes and legal renting. Unaya Build supports you from the land to renting out your villa.",
- ('fr','Main'):"Gestion locative de villas à Bali : marketing, réservations, entretien et rapport financier chaque mois. Commission dès 18 %, sans frais fixes. Uluwatu / Jimbaran, Tanah Lot / Canggu West, Seminyak / Kerobokan.",
- ('en','Main'):"Bali villa management: marketing, bookings, maintenance and a monthly financial report. Commission from 18%, no fixed fees. Uluwatu / Jimbaran, Tanah Lot / Canggu West, Seminyak / Kerobokan.",
+ ('fr','Main'):"Unaya Bali gère votre villa : annonces, voyageurs, entretien, rapport mensuel, dès 18 % sans frais fixes. Et 3 villas avec piscine à louer à Uluwatu et Tanah Lot.",
+ ('en','Main'):"Unaya Bali manages your villa: listings, guests, upkeep and a monthly report, from 18% with no fixed fees. Plus 3 pool villas for rent in Uluwatu and Tanah Lot.",
+ ('fr','Contact'):"Contactez Unaya Bali sur WhatsApp (+62 851 9021 1324) ou par e-mail : gestion de villa, réservation ou service voyageur. Réponse sous 24 h, bureau à Jimbaran.",
+ ('en','Contact'):"Contact Unaya Bali on WhatsApp (+62 851 9021 1324) or by email: villa management, bookings or guest services. Reply within 24 hours, office in Jimbaran.",
+ ('fr','APropos'):"Unaya Bali, agence de gestion de villas à Jimbaran : peu de villas, suivies de près, une équipe sur place 7 j/7 et des comptes clairs chaque mois.",
+ ('en','APropos'):"Unaya Bali, a boutique villa management agency in Jimbaran: fewer villas, closely managed, a team on the ground 7 days a week and clear monthly accounts.",
+ ('fr','FAQ'):"Questions fréquentes sur la gestion de villa à Bali avec Unaya (commission, rapport, revenus) et sur la réservation de nos villas (acompte, annulation, arrivée).",
+ ('en','FAQ'):"Frequently asked questions about villa management in Bali with Unaya (commission, reports, payouts) and booking our villas (deposit, cancellation, check-in).",
+ ('fr','ServicesVoyageurs'):"Transfert aéroport, chauffeur privé, location de scooter livré à la villa et excursions à Bali : demande en une minute, confirmation sur WhatsApp.",
+ ('en','ServicesVoyageurs'):"Airport transfer, private driver, scooter rental delivered to your villa and day trips in Bali: request in a minute, confirmed on WhatsApp.",
+ ('fr','Conditions'):"Conditions de réservation des villas Unaya en direct : acompte de 30 %, solde 14 jours avant l'arrivée (30 en haute saison), annulation et règles de la maison.",
+ ('en','Conditions'):"Booking terms for Unaya villas booked direct: 30% deposit, balance 14 days before arrival (30 in high season), cancellation and house rules.",
+ ('fr','Confidentialite'):"Politique de confidentialité du site Unaya Bali : données collectées par les formulaires et les réservations, utilisation, conservation et vos droits.",
+ ('en','Confidentialite'):"Unaya Bali privacy policy: data collected through forms and bookings, how it is used and stored, and your rights.",
+ ('fr','MentionsLegales'):"Mentions légales du site unayabali.com, édité par PT Unaya Bali Grup (NIB 3009260021018), Jimbaran, Bali, Indonésie.",
+ ('en','MentionsLegales'):"Legal notice for unayabali.com, published by PT Unaya Bali Grup (NIB 3009260021018), Jimbaran, Bali, Indonesia.",
  ('fr','VillaSuma'):"Villa Suma à Balangan, Uluwatu : 5 suites, piscine privée, jusqu'à 10 voyageurs, à 5 minutes de la plage. Réservation directe.",
  ('en','VillaSuma'):"Villa Suma in Balangan, Uluwatu: 5 suites, private pool, up to 10 guests, 5 minutes from the beach. Book direct.",
  ('fr','VillaYuga'):"Villa Yuga à Nyanyi : 4 chambres, piscine privée, vue sur les rizières, à 5 minutes de Nuanu. Jusqu'à 8 voyageurs. Réservation directe.",
@@ -114,7 +128,7 @@ def header(lang, page):
 def footer(lang, page):
     t = T[lang]; other = 'en' if lang == 'fr' else 'fr'
     L = 'color: #E9DED6; text-decoration: none;'
-    H = 'font-size: 12px; letter-spacing: 0.28em; text-transform: uppercase; color: #D2A48C; margin-bottom: 6px;'
+    H = 'font-size: 13px; letter-spacing: 0.28em; text-transform: uppercase; color: #D2A48C; margin-bottom: 6px;'
     links = ''.join(f'<a href="{url(n, lang)}" style="{L}">{lbl}</a>\n' for n, lbl in t['f_links'])
     legal = ''.join(f'<a href="{url(n, lang)}" style="color: #CDBFB6; text-decoration: none;">{lbl}</a>\n' for n, lbl in t['legal'])
     sw = ('<strong style="font-weight: 500;">FR</strong> · EN' if lang == 'fr' else 'FR · <strong style="font-weight: 500;">EN</strong>')
@@ -186,7 +200,7 @@ def fix_booking(body, lang, page):
     aside = aside.replace("<span style=\"font-family: 'Cormorant Garamond', serif; font-size: 40px;", "<span data-price=\"villa\" style=\"font-family: 'Cormorant Garamond', serif; font-size: 40px;", 1)
     aside = aside.replace("<span style=\"font-family: 'Cormorant Garamond', serif; font-size: 30px;", "<span data-price=\"room\" style=\"font-family: 'Cormorant Garamond', serif; font-size: 30px;", 1)
     I = "font-family: 'Jost', sans-serif; font-size: 16px; padding: 12px; border: 1px solid #A8705A; background: #F7F2EE; color: #2E2429; width: 100%;"
-    L = "flex: 1 1 130px; display: flex; flex-direction: column; gap: 6px; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: #D2A48C;"
+    L = "flex: 1 1 130px; display: flex; flex-direction: column; gap: 6px; font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase; color: #D2A48C;"
     lab = dict(fr=('Arrivée','Départ','Voyageurs','Vérifier les disponibilités','voyageur','voyageurs'), en=('Check-in','Check-out','Guests','Check availability','guest','guests'))[lang]
     maxg = {'VillaSuma': 10, 'VillaYuga': 8, 'VillaRumahJambu': 4}[page]
     opts = ''.join(f'<option value="{g}"{" selected" if g == 2 else ""}>{g} {lab[4] if g == 1 else lab[5]}</option>' for g in range(1, maxg + 1))
@@ -275,6 +289,46 @@ def contact_wa(lang):
     return (f'<div class="c-item c-item--wa"><span class="c-wa-ic">{WA_SVG}</span><div><strong>WhatsApp</strong><span><a href="{wa_url(lang, "Contact")}" target="_blank" rel="noopener">{WA_SHOW}</a><br>'
             f'{"Le plus rapide : réponse en général dans l’heure, de 8 h à 20 h." if fr else "The fastest way: we usually reply within the hour, 8 am to 8 pm."}</span></div></div>')
 
+# ---- Photos allégées (15/11/2026) : WebP en 800 / 1200 / 1600 px (générées par tools/webp.py) ----
+IMG_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'assets', 'images')
+def _variants(name):
+    return [w for w in (800, 1200, 1600) if os.path.exists(os.path.join(IMG_DIR, f'{name}-{w}.webp'))]
+def webpify(page_html):
+    def srcset(name, ws):
+        return ', '.join(f'/assets/images/{name}-{w}.webp {w}w' for w in ws)
+    def img(m):
+        tag = m.group(0); name = m.group(1); ws = _variants(name)
+        if not ws or 'srcset=' in tag:
+            return tag
+        full = 'fetchpriority="high"' in tag
+        sizes = '100vw' if full else '(max-width: 640px) 100vw, (max-width: 1100px) 50vw, 720px'
+        mid = 1200 if 1200 in ws else ws[-1]
+        tag = tag.replace(f'src="/assets/images/{name}.jpg"', f'src="/assets/images/{name}-{mid}.webp" srcset="{srcset(name, ws)}" sizes="{sizes}" data-full="/assets/images/{name}-{ws[-1]}.webp"', 1)
+        return tag
+    page_html = re.sub(r'<img [^>]*src="/assets/images/([a-z0-9-]+)\.jpg"[^>]*>', img, page_html)
+    def source(m):
+        media, name = m.group(1), m.group(2); ws = _variants(name)
+        return f'<source media="{media}" srcset="{srcset(name, ws)}" sizes="100vw">' if ws else m.group(0)
+    page_html = re.sub(r'<source media="([^"]*)" srcset="/assets/images/([a-z0-9-]+)\.jpg">', source, page_html)
+    return page_html
+
+def fill_alts(body, lang):
+    """Images sans description : on reprend le titre le plus proche qui suit (carte, circuit, section)."""
+    def one(m):
+        tag = m.group(0)
+        after = body[m.end():m.end() + 2500]
+        h = re.search(r'<(h1|h2|h3|strong)[^>]*>(.*?)</\1>', after, flags=re.S)
+        if h and h.group(1) in ('h1', 'h2'):  # image de fond d'une section : décorative, on la laisse vide
+            return tag
+        if not h:
+            return tag
+        txt = html.unescape(re.sub(r'<[^>]+>', ' ', h.group(2)))
+        txt = re.sub(r'\s+', ' ', txt).strip()[:110]
+        if not txt:
+            return tag
+        return tag.replace('alt=""', f'alt="{html.escape(txt)}"', 1)
+    return re.sub(r'<img [^>]*alt=""[^>]*>', one, body)
+
 def transform(body, lang, page):
     body = body.replace('<a href="#">info@unayabali.com</a>', '<a href="mailto:info@unayabali.com">info@unayabali.com</a>')
     body = body.replace('<a href="#" style="font-size: 20px;">info@unayabali.com</a>', '<a href="mailto:info@unayabali.com" style="font-size: 20px;">info@unayabali.com</a>')
@@ -298,6 +352,7 @@ def transform(body, lang, page):
         body = fix_booking(body, lang, page)
     if '<form' in body:
         body = fix_forms(body, lang, page)
+    body = fill_alts(body, lang)
     # images : chargement différé sauf la première
     first = [True]
     def lazy(m):
@@ -337,6 +392,12 @@ SEO_TITLES = {
  ('en','Experiences'): 'Private Day Trips in Bali with a Guide or Driver — Unaya Experiences',
  ('fr','APropos'): 'À propos — Unaya Bali, gestion de villas à Uluwatu',
  ('en','APropos'): 'About Us — Unaya Bali, Villa Management in Uluwatu',
+ ('fr','Contact'): 'Contact — Unaya Bali, gestion de villas à Jimbaran, Bali',
+ ('en','Contact'): 'Contact Unaya Bali — Villa Management in Jimbaran, Bali',
+ ('fr','FAQ'): 'Questions fréquentes — gestion et location de villas | Unaya Bali',
+ ('en','FAQ'): 'FAQ — Villa Management & Villa Rentals in Bali | Unaya Bali',
+ ('fr','TerrainMelasti'): 'Terrain de 500 m² à Melasti, Uluwatu (bail de 30 ans) — Unaya Bali',
+ ('en','TerrainMelasti'): '500 m² Land in Melasti, Uluwatu (30-Year Lease) — Unaya Bali',
 }
 ORG_ID = SITE + '/#organisation'
 LODGING = {
@@ -374,6 +435,11 @@ def jsonld(lang, page, title, body):
     return '<script type="application/ld+json">' + json.dumps({'@context': 'https://schema.org', '@graph': graph}, ensure_ascii=False).replace('</', '<\\/') + '</script>'
 
 def layout(lang, page, title, desc, body):
+    other = 'en' if lang == 'fr' else 'fr'
+    canon = SITE + url(page, lang)
+    return webpify(_layout(lang, page, title, desc, body))
+
+def _layout(lang, page, title, desc, body):
     other = 'en' if lang == 'fr' else 'fr'
     canon = SITE + url(page, lang)
     return f'''<!doctype html>
