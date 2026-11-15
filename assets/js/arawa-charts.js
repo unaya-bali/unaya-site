@@ -40,7 +40,7 @@
   }
 
   /* ---------- 1. Simulateur de revenus locatifs ---------- */
-  var sim = root.querySelector('.cx-sim');
+  var sim = root.querySelector('.cx-sim:not(.ld-calc)');
   if (sim) {
     var price = cfg.price, years = cfg.lease;
     var rate = sim.querySelector('[name=rate]'), occ = sim.querySelector('[name=occ]');
@@ -151,6 +151,32 @@
     var rw; window.addEventListener('resize', function () { clearTimeout(rw); rw = setTimeout(function () { drawArea(cur.net, false); }, 150); });
     update(false);
     onView(sim, function () { drawDonut(0, false); requestAnimationFrame(function () { update(true); }); });
+  }
+
+  /* ---------- 1 bis. Calculateur de prix des terrains ---------- */
+  var lc = root.querySelector('.ld-calc');
+  if (lc) {
+    var c = JSON.parse(lc.getAttribute('data-calc')), ar = lc.querySelector('[name=ares]'), mode = 'lease';
+    var kk = { tot: lc.querySelector('[data-k=tot]'), usd: lc.querySelector('[data-k=usd]'), foot: lc.querySelector('[data-k=foot]'), floor: lc.querySelector('[data-k=floor]') };
+    var bar = lc.querySelector('.ld-calc__bar'), built = lc.querySelector('.ld-calc__built'), freeNote = lc.querySelector('.ld-calc__free');
+    var idr = function (n) { return 'IDR ' + fmt(Math.round(n)); };
+    function upd() {
+      var a = mode === 'free' ? c.max : +ar.value; if (mode === 'free') ar.value = c.max;
+      ar.disabled = mode === 'free'; freeNote.hidden = mode !== 'free';
+      ar.style.setProperty('--p', ((ar.value - ar.min) / (ar.max - ar.min) * 100) + '%');
+      var tot = mode === 'free' ? a * c.free : a * c.rate * c.years, m2v = a * 100;
+      lc.querySelector('[data-out=ares]').textContent = fmt(a, 2) + (FR ? ' ares' : ' ares');
+      lc.querySelector('[data-out=m2]').textContent = fmt(m2v);
+      countUp(kk.tot, tot, idr);
+      countUp(kk.usd, tot / c.fx, function (v) { return usd(Math.round(v / 100) * 100); });
+      countUp(kk.foot, m2v * 0.5, function (v) { return fmt(Math.round(v)) + ' m²'; });
+      countUp(kk.floor, m2v * 2, function (v) { return fmt(Math.round(v)) + ' m²'; });
+      var w = 400 * a / c.max; bar.setAttribute('width', w); built.setAttribute('width', w / 2);
+      lc.querySelectorAll('[data-mode]').forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-mode') === mode ? 'true' : 'false'); });
+    }
+    ar.addEventListener('input', upd);
+    lc.querySelectorAll('[data-mode]').forEach(function (b) { b.addEventListener('click', function () { mode = b.getAttribute('data-mode'); upd(); }); });
+    upd();
   }
 
   /* ---------- 2. Barres horizontales animées (comparaison, surfaces, distances) ---------- */

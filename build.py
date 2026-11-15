@@ -19,7 +19,7 @@ WHATSAPP = {'VillaSuma': '6285190211324', 'VillaYuga': '6281330617077', 'VillaRu
 TURNSTILE_SITEKEY = '0x4AAAAAAFl92qPSywb2bEJt'
 SOCIAL = {'instagram': 'https://www.instagram.com/unayabali/', 'linktree': 'https://linktr.ee/Unaya_Management'}
 OWNER_PAGES = ['Proprietaires', 'ProprietairesServices', 'ProprietairesTarifs', 'ConfierMaVilla']
-INVEST_PAGES = ['Investir', 'Terrains', 'TerrainMelasti', 'VillasAVendre', 'ArawaVillas', 'ArawaVillaB', 'ArawaVillaD']
+INVEST_PAGES = ['Investir', 'Terrains', 'TerrainMelasti', 'TerrainMelasti795', 'VillasAVendre', 'ArawaVillas', 'ArawaVillaB', 'ArawaVillaD']
 INVEST_SUB = {'fr': [('Investir', 'Le guide pour investir'), ('VillasAVendre', 'Villas à vendre'), ('Terrains', 'Terrains disponibles')], 'en': [('Investir', 'Investment guide'), ('VillasAVendre', 'Villas for sale'), ('Terrains', 'Available land')]}
 BEDS24 = {'VillaSuma': '359817', 'VillaYuga': '359816', 'VillaRumahJambu': '359818'}  # propriétés Unaya
 
@@ -53,6 +53,8 @@ DESC = {
 ('en','ArawaVillaB'):"Arawa Villas, villa B in Balangan: 2 en-suite bedrooms, private pool, 91.80 m² plot, handed over furnished end of December 2026, from USD 170,000.",
 ('fr','ArawaVillaD'):"Arawa Villas, villa D à Balangan : 2 chambres en suite, piscine privée, parcelle de 105,41 m² avec rangement, livrée meublée fin décembre 2026, dès 195 000 USD.",
 ('en','ArawaVillaD'):"Arawa Villas, villa D in Balangan: 2 en-suite bedrooms, private pool, 105.41 m² plot with storage, handed over furnished end of December 2026, from USD 195,000.",
+('fr','TerrainMelasti795'):"Terrain d'angle de 795 m² en zone rose à Melasti, Uluwatu : chemin privé, vue dégagée, 5 min de la plage. Bail dès 4 ares ou pleine propriété.",
+('en','TerrainMelasti795'):"795 m² pink-zone corner plot in Melasti, Uluwatu: private lane, open view, 5 min from the beach. Leasehold from 4 ares or freehold.",
 ('fr','TerrainMelasti'):"Terrain de 500 m² en zone rose à Melasti, Uluwatu : bail 30 ans + option 30 ans, titre SHM, à 5 min de la plage. IDR 3,15 milliards.",
 ('en','TerrainMelasti'):"500 m² pink-zone plot in Melasti, Uluwatu: 30-year lease + 30-year option, SHM title, 5 min from the beach. IDR 3.15 billion.",
  ('fr','Experiences'):"Unaya Experiences : excursions privées à Bali avec guide francophone ou chauffeur, départ de votre villa. 10 circuits à la journée, activités et calcul du prix en ligne.",
@@ -101,7 +103,7 @@ def url(name, lang):
 def subnav(lang, page):
     t = T[lang]
     if page in INVEST_PAGES:
-        cur = {'TerrainMelasti': 'Terrains', 'ArawaVillas': 'VillasAVendre', 'ArawaVillaB': 'VillasAVendre', 'ArawaVillaD': 'VillasAVendre'}.get(page, page)
+        cur = {'TerrainMelasti': 'Terrains', 'TerrainMelasti795': 'Terrains', 'ArawaVillas': 'VillasAVendre', 'ArawaVillaB': 'VillasAVendre', 'ArawaVillaD': 'VillasAVendre'}.get(page, page)
         return f'<nav class="subnav" aria-label="{"Investir à Bali" if lang == "fr" else "Invest in Bali"}">' + ''.join(
             f'<a href="{url(n, lang)}"{" aria-current=\"page\"" if n == cur else ""}>{lbl}</a>' for n, lbl in INVEST_SUB[lang]) + '</nav>'
     if page not in OWNER_PAGES: return ''
@@ -259,6 +261,8 @@ def wa_text(lang, page):
         return (f"Bonjour Unaya, je suis intéressé(e) par la villa {v} des Arawa Villas à Balangan." if fr else f"Hello Unaya, I'm interested in villa {v} at Arawa Villas in Balangan.")
     if page in ('VillasAVendre', 'ArawaVillas'):
         return ("Bonjour Unaya, je suis intéressé(e) par les Arawa Villas à Balangan." if fr else "Hello Unaya, I'm interested in Arawa Villas in Balangan.")
+    if page == 'TerrainMelasti795':
+        return ("Bonjour Unaya, je souhaite des informations sur le terrain de 795 m² à Melasti." if fr else "Hello Unaya, I'd like information about the 795 m² Melasti plot.")
     if page in ('Terrains', 'TerrainMelasti'):
         return ("Bonjour Unaya, je souhaite des informations sur le terrain de Melasti." if fr else "Hello Unaya, I'd like information about the Melasti land.")
     if page in OWNER_PAGES or page == 'Investir':
@@ -432,6 +436,8 @@ SEO_TITLES = {
  ('fr','FAQ'): 'Questions fréquentes — gestion et location de villas | Unaya Bali',
  ('en','FAQ'): 'FAQ — Villa Management & Villa Rentals in Bali | Unaya Bali',
  ('fr','TerrainMelasti'): 'Terrain de 500 m² à Melasti, Uluwatu (bail de 30 ans) — Unaya Bali',
+ ('fr','TerrainMelasti795'): 'Terrain de 795 m² à Melasti, Uluwatu — bail ou pleine propriété | Unaya Bali',
+ ('en','TerrainMelasti795'): '795 m² Land in Melasti, Uluwatu — Leasehold or Freehold | Unaya Bali',
  ('en','TerrainMelasti'): '500 m² Land in Melasti, Uluwatu (30-Year Lease) — Unaya Bali',
 }
 ORG_ID = SITE + '/#organisation'
@@ -440,7 +446,7 @@ LODGING = {
  'VillaYuga': dict(name='Villa Yuga', loc='Nyanyi, Tanah Lot', img='yuga-g1.jpg', rooms=4, guests=8),
  'VillaRumahJambu': dict(name='Rumah Jambu', loc='Balangan, Uluwatu', img='rj-g1.jpg', rooms=2, guests=4),
 }
-PARENT = {'VillaSuma':'Villas','VillaYuga':'Villas','VillaRumahJambu':'Villas','TerrainMelasti':'Terrains','ArawaVillas':'VillasAVendre','ArawaVillaB':'ArawaVillas','ArawaVillaD':'ArawaVillas',
+PARENT = {'VillaSuma':'Villas','VillaYuga':'Villas','VillaRumahJambu':'Villas','TerrainMelasti':'Terrains','TerrainMelasti795':'Terrains','ArawaVillas':'VillasAVendre','ArawaVillaB':'ArawaVillas','ArawaVillaD':'ArawaVillas',
           'ProprietairesServices':'Proprietaires','ProprietairesTarifs':'Proprietaires','ConfierMaVilla':'Proprietaires','SiteWeb':'Proprietaires'}
 
 def jsonld(lang, page, title, body):

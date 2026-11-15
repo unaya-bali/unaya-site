@@ -801,3 +801,22 @@ footer a{display:inline-block;padding:4px 0}
 .ar-vid__frame video{width:100%;height:100%;object-fit:cover;display:block}
 @media (max-width:900px){.ar-vid{grid-template-columns:1fr;gap:32px;text-align:center}.ar-vid__txt>p{margin:0 auto}.ar-vid__btns{justify-content:center}.ar-vid__frame{width:min(100%,360px)}}
 .ar-vid__snd{background:transparent;cursor:pointer;font-family:inherit}
+/* Terrains v2 */
+.ld-mz__cap{position:absolute;right:16px;bottom:16px;z-index:1;background:rgba(46,36,41,.6);color:#fff;font:400 13px 'Jost',sans-serif;letter-spacing:.06em;padding:6px 12px;border-radius:999px;backdrop-filter:blur(4px)}
+.ar-mz a{cursor:zoom-in}
+.ar-mz .ar-mz__plan{cursor:pointer}
+.ld-price__s{border-top:0!important;padding-top:6px!important;margin-top:6px!important;font-size:13px!important}
+.ld-ar2 .ar-lv2__b{padding-top:46px}
+.ld-ar2__n{position:absolute;right:20px;top:14px;font:500 34px/1 'Cormorant Garamond',serif;color:#E6DCD4}
+.ld-calc .cx-sl input:disabled{opacity:.45;cursor:not-allowed}
+.ld-calc__free{grid-column:1/-1;margin:0;font-size:14px;color:var(--prune)}
+.ld-calc__viz{background:#fff;border:1px solid var(--ligne);border-radius:22px;padding:18px 22px}
+.ld-calc__viz svg{width:100%;height:auto;display:block}
+.ld-calc__bar,.ld-calc__built{transition:width .6s cubic-bezier(.2,.7,.2,1)}
+.ld-calc__leg{display:flex;flex-wrap:wrap;gap:16px;font-size:13px;color:var(--prune)}
+.ld-calc__leg i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.ld-calc .cx-kpi strong{font-size:28px}
+.ar-zone .ld-tbl{margin-bottom:20px}
+.ld-calc__viz svg{height:56px;margin-bottom:14px}
+.ld-ar2 .ar-lv2__b{padding-top:30px}
+.ld-ar2 .ar-lv2__ic{position:static;transform:none;margin:0 auto 6px;box-shadow:none}
