@@ -61,7 +61,7 @@ def page(lang):
     portal_ic = re.search(r'<div class="u-band">(<svg.*?</svg>)', old, flags=re.S).group(1)
     s = f'<!-- title: {x["title"]} -->\n<div class="hm">\n'
     # 1. Grande photo
-    s += (f'<section class="hm-hero hm-hero--sm"><img src="/assets/images/yuga-piscine.jpg" alt="{"La piscine de la Villa Yuga face aux rizières, Nyanyi" if fr else "Villa Yuga pool facing the rice fields, Nyanyi"}" fetchpriority="high">'
+    s += (f'<section class="hm-hero hm-hero--sm"><img src="/assets/images/suma-piscine-2.jpg" alt="{"La piscine de la Villa Suma, Balangan Uluwatu" if fr else "Villa Suma pool, Balangan Uluwatu"}" fetchpriority="high">'
           f'<div class="hm-hero__in"><p class="hm-hero__k">{x["kick"]}</p><h1>{x["h1"]}</h1><p class="hm-hero__sub">{x["sub"]}</p>'
           f'<div class="u-btns"><a class="u-btn u-btn--rose" href="{x["b1"][1]}">{x["b1"][0]}</a><a class="u-btn hm-btn--glass" href="{x["b2"][1]}">{x["b2"][0]}</a></div>'
           '<ul class="hm-badges">' + ''.join(f'<li><span aria-hidden="true">✓</span>{b}</li>' for b in x['badges']) + '</ul></div></section>\n')
