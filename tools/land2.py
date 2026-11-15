@@ -33,19 +33,43 @@ def plan795(l):
 # ---------- données des terrains ----------
 def d500(l):
     t = L0.T[l]; fr = l == 'fr'
-    total = 3150000000
-    return dict(page='TerrainMelasti', ares=5, gps=('-8.84149', '115.14777'), maps='https://www.google.com/maps?q=-8.84149,115.14777',
-        hero='terrain-melasti-plage.jpg', mosaic=None, rdtr='terrain-melasti-rdtr.jpg', plan=plan500(l),
-        title=('Terrain de 500 m² à Melasti, Uluwatu (bail 30 ans) — Unaya Bali' if fr else '500 m² Land in Melasti, Uluwatu (30-Year Lease) — Unaya Bali'),
-        kick=t['kick'], h1=t['h1'], sub=t['sub'], badges=[t['status'], ('Zone rose' if fr else 'Pink zone'), ('Bail 30 ans' if fr else '30-year lease')],
-        facts=t['facts'], dh=t['dh'], dp=t['dp'], why=t['why'],
-        prices=[(('Parcelle entière · 30 ans' if fr else 'Full plot · 30 years'), total)], pe=t['pe'],
-        calc=None, around=t['around'], ah=t['ah'], al=t['al'],
-        tbl=[x for x in t['tbl'] if x[0] not in ('Plage de Melasti', 'Melasti Beach', 'Savaya', 'Monster Padel', 'Aéroport', 'Airport')],
+    lease = 3150000000; free = 4950000000
+    if fr:
+        x = dict(title='Terrain de 500 m² à Melasti, Uluwatu — bail ou pleine propriété | Unaya Bali',
+                 h1='Terrain de 500 m² en zone rose, en bail ou en pleine propriété',
+                 sub='Imaginez un jardin tropical ouvert sur le ruisseau, où l’espace va bien au-delà de la parcelle. Prêt à construire, sans vis-à-vis, au soleil jusqu’en fin d’après-midi. À 5 minutes de la plage de Melasti.',
+                 badges=['Disponible', 'Zone rose', 'Bail ou pleine propriété'],
+                 facts=[('map', 'Surface', '500 m²', '5 ares'), ('temple', 'Zonage', 'Zone rose · W', 'Zona Pariwisata'), ('doc', 'Titre foncier', 'SHM · Hak Milik', 'certificat de pleine propriété'), ('clock', 'Formules', 'Bail 30 ans', 'ou pleine propriété')],
+                 prices=[('Bail 30 ans · parcelle entière', lease), ('Pleine propriété · parcelle entière', free)],
+                 pe='Bail : IDR 21 000 000 / are / an sur 30 ans, + option de 30 ans · Pleine propriété : IDR 990 000 000 / are',
+                 card_pts=['500 m²', 'Zone rose', 'Bord de ruisseau'], card_deal='Bail 30 ans ou pleine propriété',
+                 qs=[('Un étranger peut-il prendre ce terrain ?', 'Oui, en bail (hak sewa) enregistré chez un notaire : droit d’usage pendant 30 ans, avec une option de prolongation de 30 ans. La pleine propriété (SHM) est réservée aux Indonésiens ou se fait au nom d’une société PT PMA. Voir notre page <a href="/fr/investir-a-bali/">Investir à Bali</a>.'),
+                     t['qs'][1],
+                     ('Comment le prix est-il calculé ?', f'Bail : IDR 21 000 000 par are et par an × 5 ares × 30 ans = IDR 3 150 000 000 ({usd(lease / FX, True)}). Pleine propriété : IDR 990 000 000 par are × 5 ares = IDR 4 950 000 000 ({usd(free / FX, True)}). Dollars au taux du {FXD[l]}.'),
+                     ('Pouvez-vous construire la villa ?', 'Oui : Unaya s’occupe des plans, du permis (PBG) et de la construction, puis de la mise en location.')])
+    else:
+        x = dict(title='500 m² Land in Melasti, Uluwatu — Leasehold or Freehold | Unaya Bali',
+                 h1='500 m² plot in the pink zone, leasehold or freehold',
+                 sub='Imagine a tropical garden opening onto the creek, where the space extends far beyond the plot itself. Ready to build, with no overlooking neighbours, bathed in sunlight until late afternoon. 5 minutes from Melasti Beach.',
+                 badges=['Available', 'Pink zone', 'Leasehold or freehold'],
+                 facts=[('map', 'Land area', '500 m²', '5 ares'), ('temple', 'Zoning', 'Pink zone · W', 'Zona Pariwisata'), ('doc', 'Land title', 'SHM · Hak Milik', 'freehold certificate'), ('clock', 'Options', '30-year lease', 'or freehold')],
+                 prices=[('30-year lease · full plot', lease), ('Freehold · full plot', free)],
+                 pe='Leasehold: IDR 21,000,000 / are / year over 30 years, + 30-year option · Freehold: IDR 990,000,000 / are',
+                 card_pts=['500 m²', 'Pink zone', 'Creekside'], card_deal='30-year lease or freehold',
+                 qs=[('Can a foreigner take this land?', 'Yes, through a lease (hak sewa) registered with a notary: right of use for 30 years, with a 30-year extension option. Freehold (SHM) is reserved for Indonesians or held through a PT PMA company. See our <a href="/invest-in-bali/">Invest in Bali</a> page.'),
+                     t['qs'][1],
+                     ('How is the price calculated?', f'Lease: IDR 21,000,000 per are per year × 5 ares × 30 years = IDR 3,150,000,000 ({usd(lease / FX, False)}). Freehold: IDR 990,000,000 per are × 5 ares = IDR 4,950,000,000 ({usd(free / FX, False)}). Dollars at the rate of {FXD[l]}.'),
+                     ('Can you build the villa?', 'Yes: Unaya handles design, the building permit (PBG) and construction, then renting it out.')])
+    return dict(page='TerrainMelasti', ares=5, gps=('-8.84149', '115.14777'), maps='https://maps.app.goo.gl/ffFTDj8378gH2b2y5',
+        hero='terrain-melasti-plage.jpg', mosaic=['terrain-melasti-plage.jpg', 'terrain-melasti500-satellite.jpg', 'terrain-melasti500-rdtr.jpg'],
+        mzcap=(['La plage de Melasti, à 5 min', 'La parcelle vue du ciel', 'Zone rose · Pariwisata'] if fr else ['Melasti Beach, 5 min away', 'The plot from above', 'Pink zone · Pariwisata']),
+        rdtr='terrain-melasti500-rdtr.jpg', plan=plan500(l), kick=t['kick'], calc=None,
+        dh=t['dh'], dp=t['dp'], why=t['why'], around=t['around'], ah=t['ah'], al=t['al'],
+        tbl=[(('Titre foncier' if fr else 'Land title'), 'SHM · Hak Milik'), (('Surface' if fr else 'Land area'), ('500 m² (5 ares)')),
+             (('Zonage' if fr else 'Zoning'), ('Zone rose · W — Zona Pariwisata, 315 activités autorisées' if fr else 'Pink zone · W — Zona Pariwisata, 315 permitted activities')), ('GPS', '-8.84149, 115.14777')],
         dist=[('Monster Padel', '1 min'), (('Plage de Melasti' if fr else 'Melasti Beach'), '5 min'), ('Karma Kandara', '5 min'), ('Savaya', '10 min'), (('Aéroport' if fr else 'Airport'), '45 min')],
-        qs=[q if not q[0].startswith(('Comment le prix', 'How is the price')) else (q[0], (f'IDR 21 000 000 par are et par an × 5 ares × 30 ans = IDR 3 150 000 000, soit {usd(total / FX, fr)} au taux du {FXD[l]}.' if fr else f'IDR 21,000,000 per are per year × 5 ares × 30 years = IDR 3,150,000,000, or {usd(total / FX, fr)} at the rate of {FXD[l]}.')) for q in t['qs']],
         name=('le terrain de 500 m² à Melasti' if fr else 'the 500 m² Melasti plot'), short='500 m²', zone='Melasti · Uluwatu', card_img='terrain-melasti-plage.jpg',
-        card_pts=(['500 m²', 'Zone rose', 'Bail 30 ans'] if fr else ['500 m²', 'Pink zone', '30-year lease']), card_price=total, card_deal=('Bail 30 ans' if fr else '30-year lease'))
+        card_price=lease, **x)
 
 def d795(l):
     fr = l == 'fr'
@@ -157,7 +181,7 @@ def page(l, d):
           f'<p class="ld-kick">{d["kick"]}</p><h1>{d["h1"]}</h1><p>{d["sub"]}</p><div class="ld-badges">' + ''.join(f'<span class="ld-badge{" ld-badge--ok" if i == 0 else ""}">{b}</span>' for i, b in enumerate(d['badges'])) + '</div></div></section>\n')
     s += '<section class="ld-facts"><div class="ld-facts__in">' + ''.join(f'<div class="ld-fact">{ic(k,30)}<span>{a}</span><strong>{b}</strong><em>{c}</em></div>' for k, a, b, c in d['facts']) + '</div></section>\n'
     if d['mosaic']:
-        mz = d['mosaic']; cap = (['La parcelle', 'Le chemin privé', 'La plage de Melasti, à 5 min'] if fr else ['The plot', 'The private lane', 'Melasti Beach, 5 min away'])
+        mz = d['mosaic']; cap = d.get('mzcap') or (['La parcelle', 'Le chemin privé', 'La plage de Melasti, à 5 min'] if fr else ['The plot', 'The private lane', 'Melasti Beach, 5 min away'])
         s += ('<section class="u-sec ar-mz-sec"><div class="u-wrap"><div class="ar-mz" data-gallery>'
               f'<a class="ar-mz__big"><img src="/assets/images/{mz[0]}" alt="{cap[0]}"><span class="ld-mz__cap">{cap[0]}</span></a>'
               f'<a class="ar-mz__s"><img src="/assets/images/{mz[1]}" alt="{cap[1]}" loading="lazy"><span class="ld-mz__cap">{cap[1]}</span></a>'

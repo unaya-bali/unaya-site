@@ -55,8 +55,8 @@ DESC = {
 ('en','ArawaVillaD'):"Arawa Villas, villa D in Balangan: 2 en-suite bedrooms, private pool, 105.41 m² plot with storage, handed over furnished end of December 2026, from USD 195,000.",
 ('fr','TerrainMelasti795'):"Terrain d'angle de 795 m² en zone rose à Melasti, Uluwatu : chemin privé, vue dégagée, 5 min de la plage. Bail dès 4 ares ou pleine propriété.",
 ('en','TerrainMelasti795'):"795 m² pink-zone corner plot in Melasti, Uluwatu: private lane, open view, 5 min from the beach. Leasehold from 4 ares or freehold.",
-('fr','TerrainMelasti'):"Terrain de 500 m² en zone rose à Melasti, Uluwatu : bail 30 ans + option 30 ans, titre SHM, à 5 min de la plage. IDR 3,15 milliards.",
-('en','TerrainMelasti'):"500 m² pink-zone plot in Melasti, Uluwatu: 30-year lease + 30-year option, SHM title, 5 min from the beach. IDR 3.15 billion.",
+('fr','TerrainMelasti'):"Terrain de 500 m² en zone rose à Melasti, Uluwatu, au bord d'un ruisseau : bail 30 ans (IDR 3,15 Md) ou pleine propriété (IDR 4,95 Md), à 5 min de la plage.",
+('en','TerrainMelasti'):"500 m² creekside pink-zone plot in Melasti, Uluwatu: 30-year lease (IDR 3.15 bn) or freehold (IDR 4.95 bn), 5 min from the beach.",
  ('fr','Experiences'):"Unaya Experiences : excursions privées à Bali avec guide francophone ou chauffeur, départ de votre villa. 10 circuits à la journée, activités et calcul du prix en ligne.",
 ('en','Experiences'):"Unaya Experiences: private day trips in Bali with a French-speaking guide or a driver, from your villa. 10 day tours, activities and an online price calculator.",
  ('fr','Investir'):"Investir à Bali : bail ou PT PMA, acheter ou faire construire, taxes et location en règle. Unaya Build vous accompagne du terrain à la mise en location.",
@@ -435,10 +435,10 @@ SEO_TITLES = {
  ('en','Contact'): 'Contact Unaya Bali — Villa Management in Jimbaran, Bali',
  ('fr','FAQ'): 'Questions fréquentes — gestion et location de villas | Unaya Bali',
  ('en','FAQ'): 'FAQ — Villa Management & Villa Rentals in Bali | Unaya Bali',
- ('fr','TerrainMelasti'): 'Terrain de 500 m² à Melasti, Uluwatu (bail de 30 ans) — Unaya Bali',
+ ('fr','TerrainMelasti'): 'Terrain de 500 m² à Melasti, Uluwatu — bail ou pleine propriété | Unaya Bali',
  ('fr','TerrainMelasti795'): 'Terrain de 795 m² à Melasti, Uluwatu — bail ou pleine propriété | Unaya Bali',
  ('en','TerrainMelasti795'): '795 m² Land in Melasti, Uluwatu — Leasehold or Freehold | Unaya Bali',
- ('en','TerrainMelasti'): '500 m² Land in Melasti, Uluwatu (30-Year Lease) — Unaya Bali',
+ ('en','TerrainMelasti'): '500 m² Land in Melasti, Uluwatu — Leasehold or Freehold | Unaya Bali',
 }
 ORG_ID = SITE + '/#organisation'
 LODGING = {
