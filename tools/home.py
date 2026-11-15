@@ -144,6 +144,7 @@ def page(lang):
     s = s.rstrip() + '\n</div>\n<script src="/assets/js/invest.js" defer></script>\n'
     return s
 
-for lang in ('fr', 'en'):
-    open(os.path.join(SRC, lang, 'Main.html'), 'w').write(page(lang))
-print('ok')
+if __name__ == '__main__':
+    for lang in ('fr', 'en'):
+        open(os.path.join(SRC, lang, 'Main.html'), 'w').write(page(lang))
+    print('ok')

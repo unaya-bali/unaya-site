@@ -380,9 +380,6 @@ def transform(body, lang, page):
         for old, new in zip(imgs, ['/assets/images/yuga-drone.jpg', '/assets/images/suma-piscine-2.jpg']):
             body = body.replace(old, '<span class="h-door__img"><img src="' + new + '"', 1)
         body = body.replace('<!-- VILLAS -->', home_villas(lang), 1)
-    if page == 'Proprietaires':
-        j = body.index('</section>') + len('</section>')
-        body = body[:j] + '\n' + stats_band(lang) + body[j:]
     if page == 'Villas':
         body = re.sub(r'<a class="vl-card".*?</a>', lambda m: add_price(m.group(0), lang), body, flags=re.S)
     if page == 'Contact':
