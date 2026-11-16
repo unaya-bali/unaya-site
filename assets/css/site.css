@@ -1375,3 +1375,7 @@ button.gs-btn{font-family:'Jost',sans-serif;border:1px solid var(--aubergine)}
 .ct-main .c-map{border-radius:18px;overflow:hidden;scroll-margin-top:160px}
 @media (max-width:900px){.ct-ways .iv-keys__in{grid-template-columns:1fr 1fr}.ct-ways .iv-key:nth-child(2){border-right:0}.ct-ways .iv-key:nth-child(-n+2){border-bottom:1px solid var(--ligne)}.ct-main .c-form{padding:24px 18px}}
 .ct-main .c-form form{border:0!important;padding:0!important;background:transparent!important}
+/* H1 mot-clé (petit, au-dessus) + slogan en grand (16/11/2026) */
+.hm-hero .hm-h1{font:400 clamp(46px,6.4vw,88px)/1 'Cormorant Garamond',serif;margin:0 0 22px;max-width:15ch;color:#fff;text-shadow:0 2px 30px rgba(0,0,0,.25)}
+.hm-hero--sm .hm-h1{max-width:19ch;font-size:clamp(44px,5.6vw,78px)}
+.hm-hero h1.hm-hero__k{font:400 13px/1.4 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#E2C3B2;margin:0 0 16px;max-width:none;text-shadow:none}

@@ -411,7 +411,17 @@ def owner_next(lang, page):
     cards += f'<a class="on-card on-card--portal" href="https://owners.unayabali.com">{phone}<span class="on-card__b"><strong>{ph}</strong><span>{pd}</span><em>{pb}</em></span></a>'
     return f'<section class="u-sec on-next"><div class="u-wrap"><div class="u-head u-head--c"><h2>{t["h"]}</h2><p>{t["p"]}</p></div><div class="on-grid">{cards}</div></div></section>\n'
 
+def seo_h1(body, lang, page):
+    kw = KW.H1.get((lang, page))
+    if kw:
+        body = re.sub(r'<p class="hm-hero__k">[^<]*</p><h1>(.*?)</h1>', lambda m: f'<h1 class="hm-hero__k">{kw}</h1><p class="hm-h1">{m.group(1)}</p>', body, count=1, flags=re.S)
+    t = KW.H1_TEXT.get((lang, page))
+    if t:
+        body = body.replace(f'<h1>{t[0]}</h1>', f'<h1>{t[1]}</h1>', 1)
+    return body
+
 def transform(body, lang, page):
+    body = seo_h1(body, lang, page)
     body = body.replace('<a href="#">info@unayabali.com</a>', '<a href="mailto:info@unayabali.com">info@unayabali.com</a>')
     body = body.replace('<a href="#" style="font-size: 20px;">info@unayabali.com</a>', '<a href="mailto:info@unayabali.com" style="font-size: 20px;">info@unayabali.com</a>')
     if page == 'Main':
@@ -449,6 +459,8 @@ def transform(body, lang, page):
 
 # ---- SEO (14/11/2026) ----
 GOOGLE_VERIFY = ''  # code « google-site-verification » de la Search Console (méthode « balise HTML »), si utilisé
+import sys as _s; _s.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), 'tools'))
+import seo_keywords as KW
 SEO_TITLES = {
  ('fr','Main'): 'Unaya Bali — Gestion de villas et locations de vacances à Bali',
  ('en','Main'): 'Unaya Bali — Villa Management & Holiday Villas in Bali',
@@ -487,6 +499,8 @@ SEO_TITLES = {
  ('en','TerrainMelasti795'): '795 m² Land in Melasti, Uluwatu — Leasehold or Freehold | Unaya Bali',
  ('en','TerrainMelasti'): '500 m² Land in Melasti, Uluwatu — Leasehold or Freehold | Unaya Bali',
 }
+SEO_TITLES.update(KW.TITLES)
+DESC.update(KW.DESCS)
 ORG_ID = SITE + '/#organisation'
 LODGING = {
  'VillaSuma': dict(name='Villa Suma', loc='Balangan, Uluwatu', img='suma-g1.jpg', rooms=5, guests=10),
@@ -498,10 +512,10 @@ PARENT = {'VillaSuma':'Villas','VillaYuga':'Villas','VillaRumahJambu':'Villas','
 
 def jsonld(lang, page, title, body):
     canon = SITE + url(page, lang)
-    org = {'@type': 'Organization', '@id': ORG_ID, 'name': 'Unaya Management', 'alternateName': ['Unaya Bali', 'Unaya', 'PT Unaya Bali Grup'],
+    org = {'@type': ['Organization', 'LocalBusiness', 'RealEstateAgent'], '@id': ORG_ID, 'knowsAbout': ['Villa management in Bali', 'Holiday villa rentals in Bali', 'Villas for sale in Bali', 'Land for sale in Bali', 'Gestion de villa à Bali', 'Location de villa à Bali'], 'priceRange': '$$', 'name': 'Unaya Management', 'alternateName': ['Unaya Bali', 'Unaya', 'PT Unaya Bali Grup'],
            'url': SITE + '/', 'logo': SITE + '/assets/images/og-unaya.jpg', 'email': 'info@unayabali.com', 'telephone': '+62 851 9021 1324',
            'address': {'@type': 'PostalAddress', 'streetAddress': 'Jalan Balangan Hijau VI No. 15', 'addressLocality': 'Jimbaran, Kuta Selatan', 'addressRegion': 'Bali', 'addressCountry': 'ID'},
-           'areaServed': 'Bali, Indonesia', 'sameAs': [SOCIAL['instagram'], SOCIAL['linktree'], 'https://www.instagram.com/yuga_nyanyi_bali/', 'https://www.instagram.com/suma_bali_/']}
+           'areaServed': [{'@type': 'Place', 'name': n} for n in ('Uluwatu', 'Jimbaran', 'Canggu', 'Seminyak', 'Tanah Lot', 'Bali, Indonesia')], 'sameAs': [SOCIAL['instagram'], SOCIAL['linktree'], 'https://www.instagram.com/yuga_nyanyi_bali/', 'https://www.instagram.com/suma_bali_/']}
     graph = [org, {'@type': 'WebSite', '@id': SITE + '/#website', 'url': SITE + '/', 'name': 'Unaya Bali', 'alternateName': 'Unaya Management', 'publisher': {'@id': ORG_ID}, 'inLanguage': ['fr', 'en']}]
     if page in LODGING:
         v = LODGING[page]
@@ -518,7 +532,7 @@ def jsonld(lang, page, title, body):
         home = T[lang]['nav'] and ('Accueil' if lang == 'fr' else 'Home')
         items = [(home, SITE + url('Main', lang))]
         if page in PARENT: items.append((dict(T[lang]['nav']).get(PARENT[page]) or PARENT[page], SITE + url(PARENT[page], lang)))
-        items.append((title.split(' — ')[0].split(' | ')[0], canon))
+        items.append((re.split(r' — | \| | ?: ', title)[0], canon))
         graph.append({'@type': 'BreadcrumbList', 'itemListElement': [{'@type': 'ListItem', 'position': i + 1, 'name': n, 'item': u} for i, (n, u) in enumerate(items)]})
     return '<script type="application/ld+json">' + json.dumps({'@context': 'https://schema.org', '@graph': graph}, ensure_ascii=False).replace('</', '<\\/') + '</script>'
 
