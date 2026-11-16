@@ -537,7 +537,7 @@ PARENT = {'VillaSuma':'Villas','VillaYuga':'Villas','VillaRumahJambu':'Villas','
 
 def jsonld(lang, page, title, body):
     canon = SITE + url(page, lang)
-    org = {'@type': ['Organization', 'LocalBusiness', 'RealEstateAgent'], '@id': ORG_ID, 'knowsAbout': ['Villa management in Bali', 'Holiday villa rentals in Bali', 'Villas for sale in Bali', 'Land for sale in Bali', 'Gestion de villa à Bali', 'Location de villa à Bali'], 'priceRange': '$$', 'name': 'Unaya Management', 'alternateName': ['Unaya Villa Management', 'Unaya Bali Villa Management', 'Unaya Bali', 'Unaya', 'PT Unaya Bali Grup'],
+    org = {'@type': ['Organization', 'LocalBusiness', 'RealEstateAgent'], '@id': ORG_ID, 'knowsAbout': ['Villa management in Bali', 'Holiday villa rentals in Bali', 'Villas for sale in Bali', 'Land for sale in Bali', 'Gestion de villa à Bali', 'Location de villa à Bali'], 'priceRange': '$$', 'name': 'Unaya Management', 'alternateName': ['Unaya Bali Grup', 'PT Unaya Bali Grup', 'Unaya Bali', 'Unaya'],
            'url': SITE + '/', 'logo': SITE + '/assets/images/og-unaya.jpg', 'email': 'info@unayabali.com', 'telephone': '+62 851 9021 1324',
            'address': {'@type': 'PostalAddress', 'streetAddress': 'Jalan Balangan Hijau VI No. 15', 'addressLocality': 'Jimbaran, Kuta Selatan', 'addressRegion': 'Bali', 'addressCountry': 'ID'},
            'areaServed': [{'@type': 'Place', 'name': n} for n in ('Uluwatu', 'Jimbaran', 'Canggu', 'Seminyak', 'Tanah Lot', 'Bali, Indonesia')], 'sameAs': [SOCIAL['instagram'], SOCIAL['linktree'], 'https://www.instagram.com/yuga_nyanyi_bali/', 'https://www.instagram.com/suma_bali_/']}
