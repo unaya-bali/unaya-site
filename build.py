@@ -27,13 +27,13 @@ T = {  # textes communs
  'fr': dict(nav=[('Proprietaires','Propriétaires'),('Villas','Nos villas'),('Investir','Investir à Bali'),('ServicesVoyageurs','Services voyageurs'),('APropos','À propos'),('Contact','Contact')],
             book='Réserver', owner='Confier ma villa', menu='Menu', skip='Aller au contenu', main_menu='Menu principal',
             sub=[('Proprietaires',"Vue d'ensemble"),('ProprietairesServices','Nos services'),('ProprietairesTarifs','Formules & tarifs'),('ConfierMaVilla','Confier ma villa')], sub_label='Propriétaires', portal='Espace propriétaire',
-            f_nav='Navigation', f_contact='Contact', f_company='Société', f_links=[('Proprietaires','Propriétaires'),('Villas','Nos villas'),('Investir','Investir à Bali'),('VillasAVendre','Villas à vendre'),('Terrains','Terrains'),('ServicesVoyageurs','Services voyageurs'),('FAQ','FAQ'),('Contact','Contact')],
+            f_nav='Navigation', f_contact='Contact', f_company='Société', f_links=[('Proprietaires','Propriétaires'),('Villas','Nos villas'),('Investir','Investir à Bali'),('VillasAVendre','Villas à vendre'),('Terrains','Terrains'),('ServicesVoyageurs','Services voyageurs'),('FAQ','FAQ'),('Contact','Contact')], f_zh='Zones & guides', f_zones=[('ZoneUluwatu','Uluwatu & Jimbaran'),('ZoneTanahLot','Tanah Lot & Canggu'),('ZoneSeminyak','Seminyak & Kerobokan'),('Guides','Nos guides'),('GuideGestion','Gestion de villa'),('GuideRendement','Combien rapporte une villa'),('GuideLeasehold','Le leasehold expliqué'),('GuideOuLoger','Où louer à Bali')],
             legal=[('MentionsLegales','Mentions légales'),('Confidentialite','Confidentialité'),('Conditions','Conditions de réservation')],
             country='Indonésie', build='Unaya Build — Investir à Bali', ogloc='fr_FR'),
  'en': dict(nav=[('Proprietaires','Owners'),('Villas','Our villas'),('Investir','Invest in Bali'),('ServicesVoyageurs','Guest services'),('APropos','About'),('Contact','Contact')],
             book='Book', owner='List my villa', menu='Menu', skip='Skip to content', main_menu='Main menu',
             sub=[('Proprietaires','Overview'),('ProprietairesServices','Our services'),('ProprietairesTarifs','Plans & pricing'),('ConfierMaVilla','List my villa')], sub_label='Owners', portal='Owner portal',
-            f_nav='Navigation', f_contact='Contact', f_company='Company', f_links=[('Proprietaires','Owners'),('Villas','Our villas'),('Investir','Invest in Bali'),('VillasAVendre','Villas for sale'),('Terrains','Land'),('ServicesVoyageurs','Guest services'),('FAQ','FAQ'),('Contact','Contact')],
+            f_nav='Navigation', f_contact='Contact', f_company='Company', f_links=[('Proprietaires','Owners'),('Villas','Our villas'),('Investir','Invest in Bali'),('VillasAVendre','Villas for sale'),('Terrains','Land'),('ServicesVoyageurs','Guest services'),('FAQ','FAQ'),('Contact','Contact')], f_zh='Areas & guides', f_zones=[('ZoneUluwatu','Uluwatu & Jimbaran'),('ZoneTanahLot','Tanah Lot & Canggu'),('ZoneSeminyak','Seminyak & Kerobokan'),('Guides','Our guides'),('GuideGestion','Villa management'),('GuideRendement','Villa rental income'),('GuideLeasehold','Leasehold explained'),('GuideOuLoger','Where to stay in Bali')],
             legal=[('MentionsLegales','Legal notice'),('Confidentialite','Privacy'),('Conditions','Booking terms')],
             country='Indonesia', build='Unaya Build — Invest in Bali', ogloc='en_US'),
 }
@@ -163,6 +163,9 @@ def footer(lang, page):
 <div style="{H}">{t['f_nav']}</div>
 {links}<a href="{PORTAL}" style="{L} margin-top: 6px; color: #D2A48C;">{t['portal']} ↗</a>
 </div>
+<div style="flex: 1 1 200px; min-width: 0; display: flex; flex-direction: column; gap: 10px;">
+<div style="{H}">{t['f_zh']}</div>
+{''.join(f'<a href="{url(n, lang)}" style="{L}">{lbl}</a>' + chr(10) for n, lbl in t['f_zones'])}</div>
 <div style="flex: 1 1 260px; min-width: 0; display: flex; flex-direction: column; gap: 10px;">
 <div style="{H}">{t['f_contact']}</div>
 <span>Jalan Balangan Hijau VI No. 15<br>Jimbaran, Kuta Selatan<br>Badung, Bali — {t['country']}</span>
@@ -501,6 +504,9 @@ SEO_TITLES = {
 }
 SEO_TITLES.update(KW.TITLES)
 DESC.update(KW.DESCS)
+import zones as _ZN, articles as _AR
+for _m in (_ZN.META, _AR.META):
+    for _k, (_t, _d) in _m.items(): SEO_TITLES[_k] = _t; DESC[_k] = _d
 ORG_ID = SITE + '/#organisation'
 LODGING = {
  'VillaSuma': dict(name='Villa Suma', loc='Balangan, Uluwatu', img='suma-g1.jpg', rooms=5, guests=10),
@@ -508,7 +514,7 @@ LODGING = {
  'VillaRumahJambu': dict(name='Rumah Jambu', loc='Balangan, Uluwatu', img='rj-g1.jpg', rooms=2, guests=4),
 }
 PARENT = {'VillaSuma':'Villas','VillaYuga':'Villas','VillaRumahJambu':'Villas','TerrainMelasti':'Terrains','TerrainMelasti795':'Terrains','ArawaVillas':'VillasAVendre','ArawaVillaB':'ArawaVillas','ArawaVillaD':'ArawaVillas',
-          'ProprietairesServices':'Proprietaires','ProprietairesTarifs':'Proprietaires','ConfierMaVilla':'Proprietaires','SiteWeb':'Proprietaires'}
+          'ProprietairesServices':'Proprietaires','ProprietairesTarifs':'Proprietaires','ConfierMaVilla':'Proprietaires','SiteWeb':'Proprietaires','GuideLeasehold':'Guides','GuideRendement':'Guides','GuideGestion':'Guides','GuideOuLoger':'Guides'}
 
 def jsonld(lang, page, title, body):
     canon = SITE + url(page, lang)
@@ -524,7 +530,11 @@ def jsonld(lang, page, title, body):
                       'numberOfRooms': v['rooms'], 'petsAllowed': page == 'VillaRumahJambu', 'checkinTime': '14:00', 'checkoutTime': '11:00',
                       'amenityFeature': [{'@type': 'LocationFeatureSpecification', 'name': n, 'value': True} for n in ('Private pool', 'Wi-Fi', 'Air conditioning', 'Kitchen', 'Free parking')],
                       'telephone': '+62 851 9021 1324', 'priceRange': 'IDR', 'parentOrganization': {'@id': ORG_ID}})
-    if page in ('FAQ', 'Investir'):
+    if page in _AR.A:
+        a = _AR.A[page]; t = a[lang]
+        graph.append({'@type': 'Article', '@id': canon + '#article', 'headline': t['h1'], 'description': t['desc'], 'image': SITE + '/assets/images/' + a['img'],
+                      'datePublished': _AR.ISO, 'dateModified': _AR.ISO, 'inLanguage': lang, 'mainEntityOfPage': canon, 'author': {'@id': ORG_ID}, 'publisher': {'@id': ORG_ID}})
+    if page in ('FAQ', 'Investir') or page.startswith('Zone'):
         qa = re.findall(r'<details[^>]*>\s*<summary[^>]*>(.*?)</summary>(.*?)</details>', body, re.S)
         clean = lambda x: re.sub(r'\s+', ' ', re.sub(r'<[^>]+>', ' ', html.unescape(x))).strip()
         if qa: graph.append({'@type': 'FAQPage', 'mainEntity': [{'@type': 'Question', 'name': clean(q), 'acceptedAnswer': {'@type': 'Answer', 'text': clean(a)}} for q, a in qa]})

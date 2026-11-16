@@ -110,5 +110,37 @@
   "TerrainMelasti795": {
     "en": "/land/melasti-795-m2/",
     "fr": "/fr/terrains/melasti-795-m2/"
+  },
+  "ZoneUluwatu": {
+    "fr": "/fr/zones/uluwatu-jimbaran/",
+    "en": "/areas/uluwatu-jimbaran/"
+  },
+  "ZoneTanahLot": {
+    "fr": "/fr/zones/tanah-lot-canggu/",
+    "en": "/areas/tanah-lot-canggu/"
+  },
+  "ZoneSeminyak": {
+    "fr": "/fr/zones/seminyak-kerobokan/",
+    "en": "/areas/seminyak-kerobokan/"
+  },
+  "Guides": {
+    "fr": "/fr/guides/",
+    "en": "/guides/"
+  },
+  "GuideLeasehold": {
+    "fr": "/fr/guides/leasehold-bali/",
+    "en": "/guides/leasehold-bali/"
+  },
+  "GuideRendement": {
+    "fr": "/fr/guides/combien-rapporte-une-villa-a-bali/",
+    "en": "/guides/bali-villa-rental-income/"
+  },
+  "GuideGestion": {
+    "fr": "/fr/guides/gestion-de-villa-a-bali/",
+    "en": "/guides/villa-management-in-bali/"
+  },
+  "GuideOuLoger": {
+    "fr": "/fr/guides/ou-louer-une-villa-a-bali/",
+    "en": "/guides/where-to-stay-in-bali/"
   }
 }
