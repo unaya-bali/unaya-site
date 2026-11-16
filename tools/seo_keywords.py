@@ -68,7 +68,7 @@ DESCS = {
 }
 H1 = {
  ('fr','Main'): 'Gestion de villa et location de villas à Bali',
- ('en','Main'): 'Villa management & villa rentals in Bali',
+ ('en','Main'): 'Bali villa management & villa rentals',
  ('fr','Villas'): 'Location de villas avec piscine à Bali',
  ('en','Villas'): 'Private pool villa rentals in Bali',
  ('fr','Proprietaires'): 'Gestion locative de villa à Bali',

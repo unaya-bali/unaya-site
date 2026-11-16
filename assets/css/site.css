@@ -1430,3 +1430,6 @@ button.gs-btn{font-family:'Jost',sans-serif;border:1px solid var(--aubergine)}
 .gd-card__b p{font-size:15px;line-height:1.6;color:#6b5f66;margin:0 0 14px}
 .gd-card__b em{font-style:normal;font-size:14px;color:var(--cuivre)}
 @media(max-width:900px){.gd-rels,.gd-grid{grid-template-columns:1fr}.hm-doors.zn-2{grid-template-columns:1fr!important}.gd-art{font-size:17px}.gd-lead{font-size:19px}}
+a.zn-card{display:block;text-decoration:none;color:inherit;transition:transform .2s,box-shadow .2s}
+a.zn-card:hover{transform:translateY(-4px);box-shadow:0 16px 36px rgba(60,30,50,.14)}
+a.zn-card h3::after{content:" →";color:var(--cuivre)}

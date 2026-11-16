@@ -414,6 +414,24 @@ def owner_next(lang, page):
     cards += f'<a class="on-card on-card--portal" href="https://owners.unayabali.com">{phone}<span class="on-card__b"><strong>{ph}</strong><span>{pd}</span><em>{pb}</em></span></a>'
     return f'<section class="u-sec on-next"><div class="u-wrap"><div class="u-head u-head--c"><h2>{t["h"]}</h2><p>{t["p"]}</p></div><div class="on-grid">{cards}</div></div></section>\n'
 
+ZONE_IMG = {'zone-uluwatu-jimbaran.jpg': 'ZoneUluwatu', 'zone-tanah-lot-canggu.jpg': 'ZoneTanahLot', 'zone-seminyak-kerobokan.jpg': 'ZoneSeminyak'}
+def zone_links(body, lang):
+    # les cartes « Là où nous sommes » deviennent des liens vers les pages zones (balises appariées)
+    out, pos = [], 0
+    while True:
+        a = body.find('<div class="u-card">', pos)
+        if a < 0: break
+        depth, k = 0, a
+        for m in re.finditer(r'<div\b|</div>', body[a:]):
+            depth += 1 if m.group(0) == '<div' else -1
+            if depth == 0: k = a + m.end(); break
+        card = body[a:k]
+        im = re.search(r'/assets/images/(zone-[a-z-]+\.jpg)', card)
+        if im and im.group(1) in ZONE_IMG:
+            card = f'<a class="u-card zn-card" href="{url(ZONE_IMG[im.group(1)], lang)}">' + card[len('<div class="u-card">'):-len('</div>')] + '</a>'
+        out.append(body[pos:a] + card); pos = k
+    return ''.join(out) + body[pos:]
+
 def seo_h1(body, lang, page):
     kw = KW.H1.get((lang, page))
     if kw:
@@ -425,6 +443,7 @@ def seo_h1(body, lang, page):
 
 def transform(body, lang, page):
     body = seo_h1(body, lang, page)
+    if page in ("Main", "Proprietaires"): body = zone_links(body, lang)
     body = body.replace('<a href="#">info@unayabali.com</a>', '<a href="mailto:info@unayabali.com">info@unayabali.com</a>')
     body = body.replace('<a href="#" style="font-size: 20px;">info@unayabali.com</a>', '<a href="mailto:info@unayabali.com" style="font-size: 20px;">info@unayabali.com</a>')
     if page == 'Main':
@@ -518,7 +537,7 @@ PARENT = {'VillaSuma':'Villas','VillaYuga':'Villas','VillaRumahJambu':'Villas','
 
 def jsonld(lang, page, title, body):
     canon = SITE + url(page, lang)
-    org = {'@type': ['Organization', 'LocalBusiness', 'RealEstateAgent'], '@id': ORG_ID, 'knowsAbout': ['Villa management in Bali', 'Holiday villa rentals in Bali', 'Villas for sale in Bali', 'Land for sale in Bali', 'Gestion de villa à Bali', 'Location de villa à Bali'], 'priceRange': '$$', 'name': 'Unaya Management', 'alternateName': ['Unaya Bali', 'Unaya', 'PT Unaya Bali Grup'],
+    org = {'@type': ['Organization', 'LocalBusiness', 'RealEstateAgent'], '@id': ORG_ID, 'knowsAbout': ['Villa management in Bali', 'Holiday villa rentals in Bali', 'Villas for sale in Bali', 'Land for sale in Bali', 'Gestion de villa à Bali', 'Location de villa à Bali'], 'priceRange': '$$', 'name': 'Unaya Management', 'alternateName': ['Unaya Villa Management', 'Unaya Bali Villa Management', 'Unaya Bali', 'Unaya', 'PT Unaya Bali Grup'],
            'url': SITE + '/', 'logo': SITE + '/assets/images/og-unaya.jpg', 'email': 'info@unayabali.com', 'telephone': '+62 851 9021 1324',
            'address': {'@type': 'PostalAddress', 'streetAddress': 'Jalan Balangan Hijau VI No. 15', 'addressLocality': 'Jimbaran, Kuta Selatan', 'addressRegion': 'Bali', 'addressCountry': 'ID'},
            'areaServed': [{'@type': 'Place', 'name': n} for n in ('Uluwatu', 'Jimbaran', 'Canggu', 'Seminyak', 'Tanah Lot', 'Bali, Indonesia')], 'sameAs': [SOCIAL['instagram'], SOCIAL['linktree'], 'https://www.instagram.com/yuga_nyanyi_bali/', 'https://www.instagram.com/suma_bali_/']}
