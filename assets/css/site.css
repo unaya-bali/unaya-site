@@ -1433,3 +1433,10 @@ button.gs-btn{font-family:'Jost',sans-serif;border:1px solid var(--aubergine)}
 a.zn-card{display:block;text-decoration:none;color:inherit;transition:transform .2s,box-shadow .2s}
 a.zn-card:hover{transform:translateY(-4px);box-shadow:0 16px 36px rgba(60,30,50,.14)}
 a.zn-card h3::after{content:" →";color:var(--cuivre)}
+/* ---- Vente Yuga : emplacement ---- */
+.yg-zone{display:grid;grid-template-columns:1.4fr 1fr;gap:28px;align-items:start}
+.yg-near{list-style:none;margin:0;padding:0;background:#fff;border:1px solid var(--ligne);border-radius:14px}
+.yg-near li{display:flex;justify-content:space-between;gap:16px;padding:16px 22px;border-bottom:1px solid var(--ligne);font-size:16px}
+.yg-near li:last-child{border-bottom:0}
+.yg-near strong{font-weight:500;color:var(--aubergine);white-space:nowrap}
+@media(max-width:900px){.yg-zone{grid-template-columns:1fr}}

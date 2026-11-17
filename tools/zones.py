@@ -72,7 +72,7 @@ Z = {
          ('How much does villa management cost in Tanah Lot?', 'The same everywhere: full management from 18% of income (after platforms and tax), marketing only 11%. No fixed fees.'),
          ('Can I rent Villa Yuga by the room?', 'Yes, Villa Yuga can be rented by the room or as a whole, with −15% from 7 nights when you book direct.'),
          ('Is it far from the airport?', 'Usually 1 to 1.5 hours depending on the time of day. We arrange the airport transfer.')]),
-   villas=['VillaYuga'], sale=[]),
+   villas=['VillaYuga'], sale=['VillaYugaVente']),
  'ZoneSeminyak': dict(img='zone-seminyak-kerobokan.jpg', fr=dict(
     title='Gestion de villa à Seminyak et Kerobokan | Unaya Bali',
     desc="Gestion de villa à Seminyak, Kerobokan, Petitenget et Umalas : location sur Airbnb et Booking, voyageurs, entretien, comptabilité. Estimation gratuite.",
@@ -106,7 +106,8 @@ Z = {
 VIL = {'VillaSuma': ('suma-piscine-2.jpg', 'Villa Suma', {'fr': 'Balangan · 5 chambres · à la chambre ou entière', 'en': 'Balangan · 5 bedrooms · by the room or whole'}),
        'VillaRumahJambu': ('rumah-jambu-jardin.jpg', 'Rumah Jambu', {'fr': 'Balangan · maison balinaise avec jardin', 'en': 'Balangan · Balinese house with garden'}),
        'VillaYuga': ('yuga-piscine.jpg', 'Villa Yuga', {'fr': 'Nyanyi · 4 chambres · rizières', 'en': 'Nyanyi · 4 bedrooms · rice fields'})}
-SALE = {'ArawaVillaB': ('arawa-facade.jpg', {'fr': 'Arawa · Villa B', 'en': 'Arawa · Villa B'}, {'fr': 'Balangan · 2 chambres · dès 170 000 USD', 'en': 'Balangan · 2 bedrooms · from USD 170,000'}),
+SALE = {'VillaYugaVente': ('yuga-piscine.jpg', {'fr': 'Villa Yuga', 'en': 'Villa Yuga'}, {'fr': 'Nyanyi · 4 suites · IDR 5,9 milliards (≈ 325 000 USD)', 'en': 'Nyanyi · 4 suites · IDR 5.9 billion (≈ USD 325,000)'}),
+        'ArawaVillaB': ('arawa-facade.jpg', {'fr': 'Arawa · Villa B', 'en': 'Arawa · Villa B'}, {'fr': 'Balangan · 2 chambres · dès 170 000 USD', 'en': 'Balangan · 2 bedrooms · from USD 170,000'}),
         'ArawaVillaD': ('arawa-piscine.jpg', {'fr': 'Arawa · Villa D', 'en': 'Arawa · Villa D'}, {'fr': 'Balangan · 2 chambres · dès 195 000 USD', 'en': 'Balangan · 2 bedrooms · from USD 195,000'}),
         'TerrainMelasti795': ('terrain-melasti795-parcelle.jpg', {'fr': 'Terrain de 795 m²', 'en': '795 m² plot'}, {'fr': 'Melasti · zone rose · bail ou pleine propriété', 'en': 'Melasti · pink zone · leasehold or freehold'}),
         'TerrainMelasti': ('terrain-melasti-plage.jpg', {'fr': 'Terrain de 500 m²', 'en': '500 m² plot'}, {'fr': 'Melasti · zone rose · bail ou pleine propriété', 'en': 'Melasti · pink zone · leasehold or freehold'})}

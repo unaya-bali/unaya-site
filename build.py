@@ -19,7 +19,7 @@ WHATSAPP = {'VillaSuma': '6285190211324', 'VillaYuga': '6281330617077', 'VillaRu
 TURNSTILE_SITEKEY = '0x4AAAAAAFl92qPSywb2bEJt'
 SOCIAL = {'instagram': 'https://www.instagram.com/unayabali/', 'linktree': 'https://linktr.ee/Unaya_Management'}
 OWNER_PAGES = ['Proprietaires', 'ProprietairesServices', 'ProprietairesTarifs', 'ConfierMaVilla']
-INVEST_PAGES = ['Investir', 'Terrains', 'TerrainMelasti', 'TerrainMelasti795', 'VillasAVendre', 'ArawaVillas', 'ArawaVillaB', 'ArawaVillaD']
+INVEST_PAGES = ['Investir', 'Terrains', 'TerrainMelasti', 'TerrainMelasti795', 'VillasAVendre', 'ArawaVillas', 'ArawaVillaB', 'ArawaVillaD', 'VillaYugaVente']
 INVEST_SUB = {'fr': [('Investir', 'Le guide pour investir'), ('VillasAVendre', 'Villas à vendre'), ('Terrains', 'Terrains disponibles')], 'en': [('Investir', 'Investment guide'), ('VillasAVendre', 'Villas for sale'), ('Terrains', 'Available land')]}
 BEDS24 = {'VillaSuma': '359817', 'VillaYuga': '359816', 'VillaRumahJambu': '359818'}  # propriétés Unaya
 
@@ -104,7 +104,7 @@ def url(name, lang):
 def subnav(lang, page):
     t = T[lang]
     if page in INVEST_PAGES:
-        cur = {'TerrainMelasti': 'Terrains', 'TerrainMelasti795': 'Terrains', 'ArawaVillas': 'VillasAVendre', 'ArawaVillaB': 'VillasAVendre', 'ArawaVillaD': 'VillasAVendre'}.get(page, page)
+        cur = {'TerrainMelasti': 'Terrains', 'TerrainMelasti795': 'Terrains', 'ArawaVillas': 'VillasAVendre', 'ArawaVillaB': 'VillasAVendre', 'ArawaVillaD': 'VillasAVendre', 'VillaYugaVente': 'VillasAVendre'}.get(page, page)
         return f'<nav class="subnav" aria-label="{"Investir à Bali" if lang == "fr" else "Invest in Bali"}">' + ''.join(
             f'<a href="{url(n, lang)}"{" aria-current=\"page\"" if n == cur else ""}>{lbl}</a>' for n, lbl in INVEST_SUB[lang]) + '</nav>'
     if page not in OWNER_PAGES: return ''
@@ -264,6 +264,8 @@ def wa_text(lang, page):
     if page in ('ArawaVillaB', 'ArawaVillaD'):
         v = page[-1]
         return (f"Bonjour Unaya, je suis intéressé(e) par la villa {v} des Arawa Villas à Balangan." if fr else f"Hello Unaya, I'm interested in villa {v} at Arawa Villas in Balangan.")
+    if page == 'VillaYugaVente':
+        return ("Bonjour Unaya, je suis intéressé(e) par la Villa Yuga à vendre à Nyanyi." if fr else "Hello Unaya, I'm interested in Villa Yuga for sale in Nyanyi.")
     if page in ('VillasAVendre', 'ArawaVillas'):
         return ("Bonjour Unaya, je suis intéressé(e) par les Arawa Villas à Balangan." if fr else "Hello Unaya, I'm interested in Arawa Villas in Balangan.")
     if page == 'TerrainMelasti795':
@@ -523,8 +525,8 @@ SEO_TITLES = {
 }
 SEO_TITLES.update(KW.TITLES)
 DESC.update(KW.DESCS)
-import zones as _ZN, articles as _AR
-for _m in (_ZN.META, _AR.META):
+import zones as _ZN, articles as _AR, yuga_sale as _YS
+for _m in (_ZN.META, _AR.META, _YS.META):
     for _k, (_t, _d) in _m.items(): SEO_TITLES[_k] = _t; DESC[_k] = _d
 ORG_ID = SITE + '/#organisation'
 LODGING = {
@@ -532,7 +534,7 @@ LODGING = {
  'VillaYuga': dict(name='Villa Yuga', loc='Nyanyi, Tanah Lot', img='yuga-g1.jpg', rooms=4, guests=8),
  'VillaRumahJambu': dict(name='Rumah Jambu', loc='Balangan, Uluwatu', img='rj-g1.jpg', rooms=2, guests=4),
 }
-PARENT = {'VillaSuma':'Villas','VillaYuga':'Villas','VillaRumahJambu':'Villas','TerrainMelasti':'Terrains','TerrainMelasti795':'Terrains','ArawaVillas':'VillasAVendre','ArawaVillaB':'ArawaVillas','ArawaVillaD':'ArawaVillas',
+PARENT = {'VillaYugaVente':'VillasAVendre','VillaSuma':'Villas','VillaYuga':'Villas','VillaRumahJambu':'Villas','TerrainMelasti':'Terrains','TerrainMelasti795':'Terrains','ArawaVillas':'VillasAVendre','ArawaVillaB':'ArawaVillas','ArawaVillaD':'ArawaVillas',
           'ProprietairesServices':'Proprietaires','ProprietairesTarifs':'Proprietaires','ConfierMaVilla':'Proprietaires','SiteWeb':'Proprietaires','GuideLeasehold':'Guides','GuideRendement':'Guides','GuideGestion':'Guides','GuideOuLoger':'Guides'}
 
 def jsonld(lang, page, title, body):
