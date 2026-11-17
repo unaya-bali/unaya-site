@@ -28,7 +28,7 @@ export async function onRequest({ request, env }) {
       const dep = String(b.departure || '');
       if (dep && dep < new Date().toISOString().slice(0, 10)) return fail('E7', 400); // séjour déjà passé
       // Le montant est calculé ici à partir de Beds24 (acompte, solde ou 100 %), jamais pris tel quel depuis le navigateur.
-      const due = amountDue(b, Number(env.DEPOSIT_PERCENT || 30));
+      const due = amountDue(b, Number(env.DEPOSIT_PERCENT || 30), new Date(), Number(env.NONREF_OFFER_ID || 2)); // offre non remboursable : 100 %
       if (due.kind !== 'none') {
         if (due.amount < 1000) return fail('E8', 400); // déjà entièrement payée
         amount = due.amount;
