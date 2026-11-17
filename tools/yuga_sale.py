@@ -37,7 +37,7 @@ T = {'fr': dict(
          ('Permis (PBG / SLF)', 'en cours, dossier déposé en septembre 2026'), ('Mobilier', 'vendu entièrement meublé et équipé')],
   lnote='Faites vérifier le bail et les documents par votre notaire ou votre avocat avant de vous engager.',
   pk='Prix', usd='≈ USD 325 000', rate='1 USD = IDR 18 158 (11 nov. 2026). Le prix de référence est en roupies.',
-  b1='Planifier une visite', b2='Écrire sur WhatsApp',
+  b1='Planifier une visite', b2='Écrire sur WhatsApp', dl='Télécharger la brochure (PDF)',
   wa='Bonjour Unaya, je suis intéressé(e) par la Villa Yuga à vendre à Nyanyi.',
   other='Voir aussi les <a href="/fr/villas-a-vendre/arawa-balangan/">Arawa Villas</a> à Balangan, dès 170 000 USD.',
   share='Partager', copy='Copier le lien', copied='Lien copié',
@@ -88,7 +88,7 @@ T = {'fr': dict(
          ('Permits (PBG / SLF)', 'in progress, application filed in September 2026'), ('Furniture', 'sold fully furnished and equipped')],
   lnote='Have the lease and documents checked by your notary or lawyer before you commit.',
   pk='Price', usd='≈ USD 325,000', rate='1 USD = IDR 18,158 (11 Nov 2026). The reference price is in rupiah.',
-  b1='Book a viewing', b2='Chat on WhatsApp',
+  b1='Book a viewing', b2='Chat on WhatsApp', dl='Download the brochure (PDF)',
   wa='Hello Unaya, I’m interested in Villa Yuga for sale in Nyanyi.',
   other='See also <a href="/villas-for-sale/arawa-balangan/">Arawa Villas</a> in Balangan, from USD 170,000.',
   share='Share', copy='Copy link', copied='Link copied',
@@ -152,7 +152,7 @@ def page(lang):
           f'<div class="ar-lease"><h3>{x["lh"]}</h3><dl>' + ''.join(f'<div><dt>{a}</dt><dd>{b}</dd></div>' for a, b in x['lease']) + f'</dl><p>{x["lnote"]}</p></div></div>'
           f'<aside class="ld-price"><span class="ld-price__k">{x["pk"]}</span><div class="ar-pr"><span>Villa Yuga</span><strong>{PRICE[lang]}</strong><em>{x["usd"]}</em></div>'
           f'<a class="u-btn u-btn--rose" href="#visite">{x["b1"]}</a><a class="ld-wa" href="{wa}" target="_blank" rel="noopener">{x["b2"]}</a>'
-          f'<p>{x["rate"]}</p><p class="ar-other">{x["other"]}</p>'
+          f'<div class="ar-dl"><a href="/assets/docs/villa-yuga-{lang}.pdf" download>{x["dl"]}</a></div><p>{x["rate"]}</p><p class="ar-other">{x["other"]}</p>'
           f'<div class="ar-share" data-share-url="{full}" data-share-title="Villa Yuga — Nyanyi, Bali"><span>{x["share"]}</span>'
           f'<a href="https://wa.me/?text={sh}" target="_blank" rel="noopener" aria-label="WhatsApp">WhatsApp</a>'
           f'<a href="https://www.facebook.com/sharer/sharer.php?u={quote(full, safe="")}" target="_blank" rel="noopener" aria-label="Facebook">Facebook</a>'
