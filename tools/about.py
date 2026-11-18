@@ -60,7 +60,11 @@ def page(lang):
         if tag.startswith('a '):
             fam += f'<{tag} class="ab-fam__c ab-fam__c--link">{sz(svg, 34)}<h3>{h}</h3><p>{p}</p><span class="u-link">{link}</span></a>'
         else:
-            fam += f'<div class="ab-fam__c{" ab-fam__c--cur" if cur else ""}">{sz(svg, 34)}<h3>{h}</h3><p>{p}</p></div>'
+            if cur:
+                href, lbl = ('/fr/proprietaires/', 'Nos services de gestion') if fr else ('/owners/', 'Our management services')
+                fam += f'<a href="{href}" class="ab-fam__c ab-fam__c--cur ab-fam__c--link">{sz(svg, 34)}<h3>{h}</h3><p>{p}</p><span class="u-link">{lbl}</span></a>'
+            else:
+                fam += f'<div class="ab-fam__c">{sz(svg, 34)}<h3>{h}</h3><p>{p}</p></div>'
     co = ''.join(f'<span>{c}</span>' for c in re.findall(r'<span>(.*?)</span>', grp.group(4), flags=re.S))
     s += (f'<section class="u-sec u-sec--white hm-sec"><div class="u-wrap"><div class="u-head u-head--c"><p class="hm-k">{x["grp_k"]}</p><h2>{grp.group(1)}</h2><p>{grp.group(2)}</p></div>'
           f'<div class="ab-fam">{fam}</div><div class="ab-co">{co}</div></div></section>\n')
