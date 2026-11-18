@@ -1441,3 +1441,6 @@ a.zn-card h3::after{content:" →";color:var(--cuivre)}
 .yg-near strong{font-weight:500;color:var(--aubergine);white-space:nowrap}
 @media(max-width:900px){.yg-zone{grid-template-columns:1fr}}
 .ab-fam__c--cur .u-link{color:#D2A48C;border-color:#D2A48C}
+/* le petit titre SEO au-dessus du slogan reste petit sur mobile (contre « main h1{font-size:44px!important} ») */
+main .hm-hero h1.hm-hero__k,.hm-hero h1.hm-hero__k{font-size:13px!important;line-height:1.4!important}
+@media (max-width:640px){main .hm-hero h1.hm-hero__k{font-size:12px!important;letter-spacing:.16em}}
