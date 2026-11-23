@@ -61,7 +61,7 @@ export async function onRequest({ request, env }) {
         success_redirect_url: finish + '&transaction_status=settlement',
         failure_redirect_url: finish + '&transaction_status=failed',
         locale: 'en',
-        invoice_duration: 86400,
+        invoice_duration: Number(env.PAY_TIMEOUT_MIN || 20) * 60, // lien valable 20 min : passé ce délai, plus de paiement possible
       }),
     });
     if (!x.ok) { let c = ''; try { c = (await x.json()).error_code || ''; } catch {} return fail('E6 ' + x.status + ' ' + c, 502); }
@@ -77,6 +77,7 @@ export async function onRequest({ request, env }) {
       item_details: [{ id: 'B' + bookId, price: amount, quantity: 1, name: (lang === 'en' ? 'Booking #' : 'Réservation n°') + bookId }],
       customer_details: guest,
       callbacks: { finish },
+      expiry: { unit: 'minutes', duration: Number(env.PAY_TIMEOUT_MIN || 20) },
     }),
   });
   if (!r.ok) return page(lang, T.err, T.msg, 502);
