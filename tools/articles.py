@@ -210,7 +210,7 @@ A['GuideOuLoger'] = dict(img='suma-g1.jpg', min=5, fr=dict(
  body=[
   ('Uluwatu et Jimbaran : falaises, surf et plages', [
    "Tout au sud, sur la péninsule de Bukit. Des plages de sable blanc entre les falaises (Balangan, Bingin, Padang Padang, Melasti), le temple d’Uluwatu au coucher du soleil, et Jimbaran avec sa baie et ses restaurants de poisson sur le sable.",
-   "Pour qui : couples, familles, surfeurs, et tous ceux qui veulent du calme près de l’aéroport (30 à 50 minutes). Nos villas ici : la Villa Suma et Rumah Jambu, à Balangan."]),
+   "Pour qui : couples, familles, surfeurs, et tous ceux qui veulent du calme près de l’aéroport (30 à 50 minutes). Nos villas ici : SUMA Bali et Rumah Jambu, à Balangan."]),
   ('Canggu : cafés, surf et vie de quartier', [
    "Le secteur le plus animé de la côte ouest : cafés, coworkings, restaurants, beach clubs et plages de surf. Idéal si vous voulez tout faire à pied ou en scooter, moins si vous cherchez le silence.",
    "Pour qui : jeunes voyageurs, nomades digitaux, groupes d’amis."]),
@@ -237,7 +237,7 @@ A['GuideOuLoger'] = dict(img='suma-g1.jpg', min=5, fr=dict(
  body=[
   ('Uluwatu & Jimbaran: cliffs, surf and beaches', [
    "At the very south, on the Bukit peninsula. White-sand beaches between the cliffs (Balangan, Bingin, Padang Padang, Melasti), Uluwatu temple at sunset, and Jimbaran with its bay and seafood restaurants on the sand.",
-   "Who it suits: couples, families, surfers, and anyone wanting calm close to the airport (30–50 minutes). Our villas here: Villa Suma and Rumah Jambu, in Balangan."]),
+   "Who it suits: couples, families, surfers, and anyone wanting calm close to the airport (30–50 minutes). Our villas here: SUMA Bali and Rumah Jambu, in Balangan."]),
   ('Canggu: cafés, surf and neighbourhood life', [
    "The liveliest area on the west coast: cafés, coworking, restaurants, beach clubs and surf beaches. Great if you want to do everything on foot or by scooter, less so if you want silence.",
    "Who it suits: young travellers, digital nomads, groups of friends."]),

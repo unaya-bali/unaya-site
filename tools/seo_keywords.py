@@ -49,8 +49,8 @@ TITLES = {
 DESCS = {
  ('fr','Main'): "Gestion de villa à Bali (Uluwatu, Jimbaran, Canggu, Tanah Lot) : location, voyageurs, entretien, rapport mensuel. Et nos villas avec piscine à louer en direct.",
  ('en','Main'): "Villa management in Bali (Uluwatu, Jimbaran, Canggu, Tanah Lot): rentals, guests, upkeep, monthly reports. Plus our private pool villas to book direct.",
- ('fr','Villas'): "Location de villa à Bali avec piscine privée : Villa Suma et Rumah Jambu à Uluwatu, Villa Yuga à Tanah Lot. À la chambre ou entière, −15 % dès 7 nuits.",
- ('en','Villas'): "Bali villa rentals with private pool: Villa Suma and Rumah Jambu in Uluwatu, Villa Yuga in Tanah Lot. By the room or whole villa, −15% from 7 nights.",
+ ('fr','Villas'): "Location de villa à Bali avec piscine privée : SUMA Bali et Rumah Jambu à Uluwatu, Villa Yuga à Tanah Lot. À la chambre ou entière, −15 % dès 7 nuits.",
+ ('en','Villas'): "Bali villa rentals with private pool: SUMA Bali and Rumah Jambu in Uluwatu, Villa Yuga in Tanah Lot. By the room or whole villa, −15% from 7 nights.",
  ('fr','Proprietaires'): "Gestion locative et conciergerie de villa à Bali : Airbnb, Booking, voyageurs, équipe, entretien et comptabilité. Commission dès 18 %, aucun frais fixe.",
  ('en','Proprietaires'): "Bali villa management and Airbnb management: listings, guests, staff, upkeep and accounting. Commission from 18%, no fixed fees. Free income estimate.",
  ('fr','ProprietairesServices'): "Conciergerie et gestion de villa à Bali : annonces Airbnb et Booking, prix, accueil des voyageurs, ménage, entretien, taxes et rapport mensuel.",

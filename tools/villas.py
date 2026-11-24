@@ -48,7 +48,7 @@ def page(lang):
     cta = re.search(r'<section class="u-cta">.*?</section>', old, flags=re.S).group(0)
     quotes = re.findall(r'<div class="u-quote">.*?</span></div>', open(os.path.join(HERE, f'Main_old_{lang}.html')).read(), flags=re.S)[:3]
     s = f'<!-- title: {title} -->\n<div class="hm">\n'
-    s += (f'<section class="hm-hero"><img src="/assets/images/suma-g1.jpg" alt="{"La Villa Suma à la tombée de la nuit" if fr else "Villa Suma at dusk"}" fetchpriority="high">'
+    s += (f'<section class="hm-hero"><img src="/assets/images/suma-g1.jpg" alt="{"SUMA Bali à la tombée de la nuit" if fr else "SUMA Bali at dusk"}" fetchpriority="high">'
           f'<div class="hm-hero__in"><p class="hm-hero__k">{x["kick"]}</p><h1>{h1}</h1><p class="hm-hero__sub">{sub}</p>'
           f'<div class="u-btns"><a class="u-btn u-btn--rose" href="{x["b1"][1]}">{x["b1"][0]}</a><a class="u-btn hm-btn--glass" href="#reserver-direct">{x["dir_h"].split(",")[0]}</a></div>'
           '<ul class="hm-badges">' + ''.join(f'<li><span aria-hidden="true">★</span>{b}</li>' for b in x['badges']) + '</ul></div></section>\n')

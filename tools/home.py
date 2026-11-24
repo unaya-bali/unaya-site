@@ -84,7 +84,7 @@ def page(lang):
     hero, doors, gar, ges, zones, rev, tar, faq, cta = secs
     s = head.split('\n')[0] + '\n<div class="hm">\n'
     # 1. Grande photo
-    s += (f'<section class="hm-hero"><img src="/assets/images/suma-g1.jpg" alt="{"La Villa Suma et sa piscine éclairée à la tombée de la nuit, Balangan Uluwatu" if fr else "Villa Suma and its lit pool at dusk, Balangan Uluwatu"}" fetchpriority="high">'
+    s += (f'<section class="hm-hero"><img src="/assets/images/suma-g1.jpg" alt="{"SUMA Bali et sa piscine éclairée à la tombée de la nuit, Balangan Uluwatu" if fr else "SUMA Bali and its lit pool at dusk, Balangan Uluwatu"}" fetchpriority="high">'
           f'<div class="hm-hero__in"><p class="hm-hero__k">{x["kick"]}</p><h1>{x["h1"]}</h1><p class="hm-hero__sub">{x["sub"]}</p>'
           f'<div class="u-btns"><a class="u-btn u-btn--rose" href="{x["b1"][1]}">{x["b1"][0]}</a><a class="u-btn hm-btn--glass" href="{x["b2"][1]}">{x["b2"][0]}</a></div>'
           '<ul class="hm-badges">' + ''.join(f'<li><span aria-hidden="true">★</span>{b}</li>' for b in x['badges']) + '</ul></div></section>\n')

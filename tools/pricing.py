@@ -54,7 +54,7 @@ def page(lang):
     why = re.findall(r'<div class="u-feat">(<svg.*?</svg>)<h3>(.*?)</h3><p>(.*?)</p></div>', old.split('<div class="p-why">')[1].split('</section>')[0], flags=re.S)
     ok = re.findall(r'<div class="u-feat">(<svg.*?</svg>)<h3>(.*?)</h3><p>(.*?)</p></div>', old.split('u-feats--4')[1], flags=re.S)
     s = f'<!-- title: {x["title"]} -->\n<div class="hm">\n'
-    s += (f'<section class="hm-hero hm-hero--sm"><img src="/assets/images/suma-terrasse.jpg" alt="{"La terrasse de la Villa Suma, Balangan Uluwatu" if fr else "Villa Suma terrace, Balangan Uluwatu"}" fetchpriority="high">'
+    s += (f'<section class="hm-hero hm-hero--sm"><img src="/assets/images/suma-terrasse.jpg" alt="{"La terrasse de SUMA Bali, Balangan Uluwatu" if fr else "SUMA Bali terrace, Balangan Uluwatu"}" fetchpriority="high">'
           f'<div class="hm-hero__in"><p class="hm-hero__k">{x["kick"]}</p><h1>{h1}</h1><p class="hm-hero__sub">{sub}</p>'
           f'<div class="u-btns"><a class="u-btn u-btn--rose" href="{x["b1"][1]}">{x["b1"][0]}</a><a class="u-btn hm-btn--glass" href="{x["b2"][1]}">{x["b2"][0]}</a></div>'
           '<ul class="hm-badges">' + ''.join(f'<li><span aria-hidden="true">✓</span>{b}</li>' for b in x['badges']) + '</ul></div></section>\n')

@@ -18,12 +18,12 @@ Z = {
     intro_h='Pourquoi Uluwatu et Jimbaran', intro=[
       "C’est la péninsule de Bukit, tout au sud de Bali : des falaises, des plages de sable blanc (Balangan, Bingin, Padang Padang, Melasti) et certaines des meilleures vagues de l’île. Les voyageurs y viennent pour le surf, les couchers de soleil et le calme, loin des embouteillages de Canggu.",
       "Pour un propriétaire, c’est un secteur qui se loue bien toute l’année, avec une clientèle de couples, de familles et de surfeurs. Jimbaran, plus proche de l’aéroport, attire aussi pour sa baie et ses restaurants de poisson grillé sur la plage."],
-    hoods=[('Jimbaran', 'La baie, le marché aux poissons, les restaurants sur le sable. À 20-30 minutes de l’aéroport.'), ('Balangan', 'Une plage sauvage entre deux falaises. C’est là que se trouvent la Villa Suma, Rumah Jambu et Arawa Villas.'),
+    hoods=[('Jimbaran', 'La baie, le marché aux poissons, les restaurants sur le sable. À 20-30 minutes de l’aéroport.'), ('Balangan', 'Une plage sauvage entre deux falaises. C’est là que se trouvent SUMA Bali, Rumah Jambu et Arawa Villas.'),
            ('Bingin et Padang Padang', 'Petites criques, surf, warungs perchés sur la falaise.'), ('Melasti et Ungasan', 'Grandes plages de sable blanc, nouveaux beach clubs. Nos deux terrains à vendre sont à Melasti.'),
            ('Uluwatu et Pecatu', 'Le temple sur la falaise, le surf, des villas avec vue sur l’océan.')],
     faq=[('Combien coûte la gestion d’une villa à Uluwatu ?', 'Chez Unaya, la gestion complète est à partir de 18 % des revenus, calculés après les commissions des plateformes et la taxe d’hébergement, et le marketing seul à 11 %. Aucun frais fixe.'),
          ('Est-ce que vous vous occupez aussi des villas à Jimbaran, Ungasan ou Pecatu ?', 'Oui, toute la péninsule de Bukit : Jimbaran, Balangan, Bingin, Padang Padang, Uluwatu, Pecatu, Ungasan et Melasti. Notre bureau est à Jimbaran, donc on est sur place rapidement.'),
-         ('Peut-on louer une villa à la chambre à Uluwatu ?', 'Oui : la Villa Suma, à Balangan, se loue à la chambre ou en entier. Rumah Jambu se loue en entier.'),
+         ('Peut-on louer une villa à la chambre à Uluwatu ?', 'Oui : SUMA Bali, à Balangan, se loue à la chambre ou en entier. Rumah Jambu se loue en entier.'),
          ('Peut-on acheter une villa à Uluwatu quand on est étranger ?', 'Oui, en leasehold (bail longue durée signé chez le notaire). Nos villas à vendre à Balangan sont dans ce cas. Notre guide pour investir explique ce qu’il faut vérifier.')]),
    en=dict(
     title='Villa Management & Rentals in Uluwatu and Jimbaran | Unaya Bali',
@@ -34,12 +34,12 @@ Z = {
     intro_h='Why Uluwatu and Jimbaran', intro=[
       "This is the Bukit peninsula, at the very south of Bali: cliffs, white-sand beaches (Balangan, Bingin, Padang Padang, Melasti) and some of the best waves on the island. Guests come for the surf, the sunsets and the calm, far from Canggu’s traffic.",
       "For an owner, it is an area that rents well all year round, with couples, families and surfers. Jimbaran, closer to the airport, also draws people with its bay and grilled-fish restaurants on the beach."],
-    hoods=[('Jimbaran', 'The bay, the fish market, restaurants on the sand. 20–30 minutes from the airport.'), ('Balangan', 'A wild beach between two cliffs. Home to Villa Suma, Rumah Jambu and Arawa Villas.'),
+    hoods=[('Jimbaran', 'The bay, the fish market, restaurants on the sand. 20–30 minutes from the airport.'), ('Balangan', 'A wild beach between two cliffs. Home to SUMA Bali, Rumah Jambu and Arawa Villas.'),
            ('Bingin & Padang Padang', 'Small coves, surf, warungs perched on the cliff.'), ('Melasti & Ungasan', 'Big white-sand beaches, new beach clubs. Our two plots for sale are in Melasti.'),
            ('Uluwatu & Pecatu', 'The cliff-top temple, surf, ocean-view villas.')],
     faq=[('How much does villa management cost in Uluwatu?', 'At Unaya, full management starts at 18% of income, calculated after platform commissions and accommodation tax, and marketing only is 11%. No fixed fees.'),
          ('Do you also manage villas in Jimbaran, Ungasan or Pecatu?', 'Yes, the whole Bukit peninsula: Jimbaran, Balangan, Bingin, Padang Padang, Uluwatu, Pecatu, Ungasan and Melasti. Our office is in Jimbaran, so we are on site quickly.'),
-         ('Can I rent a villa by the room in Uluwatu?', 'Yes: Villa Suma, in Balangan, can be rented by the room or as a whole. Rumah Jambu is rented as a whole.'),
+         ('Can I rent a villa by the room in Uluwatu?', 'Yes: SUMA Bali, in Balangan, can be rented by the room or as a whole. Rumah Jambu is rented as a whole.'),
          ('Can a foreigner buy a villa in Uluwatu?', 'Yes, on a leasehold (long lease signed before a notary). Our villas for sale in Balangan are leasehold. Our investment guide explains what to check.')]),
    villas=['VillaSuma', 'VillaRumahJambu'], sale=['ArawaVillaB', 'ArawaVillaD', 'TerrainMelasti795', 'TerrainMelasti']),
  'ZoneTanahLot': dict(img='zone-tanah-lot-canggu.jpg', fr=dict(
@@ -103,7 +103,7 @@ Z = {
          ('How much does it cost?', 'Full management from 18% of income (after platforms and tax), marketing only 11%. No fixed or set-up fees.')]),
    villas=[], sale=[]),
 }
-VIL = {'VillaSuma': ('suma-piscine-2.jpg', 'Villa Suma', {'fr': 'Balangan · 5 chambres · à la chambre ou entière', 'en': 'Balangan · 5 bedrooms · by the room or whole'}),
+VIL = {'VillaSuma': ('suma-piscine-2.jpg', 'SUMA Bali', {'fr': 'Balangan · 5 chambres · à la chambre ou entière', 'en': 'Balangan · 5 bedrooms · by the room or whole'}),
        'VillaRumahJambu': ('rumah-jambu-jardin.jpg', 'Rumah Jambu', {'fr': 'Balangan · maison balinaise avec jardin', 'en': 'Balangan · Balinese house with garden'}),
        'VillaYuga': ('yuga-piscine.jpg', 'Villa Yuga', {'fr': 'Nyanyi · 4 chambres · rizières', 'en': 'Nyanyi · 4 bedrooms · rice fields'})}
 SALE = {'VillaYugaVente': ('yuga-piscine.jpg', {'fr': 'Villa Yuga', 'en': 'Villa Yuga'}, {'fr': 'Nyanyi · 4 suites · IDR 5,9 milliards (≈ 325 000 USD)', 'en': 'Nyanyi · 4 suites · IDR 5.9 billion (≈ USD 325,000)'}),

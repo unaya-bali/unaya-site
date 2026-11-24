@@ -37,7 +37,7 @@ def page(lang):
     items = re.findall(r'<(div class=a-cur|a href="[^"]+"|div)>(<svg.*?</svg>)<h3>(.*?)</h3><p>(.*?)</p>(?:<span[^>]*>(.*?)</span>)?</(?:div|a)>', grp.group(3), flags=re.S)
     cta = re.search(r'<section class="u-cta">.*?</section>', old, flags=re.S).group(0)
     s = f'<!-- title: {title} -->\n<div class="hm">\n'
-    s += (f'<section class="hm-hero hm-hero--sm"><img src="/assets/images/suma-jardin.jpg" alt="{"Le jardin de la Villa Suma" if fr else "Villa Suma garden"}" fetchpriority="high">'
+    s += (f'<section class="hm-hero hm-hero--sm"><img src="/assets/images/suma-jardin.jpg" alt="{"Le jardin de SUMA Bali" if fr else "SUMA Bali garden"}" fetchpriority="high">'
           f'<div class="hm-hero__in"><p class="hm-hero__k">{x["kick"]}</p><h1>{h1}</h1><p class="hm-hero__sub">{sub}</p>'
           f'<div class="u-btns"><a class="u-btn u-btn--rose" href="{x["b1"][1]}">{x["b1"][0]}</a><a class="u-btn hm-btn--glass" href="{x["b2"][1]}">{x["b2"][0]}</a></div>'
           '<ul class="hm-badges">' + ''.join(f'<li><span aria-hidden="true">✓</span>{b}</li>' for b in x['badges']) + '</ul></div></section>\n')
