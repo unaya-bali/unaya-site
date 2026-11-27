@@ -216,7 +216,7 @@ A['GuideOuLoger'] = dict(img='suma-g1.jpg', min=5, fr=dict(
    "Pour qui : jeunes voyageurs, nomades digitaux, groupes d’amis."]),
   ('Tanah Lot et Nyanyi : rizières et sable noir', [
    "Juste à l’ouest de Canggu, la côte devient campagne : rizières, plages de sable noir, et le temple de Tanah Lot sur son rocher. Les restaurants de Canggu et de Pererenan restent à 15-25 minutes.",
-   "Pour qui : familles, longs séjours, ceux qui veulent le Bali des rizières. Notre villa ici : la Villa Yuga, à Nyanyi, qui se loue à la chambre ou en entier."]),
+   "Pour qui : familles, longs séjours, ceux qui veulent le Bali des rizières. Notre villa ici : YUGA Bali, à Nyanyi, qui se loue à la chambre ou en entier."]),
   ('Seminyak et Kerobokan : restaurants et beach clubs', [
    "Seminyak et Petitenget, ce sont les restaurants, les boutiques et les beach clubs au bord de la plage. Kerobokan et Umalas, juste derrière, sont plus calmes, avec de grandes villas familiales.",
    "Pour qui : ceux qui veulent sortir le soir, faire du shopping, et rester à 30-45 minutes de l’aéroport."]),
@@ -243,7 +243,7 @@ A['GuideOuLoger'] = dict(img='suma-g1.jpg', min=5, fr=dict(
    "Who it suits: young travellers, digital nomads, groups of friends."]),
   ('Tanah Lot & Nyanyi: rice fields and black sand', [
    "Just west of Canggu, the coast turns to countryside: rice fields, black-sand beaches, and Tanah Lot temple on its rock. Canggu and Pererenan restaurants are 15–25 minutes away.",
-   "Who it suits: families, long stays, anyone after rice-field Bali. Our villa here: Villa Yuga, in Nyanyi, rented by the room or as a whole."]),
+   "Who it suits: families, long stays, anyone after rice-field Bali. Our villa here: YUGA Bali, in Nyanyi, rented by the room or as a whole."]),
   ('Seminyak & Kerobokan: restaurants and beach clubs', [
    "Seminyak and Petitenget are restaurants, boutiques and beach clubs by the sea. Kerobokan and Umalas, just behind, are quieter, with big family villas.",
    "Who it suits: those who want nights out, shopping, and to stay 30–45 minutes from the airport."]),

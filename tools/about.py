@@ -43,7 +43,7 @@ def page(lang):
           '<ul class="hm-badges">' + ''.join(f'<li><span aria-hidden="true">✓</span>{b}</li>' for b in x['badges']) + '</ul></div></section>\n')
     s += '<section class="iv-keys"><div class="iv-keys__in">' + ''.join(f'<div class="iv-key"><strong>{a}</strong><span>{b}</span></div>' for a, b in x['keys']) + '</div></section>\n'
     # Histoire
-    s += (f'<section class="u-sec hm-sec"><div class="u-wrap"><div class="hm-bld"><div class="hm-bld__img"><img src="/assets/images/yuga-drone.jpg" alt="{"La Villa Yuga vue du ciel" if fr else "Villa Yuga from above"}" loading="lazy">'
+    s += (f'<section class="u-sec hm-sec"><div class="u-wrap"><div class="hm-bld"><div class="hm-bld__img"><img src="/assets/images/yuga-drone.jpg" alt="{"YUGA Bali vue du ciel" if fr else "YUGA Bali from above"}" loading="lazy">'
           '<div class="hm-bld__facts">' + ''.join(f'<div><strong>{a}</strong><span>{b}</span></div>' for a, b in x['facts']) + '</div></div>'
           f'<div class="hm-bld__t ab-story"><p class="hm-k">{x["story_k"]}</p><h2>{st.group(1)}</h2>{st.group(2)}</div></div></div></section>\n')
     # Symbole

@@ -52,7 +52,7 @@ def page(lang):
     blocks = re.findall(r'<div class="u-svc__b"><div class="u-svc__h">(<svg.*?</svg>)<h3>(.*?)</h3></div><p>(.*?)</p><ul class="u-checks">(.*?)</ul></div>', old, flags=re.S)
     plat = re.search(r'<div class="pl-row">.*?</div>', open(os.path.join(HERE, f'Main_old_{lang}.html')).read(), flags=re.S).group(0)
     s = f'<!-- title: {x["title"]} -->\n<div class="hm">\n'
-    s += (f'<section class="hm-hero hm-hero--sm"><img src="/assets/images/yuga-terrasse.jpg" alt="{"La terrasse de la Villa Yuga, Nyanyi" if fr else "Villa Yuga terrace, Nyanyi"}" fetchpriority="high">'
+    s += (f'<section class="hm-hero hm-hero--sm"><img src="/assets/images/yuga-terrasse.jpg" alt="{"La terrasse de YUGA Bali, Nyanyi" if fr else "YUGA Bali terrace, Nyanyi"}" fetchpriority="high">'
           f'<div class="hm-hero__in"><p class="hm-hero__k">{x["kick"]}</p><h1>{h1}</h1><p class="hm-hero__sub">{x["sub"]}</p>'
           f'<div class="u-btns"><a class="u-btn u-btn--rose" href="{x["b1"][1]}">{x["b1"][0]}</a><a class="u-btn hm-btn--glass" href="{x["b2"][1]}">{x["b2"][0]}</a></div>'
           '<ul class="hm-badges">' + ''.join(f'<li><span aria-hidden="true">✓</span>{b}</li>' for b in x['badges']) + '</ul></div></section>\n')

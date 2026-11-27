@@ -1,4 +1,4 @@
-# Brochure PDF de la Villa Yuga à vendre (FR/EN), mêmes styles que les fiches Arawa (tools/arawa_pdf.py).
+# Brochure PDF de YUGA Bali à vendre (FR/EN), mêmes styles que les fiches Arawa (tools/arawa_pdf.py).
 # Textes repris de tools/yuga_sale.py. Contact = Unaya. Sortie : assets/docs/villa-yuga-{fr,en}.pdf
 import os, sys, json, subprocess, html, re
 HERE = os.path.dirname(os.path.abspath(__file__))

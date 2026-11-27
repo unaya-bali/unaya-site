@@ -1,4 +1,4 @@
-# Page de vente « Villa Yuga » (FR/EN) + carte dans « Villas à vendre ».
+# Page de vente « YUGA Bali » (FR/EN) + carte dans « Villas à vendre ».
 # Source : Yuga_Nyanyi_Suite_-_Fiche_de_vente.pdf (11/11/2026) + réponses de Sébastien (17/11/2026).
 # Contact public = Unaya (pas le WhatsApp d'Elies). Pas de chiffres de revenus (demandé).
 import os, re, sys, json
@@ -20,9 +20,9 @@ GAL = [('yuga-piscine.jpg', 'Piscine et terrasses', 'Pool and terraces'), ('yuga
 
 T = {'fr': dict(
   title='Villa à vendre à Nyanyi, Tanah Lot : Yuga, 4 chambres, piscine | Unaya',
-  desc='Villa Yuga à vendre à Nyanyi, près de Tanah Lot et Canggu : 4 suites, piscine privée, vendue meublée et déjà louée. Bail jusqu’en 2054. IDR 5,9 milliards (≈ 325 000 USD).',
-  bc=[('Accueil', '/fr/'), ('Villas à vendre', '/fr/villas-a-vendre/'), ('Villa Yuga', None)],
-  kick='Nyanyi · Tabanan · Bali', h1='Villa Yuga, 4 chambres à vendre à Nyanyi',
+  desc='YUGA Bali à vendre à Nyanyi, près de Tanah Lot et Canggu : 4 suites, piscine privée, vendue meublée et déjà louée. Bail jusqu’en 2054. IDR 5,9 milliards (≈ 325 000 USD).',
+  bc=[('Accueil', '/fr/'), ('Villas à vendre', '/fr/villas-a-vendre/'), ('YUGA Bali', None)],
+  kick='Nyanyi · Tabanan · Bali', h1='YUGA Bali, 4 chambres à vendre à Nyanyi',
   sub='Quatre suites autour d’une piscine, face aux rizières de Beraban. Vendue meublée et déjà louée aux voyageurs : vous continuez à louer dès le premier jour.',
   badges=['Disponible', 'Déjà louée · 9,6/10', 'Bail jusqu’en 2054'],
   facts=[('bed', 'Chambres', '4 suites', 'chacune sa salle de bain'), ('map', 'Terrain', '310 m²', '3,1 ares'), ('pool', 'Piscine', 'Privée', 'avec deck'), ('doc', 'Bail', '≈ 27,5 ans', 'jusqu’en juin 2054')],
@@ -38,7 +38,7 @@ T = {'fr': dict(
   lnote='Faites vérifier le bail et les documents par votre notaire ou votre avocat avant de vous engager.',
   pk='Prix', usd='≈ USD 325 000', rate='1 USD = IDR 18 158 (11 nov. 2026). Le prix de référence est en roupies.',
   b1='Planifier une visite', b2='Écrire sur WhatsApp', dl='Télécharger la brochure (PDF)',
-  wa='Bonjour Unaya, je suis intéressé(e) par la Villa Yuga à vendre à Nyanyi.',
+  wa='Bonjour Unaya, je suis intéressé(e) par YUGA Bali à vendre à Nyanyi.',
   other='Voir aussi les <a href="/fr/villas-a-vendre/arawa-balangan/">Arawa Villas</a> à Balangan, dès 170 000 USD.',
   share='Partager', copy='Copier le lien', copied='Lien copié',
   vh='Ce que vous achetez', vl='Une villa terminée, meublée et qui tourne déjà.',
@@ -51,7 +51,7 @@ T = {'fr': dict(
   rl=('Comment marche la gestion', '/fr/proprietaires/services/'), rl2=('Le leasehold expliqué', '/fr/guides/leasehold-bali/'),
   zh='L’emplacement', zl='Nyanyi, entre Tanah Lot et Canggu : les rizières d’un côté, la plage et Nuanu de l’autre.',
   near=[('Plage de Nyanyi', 'sur la même route'), ('Nuanu Creative City', '5 min'), ('Luna Beach Club', 'tout près, à Nuanu'), ('Pererenan et Canggu', '10 à 15 min'), ('Temple de Tanah Lot', 'dans le secteur')],
-  maps='Voir sur Google Maps', mtitle='Emplacement de la Villa Yuga, Nyanyi',
+  maps='Voir sur Google Maps', mtitle='Emplacement de YUGA Bali, Nyanyi',
   ah='Comment se passe l’achat', al='Unaya vous accompagne à chaque étape.',
   steps=[('chat', 'Premier contact', 'Questions, photos, visite sur place à Nyanyi, ou en vidéo si vous êtes loin.'),
          ('doc', 'Vérifications', 'Votre avocat vérifie le bail, les permis et les documents de la villa.'),
@@ -65,15 +65,15 @@ T = {'fr': dict(
       ('Où en sont les permis ?', 'Les permis (PBG et SLF) sont en cours : le dossier a été déposé en septembre 2026. Nous vous montrons où il en est, et votre avocat peut le vérifier.'),
       ('Le prix est en roupies ou en dollars ?', 'Le prix de référence est IDR 5 900 000 000. Le montant en dollars (≈ 325 000 USD) est indicatif, au taux du 11 novembre 2026.')],
   vf=dict(h='Planifier une visite', p='Sur place à Nyanyi, ou en vidéo si vous êtes loin. Choisissez un jour, nous vous confirmons l’heure sur WhatsApp.',
-          rep=[('Sur place à Balangan', 'Sur place à Nyanyi'), ('Visite de la Villa B — Arawa Villas, Balangan.', 'Visite de la Villa Yuga — Nyanyi.')]),
+          rep=[('Sur place à Balangan', 'Sur place à Nyanyi'), ('Visite de la Villa B — Arawa Villas, Balangan.', 'Visite de YUGA Bali — Nyanyi.')]),
   legal='Informations données à titre indicatif, sans valeur contractuelle, sous réserve de disponibilité. Faites vérifier les documents par votre notaire ou votre avocat avant tout engagement.',
-  card=dict(zone='Nyanyi · Tanah Lot', st='Disponible', title='Villa Yuga', pts=['4 suites', 'Terrain 310 m²', 'Déjà louée'], left='≈ 325 000 USD · bail jusqu’en 2054', price='IDR 5,9 milliards', more='Voir la villa', alt='Villa Yuga à vendre, Nyanyi'),
+  card=dict(zone='Nyanyi · Tanah Lot', st='Disponible', title='YUGA Bali', pts=['4 suites', 'Terrain 310 m²', 'Déjà louée'], left='≈ 325 000 USD · bail jusqu’en 2054', price='IDR 5,9 milliards', more='Voir la villa', alt='YUGA Bali à vendre, Nyanyi'),
   ),
  'en': dict(
   title='Villa for Sale in Nyanyi, Tanah Lot: Yuga, 4 Bedrooms, Pool | Unaya',
-  desc='Villa Yuga for sale in Nyanyi, near Tanah Lot and Canggu: 4 suites, private pool, sold furnished and already renting. Lease to 2054. IDR 5.9 billion (≈ USD 325,000).',
-  bc=[('Home', '/'), ('Villas for sale', '/villas-for-sale/'), ('Villa Yuga', None)],
-  kick='Nyanyi · Tabanan · Bali', h1='Villa Yuga, a 4-bedroom villa for sale in Nyanyi',
+  desc='YUGA Bali for sale in Nyanyi, near Tanah Lot and Canggu: 4 suites, private pool, sold furnished and already renting. Lease to 2054. IDR 5.9 billion (≈ USD 325,000).',
+  bc=[('Home', '/'), ('Villas for sale', '/villas-for-sale/'), ('YUGA Bali', None)],
+  kick='Nyanyi · Tabanan · Bali', h1='YUGA Bali, a 4-bedroom villa for sale in Nyanyi',
   sub='Four suites around one pool, looking out over the rice fields of Beraban. Sold furnished and already taking guests: you keep renting from day one.',
   badges=['Available', 'Already renting · 9.6/10', 'Lease to 2054'],
   facts=[('bed', 'Bedrooms', '4 suites', 'each with a bathroom'), ('map', 'Land', '310 m²', '3.1 are'), ('pool', 'Pool', 'Private', 'with sun deck'), ('doc', 'Lease', '≈ 27.5 years', 'to June 2054')],
@@ -89,7 +89,7 @@ T = {'fr': dict(
   lnote='Have the lease and documents checked by your notary or lawyer before you commit.',
   pk='Price', usd='≈ USD 325,000', rate='1 USD = IDR 18,158 (11 Nov 2026). The reference price is in rupiah.',
   b1='Book a viewing', b2='Chat on WhatsApp', dl='Download the brochure (PDF)',
-  wa='Hello Unaya, I’m interested in Villa Yuga for sale in Nyanyi.',
+  wa='Hello Unaya, I’m interested in YUGA Bali for sale in Nyanyi.',
   other='See also <a href="/villas-for-sale/arawa-balangan/">Arawa Villas</a> in Balangan, from USD 170,000.',
   share='Share', copy='Copy link', copied='Link copied',
   vh='What you are buying', vl='A finished, furnished villa that is already up and running.',
@@ -102,7 +102,7 @@ T = {'fr': dict(
   rl=('How our management works', '/owners/services/'), rl2=('Leasehold explained', '/guides/leasehold-bali/'),
   zh='Location', zl='Nyanyi, between Tanah Lot and Canggu: rice fields on one side, the beach and Nuanu on the other.',
   near=[('Nyanyi Beach', 'on the same road'), ('Nuanu Creative City', '5 min'), ('Luna Beach Club', 'close by, at Nuanu'), ('Pererenan and Canggu', '10 to 15 min'), ('Tanah Lot temple', 'in the area')],
-  maps='View on Google Maps', mtitle='Location of Villa Yuga, Nyanyi',
+  maps='View on Google Maps', mtitle='Location of YUGA Bali, Nyanyi',
   ah='How buying works', al='Unaya guides you through each step.',
   steps=[('chat', 'First contact', 'Questions, photos, a viewing on site in Nyanyi, or by video if you are far away.'),
          ('doc', 'Checks', 'Your lawyer checks the lease, the permits and the villa’s documents.'),
@@ -116,9 +116,9 @@ T = {'fr': dict(
       ('Where are the permits?', 'The permits (PBG and SLF) are in progress: the application was filed in September 2026. We show you where it stands, and your lawyer can check it.'),
       ('Is the price in rupiah or dollars?', 'The reference price is IDR 5,900,000,000. The dollar amount (≈ USD 325,000) is indicative, at the 11 November 2026 rate.')],
   vf=dict(h='Book a viewing', p='On site in Nyanyi, or by video if you are far away. Pick a day and we confirm the time on WhatsApp.',
-          rep=[('On site in Balangan', 'On site in Nyanyi'), ('Viewing of Villa B — Arawa Villas, Balangan.', 'Viewing of Villa Yuga — Nyanyi.')]),
+          rep=[('On site in Balangan', 'On site in Nyanyi'), ('Viewing of Villa B — Arawa Villas, Balangan.', 'Viewing of YUGA Bali — Nyanyi.')]),
   legal='Information given for guidance only, not contractual, subject to availability. Have the documents checked by your notary or lawyer before any commitment.',
-  card=dict(zone='Nyanyi · Tanah Lot', st='Available', title='Villa Yuga', pts=['4 suites', '310 m² land', 'Already renting'], left='≈ USD 325,000 · lease to 2054', price='IDR 5.9 billion', more='View the villa', alt='Villa Yuga for sale, Nyanyi'),
+  card=dict(zone='Nyanyi · Tanah Lot', st='Available', title='YUGA Bali', pts=['4 suites', '310 m² land', 'Already renting'], left='≈ USD 325,000 · lease to 2054', price='IDR 5.9 billion', more='View the villa', alt='YUGA Bali for sale, Nyanyi'),
   )}
 PRICE = {'fr': 'IDR 5 900 000 000', 'en': 'IDR 5,900,000,000'}
 
@@ -129,7 +129,7 @@ def visit_form(lang):
     sec = re.sub(r'<h2>[^<]*</h2><p>[^<]*</p>', f'<h2>{v["h"]}</h2><p>{v["p"]}</p>', sec, count=1)
     for a, b in v['rep']:
         sec = sec.replace(a, b)
-    return sec.replace('class="ar-visit"', 'class="ar-visit" data-subject="Villa Yuga"')
+    return sec.replace('class="ar-visit"', 'class="ar-visit" data-subject="YUGA Bali"')
 
 def page(lang):
     x = T[lang]; fr = lang == 'fr'
@@ -146,17 +146,17 @@ def page(lang):
           f'<a class="ar-mz__s ar-mz__more" href="#galerie" data-open-gallery><img src="/assets/images/{g(3)[0]}" alt="{g(3)[1]}" loading="lazy"><span>{x["more"].format(n=len(GAL))}</span></a></div>'
           '<div hidden data-gallery id="galerie">' + ''.join(f'<figure><img src="/assets/images/{f}" alt="{a if fr else e}" loading="lazy"></figure>' for f, a, e in GAL) + '</div></div></section>\n')
     wa = f'https://wa.me/{WA}?text={quote(x["wa"])}'
-    sh = quote(f'Villa Yuga — Nyanyi, Bali {full}')
+    sh = quote(f'YUGA Bali — Nyanyi, Bali {full}')
     s += (f'<section class="u-sec"><div class="u-wrap"><div class="ld-main"><div class="ld-desc"><div class="u-head"><h2>{x["dh"]}</h2></div>' + ''.join(f'<p>{p}</p>' for p in x['dp']) +
           '<ul class="u-checks">' + ''.join(f'<li>{w}</li>' for w in x['why']) + '</ul>'
           f'<div class="ar-lease"><h3>{x["lh"]}</h3><dl>' + ''.join(f'<div><dt>{a}</dt><dd>{b}</dd></div>' for a, b in x['lease']) + f'</dl><p>{x["lnote"]}</p></div></div>'
-          f'<aside class="ld-price"><span class="ld-price__k">{x["pk"]}</span><div class="ar-pr"><span>Villa Yuga</span><strong>{PRICE[lang]}</strong><em>{x["usd"]}</em></div>'
+          f'<aside class="ld-price"><span class="ld-price__k">{x["pk"]}</span><div class="ar-pr"><span>YUGA Bali</span><strong>{PRICE[lang]}</strong><em>{x["usd"]}</em></div>'
           f'<a class="u-btn u-btn--rose" href="#visite">{x["b1"]}</a><a class="ld-wa" href="{wa}" target="_blank" rel="noopener">{x["b2"]}</a>'
           f'<div class="ar-dl"><a href="/assets/docs/villa-yuga-{lang}.pdf" download>{x["dl"]}</a></div><p>{x["rate"]}</p><p class="ar-other">{x["other"]}</p>'
-          f'<div class="ar-share" data-share-url="{full}" data-share-title="Villa Yuga — Nyanyi, Bali"><span>{x["share"]}</span>'
+          f'<div class="ar-share" data-share-url="{full}" data-share-title="YUGA Bali — Nyanyi, Bali"><span>{x["share"]}</span>'
           f'<a href="https://wa.me/?text={sh}" target="_blank" rel="noopener" aria-label="WhatsApp">WhatsApp</a>'
           f'<a href="https://www.facebook.com/sharer/sharer.php?u={quote(full, safe="")}" target="_blank" rel="noopener" aria-label="Facebook">Facebook</a>'
-          f'<a href="mailto:?subject={quote("Villa Yuga — Nyanyi, Bali")}&amp;body={quote(full, safe="")}" aria-label="E-mail">E-mail</a>'
+          f'<a href="mailto:?subject={quote("YUGA Bali — Nyanyi, Bali")}&amp;body={quote(full, safe="")}" aria-label="E-mail">E-mail</a>'
           f'<button type="button" class="ar-copy" data-ok="{x["copied"]}">{x["copy"]}</button></div></aside></div></div></section>\n')
     s += (f'<section class="u-sec u-sec--white"><div class="u-wrap"><div class="u-head u-head--c"><h2>{x["vh"]}</h2><p>{x["vl"]}</p></div><div class="ar-lv2">' +
           ''.join(f'<article class="ar-lv2__c"><div class="ar-lv2__img"><img src="/assets/images/{im}" alt="{h}" loading="lazy"><span class="ar-lv2__n">0{i}</span></div>'

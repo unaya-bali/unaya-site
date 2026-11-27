@@ -39,8 +39,8 @@ T = {  # textes communs
 }
 
 DESC = {
- ('fr','Villas'):"Nos villas privées avec piscine à Bali : SUMA Bali et Rumah Jambu à Uluwatu, Villa Yuga à Tanah Lot. Gérées par Unaya, réservation en direct.",
- ('en','Villas'):"Our private pool villas in Bali: SUMA Bali and Rumah Jambu in Uluwatu, Villa Yuga in Tanah Lot. Managed by Unaya, book direct.",
+ ('fr','Villas'):"Nos villas privées avec piscine à Bali : SUMA Bali et Rumah Jambu à Uluwatu, YUGA Bali à Tanah Lot. Gérées par Unaya, réservation en direct.",
+ ('en','Villas'):"Our private pool villas in Bali: SUMA Bali and Rumah Jambu in Uluwatu, YUGA Bali in Tanah Lot. Managed by Unaya, book direct.",
  ('fr','SiteWeb'):"Un site web pour votre villa à Bali : plus de visibilité, une meilleure expérience voyageurs, un marketing rentable et plus de réservations directes. Inclus dans nos formules.",
  ('en','SiteWeb'):"A website for your Bali villa: more visibility, a better guest experience, cost-effective marketing and more direct bookings. Included in our plans.",
  ('fr','Terrains'):"Terrains à Bali sélectionnés et vérifiés par Unaya Build : titre foncier, zonage, accès. Bail ou PT PMA, construction et mise en location.",
@@ -79,8 +79,8 @@ DESC = {
  ('en','MentionsLegales'):"Legal notice for unayabali.com, published by PT Unaya Bali Grup (NIB 3009260021018), Jimbaran, Bali, Indonesia.",
  ('fr','VillaSuma'):"SUMA Bali à Balangan, Uluwatu : 5 suites, piscine privée, jusqu'à 10 voyageurs, à 5 minutes de la plage. Réservation directe.",
  ('en','VillaSuma'):"SUMA Bali in Balangan, Uluwatu: 5 suites, private pool, up to 10 guests, 5 minutes from the beach. Book direct.",
- ('fr','VillaYuga'):"Villa Yuga à Nyanyi : 4 chambres, piscine privée, vue sur les rizières, à 5 minutes de Nuanu. Jusqu'à 8 voyageurs. Réservation directe.",
- ('en','VillaYuga'):"Villa Yuga in Nyanyi: 4 bedrooms, private pool, rice-field views, 5 minutes from Nuanu. Up to 8 guests. Book direct.",
+ ('fr','VillaYuga'):"YUGA Bali à Nyanyi : 4 chambres, piscine privée, vue sur les rizières, à 5 minutes de Nuanu. Jusqu'à 8 voyageurs. Réservation directe.",
+ ('en','VillaYuga'):"YUGA Bali in Nyanyi: 4 bedrooms, private pool, rice-field views, 5 minutes from Nuanu. Up to 8 guests. Book direct.",
  ('fr','VillaRumahJambu'):"Rumah Jambu : maison balinaise authentique avec jardin tropical, au cœur du village de Balangan, Uluwatu. 2 chambres, 4 voyageurs.",
  ('en','VillaRumahJambu'):"Rumah Jambu: an authentic Balinese house with a tropical garden in the heart of Balangan village, Uluwatu. 2 bedrooms, 4 guests.",
  ('fr','Proprietaires'):"Confiez votre villa à Unaya Management : location, entretien et rapport financier chaque mois, sans frais fixes. Uluwatu / Jimbaran, Tanah Lot / Canggu West, Seminyak / Kerobokan.",
@@ -230,7 +230,7 @@ def fix_booking(body, lang, page):
     wa = BOOKING_MODE == 'whatsapp'
     if wa:
         lab = lab[:3] + (('Demander la disponibilité sur WhatsApp',) if lang == 'fr' else ('Ask for availability on WhatsApp',)) + lab[4:]
-    vname = {'VillaSuma': 'SUMA Bali', 'VillaYuga': 'Villa Yuga', 'VillaRumahJambu': 'Rumah Jambu'}[page]
+    vname = {'VillaSuma': 'SUMA Bali', 'VillaYuga': 'YUGA Bali', 'VillaRumahJambu': 'Rumah Jambu'}[page]
     attr = f'data-wa="{WHATSAPP[page]}" data-villa="{vname}"' if wa else f'data-beds24="{propid}"'
     note = ''
     if wa:
@@ -254,18 +254,18 @@ def fix_booking(body, lang, page):
 # ---- Conversion (15/11/2026) : WhatsApp partout, barre de réservation mobile, villas sur l'accueil ----
 WA_MAIN = '6285190211324'
 WA_SHOW = '+62 851 9021 1324'
-VNAME = {'VillaSuma': 'SUMA Bali', 'VillaYuga': 'Villa Yuga', 'VillaRumahJambu': 'Rumah Jambu'}
+VNAME = {'VillaSuma': 'SUMA Bali', 'VillaYuga': 'YUGA Bali', 'VillaRumahJambu': 'Rumah Jambu'}
 PRICE0 = {'VillaSuma': 5800000, 'VillaYuga': 2900000, 'VillaRumahJambu': 1200000}  # repli si /api/prices ne répond pas
 ROOM0 = {'VillaSuma': 1040000, 'VillaYuga': 650000}  # prix d'une chambre, repli (15/11/2026)
 def wa_text(lang, page):
     fr = lang == 'fr'
     if page in VNAME:
-        return (f"Bonjour Unaya, je suis intéressé(e) par {'la ' if page == 'VillaYuga' else ''}{VNAME[page]}. Mes dates : " if fr else f"Hello Unaya, I'm interested in {VNAME[page]}. My dates: ")
+        return (f"Bonjour Unaya, je suis intéressé(e) par {VNAME[page]}. Mes dates : " if fr else f"Hello Unaya, I'm interested in {VNAME[page]}. My dates: ")
     if page in ('ArawaVillaB', 'ArawaVillaD'):
         v = page[-1]
         return (f"Bonjour Unaya, je suis intéressé(e) par la villa {v} des Arawa Villas à Balangan." if fr else f"Hello Unaya, I'm interested in villa {v} at Arawa Villas in Balangan.")
     if page == 'VillaYugaVente':
-        return ("Bonjour Unaya, je suis intéressé(e) par la Villa Yuga à vendre à Nyanyi." if fr else "Hello Unaya, I'm interested in Villa Yuga for sale in Nyanyi.")
+        return ("Bonjour Unaya, je suis intéressé(e) par YUGA Bali à vendre à Nyanyi." if fr else "Hello Unaya, I'm interested in YUGA Bali for sale in Nyanyi.")
     if page in ('VillasAVendre', 'ArawaVillas'):
         return ("Bonjour Unaya, je suis intéressé(e) par les Arawa Villas à Balangan." if fr else "Hello Unaya, I'm interested in Arawa Villas in Balangan.")
     if page == 'TerrainMelasti795':
@@ -492,8 +492,8 @@ SEO_TITLES = {
  ('en','Villas'): 'Private Pool Villas for Rent in Bali (Uluwatu, Tanah Lot) — Unaya Bali',
  ('fr','VillaSuma'): 'SUMA Bali, Balangan Uluwatu — villa 5 chambres avec piscine | Unaya Bali',
  ('en','VillaSuma'): 'SUMA Bali, Balangan Uluwatu — 5-Bedroom Pool Villa | Unaya Bali',
- ('fr','VillaYuga'): 'Villa Yuga, Nyanyi Tanah Lot — villa 4 chambres avec piscine | Unaya Bali',
- ('en','VillaYuga'): 'Villa Yuga, Nyanyi Tanah Lot — 4-Bedroom Pool Villa | Unaya Bali',
+ ('fr','VillaYuga'): 'YUGA Bali, Nyanyi Tanah Lot — villa 4 chambres avec piscine | Unaya Bali',
+ ('en','VillaYuga'): 'YUGA Bali, Nyanyi Tanah Lot — 4-Bedroom Pool Villa | Unaya Bali',
  ('fr','VillaRumahJambu'): 'Rumah Jambu, Uluwatu — maison balinaise avec jardin | Unaya Bali',
  ('en','VillaRumahJambu'): 'Rumah Jambu, Uluwatu — Authentic Balinese House | Unaya Bali',
  ('fr','Proprietaires'): 'Gestion locative de villa à Bali — Unaya Bali',
@@ -531,7 +531,7 @@ for _m in (_ZN.META, _AR.META, _YS.META):
 ORG_ID = SITE + '/#organisation'
 LODGING = {
  'VillaSuma': dict(name='SUMA Bali', loc='Balangan, Uluwatu', img='suma-g1.jpg', rooms=5, guests=10),
- 'VillaYuga': dict(name='Villa Yuga', loc='Nyanyi, Tanah Lot', img='yuga-g1.jpg', rooms=4, guests=8),
+ 'VillaYuga': dict(name='YUGA Bali', loc='Nyanyi, Tanah Lot', img='yuga-g1.jpg', rooms=4, guests=8),
  'VillaRumahJambu': dict(name='Rumah Jambu', loc='Balangan, Uluwatu', img='rj-g1.jpg', rooms=2, guests=4),
 }
 PARENT = {'VillaYugaVente':'VillasAVendre','VillaSuma':'Villas','VillaYuga':'Villas','VillaRumahJambu':'Villas','TerrainMelasti':'Terrains','TerrainMelasti795':'Terrains','ArawaVillas':'VillasAVendre','ArawaVillaB':'ArawaVillas','ArawaVillaD':'ArawaVillas',
